@@ -1,7 +1,9 @@
 <!DOCTYPE html>
 <style>  
-    #login {colour:rgb (0, 0, 255);}
+    #log_in {colour:rgb (0, 0, 255);}
     h1 {colour:rgb (265, 165, 0);}
+    title {colour:rgb (127, 0, 255);}
+    #appname {background-colour:rgb (255, 255, 0);}
 </style>
 
 <html lang="en">
@@ -9,8 +11,8 @@
         <title>Ascendra</title>
     </head>
     <body>
-        <h1>Welcome back to <strong>Ascendra!</strong></h1>
-        <h2>Log in</h2>
+        <h1>Welcome back to <strong id = "appname">Ascendra</strong>!</h1>
+        <h2 id = "log_in">Log in</h2>
 
         <form method="post" id="login">
             <input type="text" placeholder="First Name" id="name" required>
