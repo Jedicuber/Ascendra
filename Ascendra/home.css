@@ -1,0 +1,12 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f5f7fa;
+    text-align: center;
+    margin-top: 50px;
+}
+h1 {
+    text-align: left;
+    margin-top: 5px;
+    margin-left: 25px;
+    line-height: 2px;
+}
