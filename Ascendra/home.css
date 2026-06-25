@@ -44,6 +44,6 @@ h1 {
     background-color: rgb(37, 99, 235);
     color: white;
 }
-#daily-progress {
+#dailyProgress {
     overflow: auto;
 }
