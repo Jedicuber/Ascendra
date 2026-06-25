@@ -1,19 +1,28 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="utf-8">
     <title>Ascendra - My Calendar</title>
+
     <link rel="stylesheet" href="calender - july.css">
     <link rel="icon" type="image/x-icon" href="favicon.png">
 </head>
+
 <body>
 
-    <!-- Sidebar Layout -->
+    <!-- Sidebar -->
     <div class="sidebar">
         <h1><a class="ascendraLogo">Ascendra</a></h1>
+
         <p>Welcome back!</p>
+
         <hr style="border: 0; border-top: 1px solid #eee; margin: 20px 0;">
-        <h3 style="text-align: left; color: rgb(0, 128, 0);">Today's Tasks</h3>
+
+        <h3 style="text-align: left; color: rgb(0, 128, 0);">
+            Today's Tasks
+        </h3>
+
         <ul class="task-list">
             <li>Plan my week</li>
             <li>Code HTML/CSS</li>
@@ -21,12 +30,16 @@
         </ul>
     </div>
 
-    <!-- Calendar Layout -->
+    <!-- Calendar -->
     <div class="calendar-container">
-        <div class="calendar-header">July 2026</div>
+
+        <div class="calendar-header">
+            July 2026
+        </div>
 
         <table>
-            <!-- Days of the Week Row -->
+
+            <!-- Days of the Week -->
             <tr>
                 <th>Sun</th>
                 <th>Mon</th>
@@ -37,58 +50,70 @@
                 <th>Sat</th>
             </tr>
 
-            <!-- Month Grid Rows (5 weeks) -->
+            <!-- Week 1 -->
             <tr>
                 <td class="empty-day">28</td>
                 <td class="empty-day">29</td>
                 <td class="empty-day">30</td>
-                <td>1</td>
-                <td>2</td>
-                <td>3</td>
-                <td>4</td>
+
+                <td id="day-1">1</td>
+                <td id="day-2">2</td>
+                <td id="day-3">3</td>
+                <td id="day-4">4</td>
             </tr>
+
+            <!-- Week 2 -->
             <tr>
-                <td>5</td>
-                <td>6</td>
-                <td>7</td>
-                <td>8</td>
-                <td>9</td>
-                <td>10</td>
-                <td>11</td>
+                <td id="day-5">5</td>
+                <td id="day-6">6</td>
+                <td id="day-7">7</td>
+                <td id="day-8">8</td>
+                <td id="day-9">9</td>
+                <td id="day-10">10</td>
+                <td id="day-11">11</td>
             </tr>
+
+            <!-- Week 3 -->
             <tr>
-                <td>12</td>
-                <td>13</td>
-                <td>14</td>
-                <td>15</td>
-                <td>16</td>
-                <td class = "today">17</td> <!-- Today Highlighted -->
-                <td>18</td>
+                <td id="day-12">12</td>
+                <td id="day-13">13</td>
+                <td id="day-14">14</td>
+                <td id="day-15">15</td>
+                <td id="day-16">16</td>
+                <td id="day-17">17</td>
+                <td id="day-18">18</td>
             </tr>
+
+            <!-- Week 4 -->
             <tr>
-                <td>19</td>
-                <td>20</td>
-                <td>21</td>
-                <td>22</td>
-                <td>23</td>
-                <td>24</td>
-                <td>25</td>
+                <td id="day-19">19</td>
+                <td id="day-20">20</td>
+                <td id="day-21">21</td>
+                <td id="day-22">22</td>
+                <td id="day-23">23</td>
+                <td id="day-24">24</td>
+                <td id="day-25">25</td>
             </tr>
+
+            <!-- Week 5 -->
             <tr>
-                <td>26</td>
-                <td>27</td>
-                <td>28</td>
-                <td>29</td>
-                <td>30</td>
-                <td>31</td>
+                <td id="day-26">26</td>
+                <td id="day-27">27</td>
+                <td id="day-28">28</td>
+                <td id="day-29">29</td>
+                <td id="day-30">30</td>
+                <td id="day-31">31</td>
+
                 <td class="empty-day">1</td>
             </tr>
+
         </table>
+
     </div>
 
-        <!-- Bottom Navigator Bar -->
+    <!-- Bottom Navigation -->
     <div class="navbar">
-        <button onclick="window.location.href='home.html'" >All</button>
+        <button onclick="window.location.href='home.html'">All</button>
         <button>Alerts</button>
         <button>To-Dos</button>
         <button>Habits</button>
@@ -96,5 +121,9 @@
         <button class="current">Calendar</button>
         <button>☰</button>
     </div>
+
+    <script src="calendar-july.js"></script>
+
 </body>
+
 </html>
