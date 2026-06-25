@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <title>Ascendra - My Calendar</title>
-
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
     <link rel="stylesheet" href="calendar.css">
     <link rel="icon" type="image/x-icon" href="favicon.png">
 </head>
@@ -33,9 +33,17 @@
     <!-- Calendar -->
     <div class="calendar-container">
 
-        <div class="calendar-header" id="calender-header">
-            July 2026
-        </div>
+        <div class="top-title">
+    <h1>Calendar</h1>
+    <button class="addEvent">+ Add Event</button>
+</div>
+
+<div class="calendar-card">
+    <div class="calendar-header" id="calendar-header">
+        <span>‹</span>
+        <h2>July 2026</h2>
+        <span>›</span>
+    </div>
 
         <table>
 
@@ -114,11 +122,11 @@
     <!-- Bottom Navigation -->
     <div class="navbar">
         <button onclick="window.location.href='home.html'">All</button>
-        <button>Alerts</button>
-        <button>To-Dos</button>
-        <button>Habits</button>
-        <button>Breathing</button>
-        <button class="current">Calendar</button>
+        <button><i class="fa-regular fa-bell"></i><br>Alerts</button>
+        <button><i class="fa-solid fa-list-check"></i><br>To-Dos</button>
+        <button><i class="fa-regular fa-thumbs-up"></i><br>Habits</button>
+        <button><i class="fa-solid fa-wind"></i><br>Breathing</button>
+        <button><i class="fa-regular fa-calendar"></i><br>Calendar</button>
         <button>☰</button>
     </div>
 
