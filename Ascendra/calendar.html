@@ -4,24 +4,23 @@
 <head>
     <meta charset="utf-8">
     <title>Ascendra - My Calendar</title>
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
     <link rel="stylesheet" href="calendar.css">
+
     <link rel="icon" type="image/x-icon" href="favicon.png">
 </head>
 
 <body>
 
-    <!-- Sidebar -->
     <div class="sidebar">
         <h1><a class="ascendraLogo">Ascendra</a></h1>
-
         <p>Welcome back!</p>
 
-        <hr style="border: 0; border-top: 1px solid #eee; margin: 20px 0;">
+        <hr>
 
-        <h3 style="text-align: left; color: rgb(0, 128, 0);">
-            Today's Tasks
-        </h3>
+        <h3>Today's Tasks</h3>
 
         <ul class="task-list">
             <li>Plan my week</li>
@@ -30,98 +29,96 @@
         </ul>
     </div>
 
-    <!-- Calendar -->
     <div class="calendar-container">
 
         <div class="top-title">
-    <h1>Calendar</h1>
-    <button class="addEvent">+ Add Event</button>
-</div>
+            <h1>Calendar</h1>
+            <button class="addEvent">+ Add Event</button>
+        </div>
 
-<div class="calendar-card">
-    <div class="calendar-header" id="calendar-header">
-        <span>‹</span>
-        <h2>July 2026</h2>
-        <span>›</span>
+        <div class="calendar-card">
+            <div class="calendar-header">
+                <span>‹</span>
+                <h2>July 2026</h2>
+                <span>›</span>
+            </div>
+
+            <table>
+                <tr>
+                    <th>Sun</th>
+                    <th>Mon</th>
+                    <th>Tue</th>
+                    <th>Wed</th>
+                    <th>Thu</th>
+                    <th>Fri</th>
+                    <th>Sat</th>
+                </tr>
+
+                <tr>
+                    <td class="empty-day">28</td>
+                    <td class="empty-day">29</td>
+                    <td class="empty-day">30</td>
+                    <td id="day-1">1</td>
+                    <td id="day-2">2</td>
+                    <td id="day-3">3</td>
+                    <td id="day-4">4</td>
+                </tr>
+
+                <tr>
+                    <td id="day-5">5</td>
+                    <td id="day-6">6</td>
+                    <td id="day-7">7</td>
+                    <td id="day-8">8</td>
+                    <td id="day-9">9</td>
+                    <td id="day-10">10</td>
+                    <td id="day-11">11</td>
+                </tr>
+
+                <tr>
+                    <td id="day-12">12</td>
+                    <td id="day-13">13</td>
+                    <td id="day-14">14</td>
+                    <td id="day-15">15</td>
+                    <td id="day-16">16</td>
+                    <td id="day-17">17</td>
+                    <td id="day-18">18</td>
+                </tr>
+
+                <tr>
+                    <td id="day-19">19</td>
+                    <td id="day-20">20</td>
+                    <td id="day-21">21</td>
+                    <td id="day-22">22</td>
+                    <td id="day-23">23</td>
+                    <td id="day-24">24</td>
+                    <td id="day-25">25</td>
+                </tr>
+
+                <tr>
+                    <td id="day-26">26</td>
+                    <td id="day-27">27</td>
+                    <td id="day-28">28</td>
+                    <td id="day-29">29</td>
+                    <td id="day-30">30</td>
+                    <td id="day-31">31</td>
+                    <td class="empty-day">1</td>
+                </tr>
+            </table>
+        </div>
     </div>
 
-        <table>
+    <div id="eventPopup" class="popup">
+        <h2>New Event</h2>
 
-            <!-- Days of the Week -->
-            <tr>
-                <th>Sun</th>
-                <th>Mon</th>
-                <th>Tue</th>
-                <th>Wed</th>
-                <th>Thu</th>
-                <th>Fri</th>
-                <th>Sat</th>
-            </tr>
+        <input id="eventTitle" type="text" placeholder="Event name">
+        <input id="eventDate" type="text" placeholder="Choose date">
 
-            <!-- Week 1 -->
-            <tr>
-                <td class="empty-day">28</td>
-                <td class="empty-day">29</td>
-                <td class="empty-day">30</td>
-
-                <td id="day-1">1</td>
-                <td id="day-2">2</td>
-                <td id="day-3">3</td>
-                <td id="day-4">4</td>
-            </tr>
-
-            <!-- Week 2 -->
-            <tr>
-                <td id="day-5">5</td>
-                <td id="day-6">6</td>
-                <td id="day-7">7</td>
-                <td id="day-8">8</td>
-                <td id="day-9">9</td>
-                <td id="day-10">10</td>
-                <td id="day-11">11</td>
-            </tr>
-
-            <!-- Week 3 -->
-            <tr>
-                <td id="day-12">12</td>
-                <td id="day-13">13</td>
-                <td id="day-14">14</td>
-                <td id="day-15">15</td>
-                <td id="day-16">16</td>
-                <td id="day-17">17</td>
-                <td id="day-18">18</td>
-            </tr>
-
-            <!-- Week 4 -->
-            <tr>
-                <td id="day-19">19</td>
-                <td id="day-20">20</td>
-                <td id="day-21">21</td>
-                <td id="day-22">22</td>
-                <td id="day-23">23</td>
-                <td id="day-24">24</td>
-                <td id="day-25">25</td>
-            </tr>
-
-            <!-- Week 5 -->
-            <tr>
-                <td id="day-26">26</td>
-                <td id="day-27">27</td>
-                <td id="day-28">28</td>
-                <td id="day-29">29</td>
-                <td id="day-30">30</td>
-                <td id="day-31">31</td>
-
-                <td class="empty-day">1</td>
-            </tr>
-
-        </table>
-
+        <button id="saveEvent">Save</button>
+        <button id="closePopup">Close</button>
     </div>
 
-    <!-- Bottom Navigation -->
     <div class="navbar">
-        <button onclick="window.location.href='home.html'">All</button>
+        <button onclick="window.location.href='home.html'"><i class="fa-regular fa-house"></i><br>Home</button>
         <button><i class="fa-regular fa-bell"></i><br>Alerts</button>
         <button><i class="fa-solid fa-list-check"></i><br>To-Dos</button>
         <button><i class="fa-regular fa-thumbs-up"></i><br>Habits</button>
@@ -130,8 +127,8 @@
         <button>☰</button>
     </div>
 
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     <script src="calendar.js"></script>
 
 </body>
-
 </html>
