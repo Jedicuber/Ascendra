@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Handlee&display=swap');
 body {
     margin: 0;
     padding-bottom: 110px;
@@ -52,7 +53,7 @@ body {
     border-radius: 12px;
     background-color: rgb(235, 235, 235);
     cursor: pointer;
-    transition: background-color 0.2 ease, transfrom 0.2 ease;
+    transition: background-color 0.2s ease, transform 0.2s ease;
 }
 
 .date-button:hover:not(:disabled) {
@@ -95,6 +96,8 @@ textarea {
 textarea {
     height: 70px;
     resize: vertical;
+    font-family: "Handlee", cursive;
+    font-size: 20px;
 }
 
 #saveEntry {
