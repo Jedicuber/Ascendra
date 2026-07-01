@@ -28,3 +28,8 @@
 #main_paragraph a:hover {
     text-decoration: underline;
 }
+
+#subtitle1 {
+    color: lightblue;
+    background-color: rgb(255, 255, 0);
+}
