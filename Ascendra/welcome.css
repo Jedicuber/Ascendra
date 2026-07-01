@@ -12,6 +12,11 @@
 
     border-radius: 18px;
     box-shadow: 0 5px 16px rgba(0, 0, 0, 0.08);
+
+    /* Animation */
+    opacity: 0;
+    animation: fadeUp 0.8s ease forwards;
+    animation-delay: 0.6s;
 }
 
 .ascendra {
@@ -31,8 +36,56 @@
 
 #subtitle1 {
     color: lightblue;
+
+    /* Animation */
+    opacity: 0;
+    animation: fadeUp 0.8s ease forwards;
+    animation-delay: 0.3s;
+}
+
+h1 {
+    /* Animation */
+    animation: slideDown 0.8s ease;
+}
+
+h2 {
+    opacity: 0;
+    animation: fadeUp 0.8s ease forwards;
+    animation-delay: 0.9s;
+}
+
+.credits-link {
+    opacity: 0;
+    animation: fadeUp 0.8s ease forwards;
+    animation-delay: 1.2s;
 }
 
 #subtitle1 a:hover {
     background-color: rgb(255, 255, 0);
+}
+
+/* ---------- Animations ---------- */
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-40px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
