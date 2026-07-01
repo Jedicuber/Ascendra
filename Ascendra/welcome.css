@@ -1,3 +1,30 @@
-h1 .ascendra {
-    
+#main_paragraph {
+    max-width: 720px;
+    margin: 25px auto;
+    padding: 24px 30px;
+
+    background-color: white;
+    color: rgb(70, 70, 70);
+
+    font-size: 18px;
+    line-height: 1.7;
+    text-align: center;
+
+    border-radius: 18px;
+    box-shadow: 0 5px 16px rgba(0, 0, 0, 0.08);
+}
+
+.ascendra {
+    color: rgb(127, 0, 255);
+    font-size: 22px;
+}
+
+#main_paragraph a {
+    color: rgb(37, 99, 235);
+    font-weight: bold;
+    text-decoration: none;
+}
+
+#main_paragraph a:hover {
+    text-decoration: underline;
 }
