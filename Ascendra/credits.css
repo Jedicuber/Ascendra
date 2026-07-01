@@ -1,0 +1,56 @@
+body {
+    margin: 0;
+    background-color: rgb(240, 242, 246);
+    font-family: Arial, sans-serif;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+.credit-card {
+    width: 500px;
+    background: white;
+    padding: 35px;
+    border-radius: 20px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+h1 {
+    color: rgb(127, 0, 255);
+    margin-bottom: 5px;
+}
+
+.version {
+    color: gray;
+    margin-bottom: 25px;
+}
+
+h2 {
+    margin-top: 25px;
+    color: rgb(37, 99, 235);
+}
+
+p {
+    color: rgb(70, 70, 70);
+    line-height: 1.6;
+}
+
+hr {
+    border: none;
+    border-top: 1px solid rgb(225, 225, 225);
+    margin: 25px 0;
+}
+
+.quote {
+    font-style: italic;
+    color: gray;
+}
+
+.copyright {
+    margin-top: 20px;
+    color: rgb(140, 140, 140);
+    font-size: 14px;
+}
