@@ -1,3 +1,7 @@
+body {
+      text-align:center;
+      font-family: sans-serif;
+}
 .todo-container {
       max-width: 400px;
       margin: 50px auto;
