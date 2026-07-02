@@ -1,1 +1,11 @@
+body {
+  font-family: sans-serif;
+}
 
+#alert {
+  color: blue;
+}
+
+#subtitle2 {
+    color: rgb(0, 0, 137);
+}
