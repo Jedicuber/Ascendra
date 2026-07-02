@@ -6,3 +6,8 @@ body {
     text-decoration: underline;
     color: blue;
 }
+
+#menu_paragraph {
+    color: purple;
+    background-color: rgb(255, 255, 0);
+}
