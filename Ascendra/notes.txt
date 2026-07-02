@@ -24,7 +24,7 @@ Declan:
 "For alerts.html we need to finish the to-dos or projectsfirst before we do that."
 
 Reply:
-" "
+"btw, can you check if all of the css files had this line of code in the body: text-align: center;"
 
 ────────────────────────────────────────
 
