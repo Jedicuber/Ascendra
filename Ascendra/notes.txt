@@ -2,3 +2,22 @@ syntax error in home.html/js
 Jayden - please check alert.html for notes that I left behind | reply - kk
 Jayden - you can probally start making the game for kids | reply - I might do that afer we are done the actua app, we can make the kids version an update
 
+here is whats going to be in each version:
+Version	Focus
+v0.1	Calendar
+v0.2	Home page
+v0.3	Journal -------------------------
+v0.4	To-Dos
+v0.5	Habits
+v0.6	Breathing
+v0.7	Widgets
+v0.8	Themes/settings
+v0.9	Polish + bug fixes
+v1.0	First complete release
+v1.5	Night Mode 🌙
+v2.0	Time Capsule
+v2.5	Gamified XP/levels
+v3.0	Plugin/theme marketplace
+v4.0	Cloud sync + accounts
+v5.0	Mobile version
+vFINAL	Life companion app: everything feels polished, personal, and complete 
