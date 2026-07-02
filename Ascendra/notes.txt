@@ -1,3 +1,5 @@
 syntax error in home.html/js
 please check alert.html for notes that I left behind
 you can probally start making the game for kids
+
+- fix css in journal
