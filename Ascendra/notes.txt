@@ -1,5 +1,4 @@
 syntax error in home.html/js
-please check alert.html for notes that I left behind
-you can probally start making the game for kids
+Jayden - please check alert.html for notes that I left behind | reply - kk
+Jayden - you can probally start making the game for kids | reply - I might do that afer we are done the actua app, we can make the kids version an update
 
-- fix css in journal
