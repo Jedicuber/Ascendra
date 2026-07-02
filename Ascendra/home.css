@@ -1,3 +1,6 @@
+body {
+    font-family: sans-serif;
+}
 .navbar {
     position: fixed;
     bottom: 20px;
@@ -30,10 +33,13 @@
     color: white;
     border-radius: 25px;
 }
+
 #dailyProgress {
     overflow: auto;
 }
 
-menu_screen {
-    background-color: rgb(255, 255, 0);
+#menu {
+    color: red;
 }
+
+#
