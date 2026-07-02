@@ -11,5 +11,8 @@ body {
 }
 
 #alert_list {
-  color: red;
+    color: red;
+    width: 70%;
+    height: 400px;
+    overflow: auto;
 }
