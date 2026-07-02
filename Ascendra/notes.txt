@@ -1,1 +1,1 @@
-
+syntax error in home.html/js
