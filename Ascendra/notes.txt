@@ -11,13 +11,19 @@ Jayden:
 "Please check alert.html for notes that I left behind."
 
 Reply:
-kk
+"kk"
 
 Jayden:
 "You can probably start making the game for kids."
 
 Reply:
-I might do that after we are done the actual app. We can make the kids version in a future update.
+"I might do that after we are done the actual app. We can make the kids version in a future update."
+
+Declan:
+"For alerts.html we need to finish the to-dos or projectsfirst before we do that."
+
+Reply:
+" "
 
 ────────────────────────────────────────
 
