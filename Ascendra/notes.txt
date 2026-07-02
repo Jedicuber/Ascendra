@@ -31,9 +31,9 @@ Reply:
 
 v0.1   Calendar
 v0.2   Home Page
-v0.3   Journal
-v0.4   To-Dos
-v0.5   Habits
+v0.3   Journal 
+v0.4   To-Dos and Alerts
+v0.5   Habits 
 v0.6   Breathing
 v0.7   Widgets
 v0.8   Themes & Settings
