@@ -63,7 +63,8 @@ body {
 
 
 .date-button.today {
-    background-color: rgb(37, 99, 235);
+    background-color: rgb(143, 63, 216);
+    box-shadow: 0 5px 12px rgba(143, 63, 216, 0.4);
     color: white;
 }
 
