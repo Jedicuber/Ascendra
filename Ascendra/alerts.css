@@ -9,3 +9,7 @@ body {
 #subtitle2 {
     color: rgb(173, 216, 230);
 }
+
+#alert_list {
+  color: red;
+}
