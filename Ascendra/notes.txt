@@ -1,27 +1,97 @@
-syntax error in home.html/js
-Jayden - please check alert.html for notes that I left behind | reply - kk
-Jayden - you can probally start making the game for kids | reply - I might do that afer we are done the actua app, we can make the kids version an update
+📌 Ascendra Development Notes
 
-here is whats going to be in each version:
-Version	Focus
-v0.1	Calendar
-v0.2	Home page
-v0.3	Journal -------------------------
-v0.4	To-Dos
-v0.5	Habits
-v0.6	Breathing
-v0.7	Widgets
-v0.8	Themes/settings
-v0.9	Polish + bug fixes
-v1.0	First complete release
-v1.5	Night Mode 🌙
-v2.0	Time Capsule
-v2.5	Gamified XP/levels
-v3.0	Plugin/theme marketplace
-v4.0	Cloud sync + accounts
-v5.0	Mobile version
-vFINAL	Life companion app: everything feels polished, personal, and complete 
+🐞 Current Tasks
+- Finish home.html with css and js
 
-Courses:
-JS Course: https://www.youtube.com/watch?v=EerdGm-ehJQ
-HTML/CSS Course: https://www.youtube.com/watch?v=G3e-cpL7ofc&t=58s
+────────────────────────────────────────
+
+💬 Messeges
+
+Jayden:
+"Please check alert.html for notes that I left behind."
+
+Reply:
+kk
+
+Jayden:
+"You can probably start making the game for kids."
+
+Reply:
+I might do that after we are done the actual app. We can make the kids version in a future update.
+
+────────────────────────────────────────
+
+🚀 Version Roadmap
+
+v0.1   Calendar
+v0.2   Home Page
+v0.3   Journal
+v0.4   To-Dos
+v0.5   Habits
+v0.6   Breathing
+v0.7   Widgets
+v0.8   Themes & Settings
+v0.9   Polish + Bug Fixes
+v1.0   🎉 First Complete Release
+v1.5   🌙 Night Mode
+v2.0   Time Capsule
+v2.5   Gamified XP / Levels
+v3.0   Plugin & Theme Marketplace
+v4.0   Cloud Sync + Accounts
+v5.0   Mobile Version
+vFINAL 🌟 Life companion app: everything feels polished, personal, and complete.
+
+────────────────────────────────────────
+
+📚 Courses
+
+JavaScript (SuperSimpleDev)
+https://www.youtube.com/watch?v=EerdGm-ehJQ
+
+HTML & CSS (SuperSimpleDev)
+https://www.youtube.com/watch?v=G3e-cpL7ofc&t=58s
+
+MDN Web Docs (Professional Documentation)
+https://developer.mozilla.org/
+
+JavaScript.info (Excellent JavaScript Guide)
+https://javascript.info/
+
+freeCodeCamp
+https://www.freecodecamp.org/learn
+
+Scrimba Frontend Course
+https://scrimba.com/learn/frontend
+
+Codecademy Web Development
+https://www.codecademy.com/catalog/subject/web-development
+
+Kevin Powell (CSS YouTube)
+https://www.youtube.com/@KevinPowell
+
+Web Dev Simplified (YouTube)
+https://www.youtube.com/@WebDevSimplified
+
+Bro Code (YouTube)
+https://www.youtube.com/@BroCodez
+
+Frontend Mentor (Practice Projects)
+https://www.frontendmentor.io/
+
+CodePen (Experiment with HTML/CSS/JS)
+https://codepen.io/
+
+JSFiddle
+https://jsfiddle.net/
+
+CSS Tricks
+https://css-tricks.com/
+
+GitHub Skills
+https://skills.github.com/
+
+Git Handbook
+https://guides.github.com/introduction/git-handbook/
+
+────────────────────────────────────────
+
