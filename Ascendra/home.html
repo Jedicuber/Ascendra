@@ -7,15 +7,14 @@
 <body>
     <!-- Widgets -->
 
-    <div class="widgets">
-        <button onclick="calender">Calender<br>
-        <ul>
-            <li>Meet with my friend</li>
-            <li>Code HTML/CSS</li>
-            <li>Plan my week</li>
-        </ul>
-        </button>
-    </div>
+ <div class="widgets">
+    <button class="calendar-widget" onclick="calendar()">
+        Calendar<br>
+        <strong>Upcoming Events</strong>
+        <div id="upcomingEvents"></div>
+    </button>
+</div>
+
     
     <!-- Bottom Navigator Bar -->
     <div class="navbar">
@@ -23,11 +22,12 @@
         <button><i class="fa-regular fa-bell"></i><br>Alerts</button>
         <button><i class="fa-solid fa-list-check"></i><br>To-Dos</button>
         <button><i class="fa-regular fa-thumbs-up"></i><br>Habits</button>
-        <button><i class="fa-solid fa-wind"></i> settings <!--for changing color scheme--></button>
+        <button><i class="fa-solid fa-wind"></i> Breathing</button>
         <button onclick="window.location.href='calendar.html'"><i class="fa-regular fa-calendar"></i><br>Calendar</button>
         <button onclick="window.location.href='journal.html'"><i class="fa-solid fa-book-open"></i><br>Journal</button>
          <button><i class="fa-solid fa-bars-staggered"></i><br>Menu</button>
 
-        <script href="home.js"></script>
+        <script src="home.js"></script>
 </body>
 </html>
+
