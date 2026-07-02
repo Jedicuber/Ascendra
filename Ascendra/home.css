@@ -43,9 +43,13 @@ body {
 }
 
 #alerts {
-    color: darkblue:
+    color: darkblue;
 }
 
-# {
-    
+#todos {
+    color: lightpurple;
+}
+
+#projects {
+    color: purple;
 }
