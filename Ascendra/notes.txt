@@ -3,7 +3,7 @@
 🐞 Current Tasks
 - Finish home.html with css and js
 - Need to add Navigation bar to todo.html
-
+- Note: Declan makes js and adds navigation bar
 ────────────────────────────────────────
 
 💬 Messeges
