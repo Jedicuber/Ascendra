@@ -21,3 +21,7 @@ v3.0	Plugin/theme marketplace
 v4.0	Cloud sync + accounts
 v5.0	Mobile version
 vFINAL	Life companion app: everything feels polished, personal, and complete 
+
+Courses:
+JS Course: https://www.youtube.com/watch?v=EerdGm-ehJQ
+HTML/CSS Course: https://www.youtube.com/watch?v=G3e-cpL7ofc&t=58s
