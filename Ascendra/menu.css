@@ -1,1 +1,8 @@
+body {
+    font-family: sans-serif;
+}
 
+#menu {
+    text-decoration: underline;
+    color: blue;
+}
