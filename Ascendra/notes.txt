@@ -48,6 +48,9 @@ Jayden:
 
 Jayden:
 "I deleted the button in the home page since calendar is already in the navbar"
+
+Jayden:
+"I'm going to delete menu and change it into settings"
 ────────────────────────────────────────
 
 🚀 Version Roadmap
