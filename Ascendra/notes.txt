@@ -29,6 +29,9 @@ Jayden:
 
 Jayden:
 "you should make the favicon a moose since we are Canadian"
+
+Jayden:
+"Im going to make a picture in the home page with js"
 ────────────────────────────────────────
 
 🚀 Version Roadmap
