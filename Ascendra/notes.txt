@@ -37,8 +37,17 @@ Jayden:
 Declan:
 "Why cant we just add css into home.html to make it look good?"
 
+Reply:
+"because you can animate the picture"
+
 Declan:
 "for alerts.html we have to grab the todos and the duedates from ascendra todos"
+
+Jayden:
+"then we can basically delete the alerts function in the navbar"
+
+Jayden:
+"I deleted the button in the home page since calendar is already in the navbar"
 ────────────────────────────────────────
 
 🚀 Version Roadmap
