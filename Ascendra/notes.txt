@@ -27,8 +27,8 @@ Declan:
 Jayden:
 "btw, can you check if all of the css files had this line of code in the body: text-align: center;"
 
-Reply:
-""
+Jayden:
+"you should make the favicon a moose since we are Canadian"
 ────────────────────────────────────────
 
 🚀 Version Roadmap
