@@ -1,3 +1,6 @@
+WHY IS A CALENDAR.JS THING CALLED HOME.JS!?
+
+
 📌 Ascendra Development Notes
 
 🐞 Current Tasks
