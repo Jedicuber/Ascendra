@@ -1,6 +1,45 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset-"UTF-8">
-        <link ref="stylesheet" href="habits.css">
-    </head>
+<head>
+     <meta charset="UTF-8">
+     <link ref="stylesheet" href="habits.css">
+     <title>Habits</title>
+</head>
+<body>
+    <h1 id=habits">Habits</h1>
+    <h5 id="subtitle3">to keep things up</h5>
+    <div class="habit-tracker">
+        <form id="habit-form">
+            <!-- Habit Row 1: Text Input + Days of the week -->
+          <div class="habit-row">
+              <input type="text" value="Drink 3L Water" class="habit-name" placeholder="Enter habit...">
+      
+              <div class="days-container">
+              <label><input type="checkbox" name="habit1-mon"> <span>M</span></label>
+              <label><input type="checkbox" name="habit1-tue"> <span>T</span></label>
+              <label><input type="checkbox" name="habit1-wed"> <span>W</span></label>
+              <label><input type="checkbox" name="habit1-thu"> <span>T</span></label>
+              <label><input type="checkbox" name="habit1-fri"> <span>F</span></label>
+              <label><input type="checkbox" name="habit1-sat"> <span>S</span></label>
+              <label><input type="checkbox" name="habit1-sun"> <span>S</span></label>
+              </div>
+          </div>
+
+    <!-- Habit Row 2: Numeric/Counter Input -->
+    <div class="habit-row">
+      <input type="text" value="Read Books" class="habit-name">
+      
+      <div class="counter-container">
+        <label for="pages-count">Pages Read:</label>
+        <input type="number" id="pages-count" min="0" max="500" value="0">
+        <span class="goal">/ 20</span>
+      </div>
+    </div>
+
+    <!-- Submit/Save Button -->
+    <button type="submit" class="save-btn">Save Progress</button>
+  </form>
+</div>
+
+</body>
+</html>
