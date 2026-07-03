@@ -2,30 +2,55 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Habit Tracker</title>
+    <title>Ascendra - Habits</title>
     <link rel="stylesheet" href="habits.css">
+     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
 </head>
 <body>
 
-<div class="container">
-
     <h1>Habit Tracker</h1>
+    <h5>Build better routines</h5>
 
-    <div class="input-area">
-        <input
-            type="text"
-            id="habitInput"
-            placeholder="Enter a new habit..."
-            maxlength="50">
-
-        <button id="addHabitBtn">Add Habit</button>
-    </div>
+    <button id="addHabitBtn">+ Add Habit</button>
 
     <div id="habitList"></div>
 
+    <!-- Popup -->
+ <div class="navbar">
+    <button onclick="window.location.href='home.html'">
+        <i class="fa-solid fa-mug-saucer"></i><br>Home
+    </button>
+
+    <button onclick="window.location.href='alert.html'">
+        <i class="fa-regular fa-bell"></i><br>Alerts
+    </button>
+
+    <button onclick="window.location.href='todos.html'">
+        <i class="fa-solid fa-list-check"></i><br>To-Dos
+    </button>
+
+    <button class="current">
+        <i class="fa-regular fa-thumbs-up"></i><br>Habits
+    </button>
+
+    <button onclick="window.location.href='breathing.html'">
+        <i class="fa-solid fa-wind"></i><br>Breathing
+    </button>
+
+    <button onclick="window.location.href='calendar.html'">
+        <i class="fa-regular fa-calendar"></i><br>Calendar
+    </button>
+
+    <button onclick="window.location.href='journal.html'">
+        <i class="fa-solid fa-book-open"></i><br>Journal
+    </button>
+
+    <button>
+        <i class="fa-solid fa-bars-staggered"></i><br>Menu
+    </button>
 </div>
 
-<script src="habit.js"></script>
+    <script src="habits.js"></script>
 
 </body>
 </html>
