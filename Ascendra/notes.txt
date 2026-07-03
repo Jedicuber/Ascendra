@@ -33,6 +33,9 @@ Jayden:
 
 Jayden:
 "Im going to make a picture in the home page with js"
+
+Declan:
+"Why cant we just add css into home.html to make it look good?"
 ────────────────────────────────────────
 
 🚀 Version Roadmap
