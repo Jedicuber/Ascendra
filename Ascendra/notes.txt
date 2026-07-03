@@ -36,6 +36,9 @@ Jayden:
 
 Declan:
 "Why cant we just add css into home.html to make it look good?"
+
+Declan:
+"btw why does alerts.html use blue, not purple, have you not recognized the theme yet"
 ────────────────────────────────────────
 
 🚀 Version Roadmap
