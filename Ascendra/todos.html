@@ -1,57 +1,42 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" href="todos.css">
     <title>Ascendra - To-Dos</title>
+    <link rel="stylesheet" href="todos.css">
 </head>
-
 <body>
 
-    <h1 id="todo_list">Todo List</h1>
+    <h1 id="todo_list">To-Dos</h1>
     <h5 id="subtitle3">For better task management</h5>
 
-    <div class="todo-container">
+    <button id="add-btn">+ Add Task</button>
 
-        <div class="input-group">
-            <button id="add-btn">Add Task</button>
-        </div>
-
-        <ul id="todo-list"></ul>
-
-    </div>
+    <div id="todo-list"></div>
 
     <!-- Popup -->
     <div id="popup" class="popup">
-
-        <div class="popup-content">
-
+        <div class="popup-box">
             <h2>Add Task</h2>
 
-            <input
-                type="text"
-                id="todo-input"
-                placeholder="Enter your task..."
-            >
+            <input id="task-input" type="text" placeholder="Task name">
+            <input id="date-input" type="date">
 
             <br><br>
 
             <button id="save-btn">Save</button>
             <button id="cancel-btn">Cancel</button>
-
         </div>
-
     </div>
 
     <script>
-
-        const popup = document.getElementById("popup");
         const addBtn = document.getElementById("add-btn");
+        const popup = document.getElementById("popup");
         const saveBtn = document.getElementById("save-btn");
         const cancelBtn = document.getElementById("cancel-btn");
 
-        const todoInput = document.getElementById("todo-input");
+        const taskInput = document.getElementById("task-input");
+        const dateInput = document.getElementById("date-input");
         const todoList = document.getElementById("todo-list");
 
         let todos = JSON.parse(localStorage.getItem("todos")) || [];
@@ -60,94 +45,70 @@
             localStorage.setItem("todos", JSON.stringify(todos));
         }
 
-        function displayTodos() {
-
+        function showTodos() {
             todoList.innerHTML = "";
 
-            todos.forEach((todo, index) => {
+            todos.forEach(todo => {
+                const card = document.createElement("div");
+                card.classList.add("todo-card");
 
-                const li = document.createElement("li");
+                card.innerHTML = `
+                    <div class="todo-info">
+                        <div class="todo-title">${todo.task}</div>
+                        <div class="todo-date">Due: ${todo.date}</div>
+                    </div>
 
-                li.textContent = todo;
+                    <button class="delete-btn">🗑️</button>
+                `;
 
-                const deleteBtn = document.createElement("button");
+                const deleteBtn = card.querySelector(".delete-btn");
 
-                deleteBtn.textContent = "✖";
-
-                deleteBtn.style.marginLeft = "10px";
-
-                deleteBtn.onclick = function () {
-
-                    todos.splice(index, 1);
-
+                deleteBtn.onclick = () => {
+                    todos = todos.filter(t => t.id !== todo.id);
                     saveTodos();
-
-                    displayTodos();
-
+                    showTodos();
                 };
 
-                li.appendChild(deleteBtn);
-
-                todoList.appendChild(li);
-
+                todoList.appendChild(card);
             });
-
         }
 
-        addBtn.onclick = function () {
-
+        addBtn.onclick = () => {
             popup.style.display = "block";
-
-            todoInput.focus();
-
+            taskInput.focus();
         };
 
-        cancelBtn.onclick = function () {
-
+        cancelBtn.onclick = () => {
             popup.style.display = "none";
-
-            todoInput.value = "";
-
+            taskInput.value = "";
+            dateInput.value = "";
         };
 
-        saveBtn.onclick = function () {
+        saveBtn.onclick = () => {
+            const task = taskInput.value.trim();
+            const date = dateInput.value;
 
-            const task = todoInput.value.trim();
-
-            if (task === "") {
-
-                alert("Please enter a task!");
-
+            if (task === "" || date === "") {
+                alert("Add a task and due date first!");
                 return;
-
             }
 
-            todos.push(task);
+            todos.push({
+                id: Date.now(),
+                task: task,
+                date: date
+            });
 
             saveTodos();
-
-            displayTodos();
+            showTodos();
 
             popup.style.display = "none";
-
-            todoInput.value = "";
-
+            taskInput.value = "";
+            dateInput.value = "";
         };
 
-        todoInput.addEventListener("keypress", function (e) {
-
-            if (e.key === "Enter") {
-
-                saveBtn.click();
-
-            }
-
-        });
-
-        displayTodos();
-
+        showTodos();
     </script>
 
 </body>
-
 </html>
