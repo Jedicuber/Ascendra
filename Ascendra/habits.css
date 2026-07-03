@@ -1,1 +1,68 @@
+body{
+    font-family: Arial, sans-serif;
+    background:#f2f4f8;
+}
 
+.container{
+    width:700px;
+    margin:40px auto;
+}
+
+h1{
+    text-align:center;
+}
+
+.input-area{
+    display:flex;
+    gap:10px;
+    margin-bottom:20px;
+}
+
+#habitInput{
+    flex:1;
+    padding:10px;
+    font-size:16px;
+}
+
+button{
+    padding:10px 18px;
+    background:#003399;
+    color:white;
+    border:none;
+    border-radius:5px;
+    cursor:pointer;
+}
+
+button:hover{
+    background:#002266;
+}
+
+.habit{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+
+    background:white;
+
+    padding:15px;
+
+    margin-bottom:10px;
+
+    border-radius:8px;
+}
+
+.left{
+    display:flex;
+    align-items:center;
+    gap:10px;
+}
+
+.right{
+    display:flex;
+    gap:10px;
+}
+
+.completed{
+    text-decoration:line-through;
+    color:gray;
+}
