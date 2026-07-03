@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <title>Ascendra - To-Dos</title>
     <link rel="stylesheet" href="todos.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
 </head>
 <body>
 
@@ -28,6 +29,17 @@
             <button id="cancel-btn">Cancel</button>
         </div>
     </div>
+
+   <div class="navbar">
+    <button onclick="window.location.href='home.html'"><i class="fa-solid fa-mug-saucer"></i><br>Home</button>
+    <button onclick="window.location.href='alert.html'"><i class="fa-regular fa-bell"></i><br>Alerts</button>
+    <button class="current"><i class="fa-solid fa-list-check"></i><br>To-Dos</button>
+    <button><i class="fa-regular fa-thumbs-up"></i><br>Habits</button>
+    <button><i class="fa-solid fa-wind"></i><br>Settings</button>
+    <button onclick="window.location.href='calendar.html'"><i class="fa-regular fa-calendar"></i><br>Calendar</button>
+    <button onclick="window.location.href='journal.html'"><i class="fa-solid fa-book-open"></i><br>Journal</button>
+    <button><i class="fa-solid fa-bars-staggered"></i><br>Menu</button>
+</div>
 
     <script>
         const addBtn = document.getElementById("add-btn");
