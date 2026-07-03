@@ -102,6 +102,9 @@ td {
     color: rgb(31, 22, 46);
     cursor: pointer;
     border: none;
+    width: 14%;
+    height: 90px;
+    vertical-align: top;
 }
 
 td:hover {
@@ -167,6 +170,7 @@ td:hover {
 .navbar .current {
     background-color: rgb(37, 99, 235);
     color: white;
+    border-radius: 25px;
 }
 
 
@@ -205,4 +209,10 @@ td:hover {
     color: white;
     border-radius: 8px;
     font-size: 12px;
+    line-height: 1.2;
+    white-space: normal;
+    overflow-wrap: break-word;
+    word-break: break-word;
+    max-width: 100%;
+    display: block;
 }
