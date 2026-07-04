@@ -51,6 +51,9 @@ Jayden:
 
 Jayden:
 "I'm going to delete menu and change it into settings"
+
+Reply:
+"I was planning on having the menu hold other feeatures other then the ones in the navbar. the less important ones like app blocking or alarms"
 ────────────────────────────────────────
 
 🚀 Version Roadmap
