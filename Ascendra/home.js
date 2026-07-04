@@ -7,6 +7,7 @@ function setup() {
 }
 
 function draw() {
+    noStroke();
     background(255, 255, 0);
 
     // main head
@@ -14,5 +15,5 @@ function draw() {
     ellipse(x, y, 250, 250);
 
     //ears
-    triangle()
+    triangle(110, 140, 110, 50, 165, 85)
 }
