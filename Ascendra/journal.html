@@ -4,18 +4,13 @@
     <meta charset="utf-8">
     <title>Ascendra - Journal</title>
 
-    <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
 
-    <!-- Google Font -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Handlee&display=swap" rel="stylesheet">
 
-    <!-- Your CSS -->
     <link rel="stylesheet" href="journal.css">
-
-    <!-- Favicon -->
     <link rel="icon" type="image/x-icon" href="favicon.png">
 </head>
 
@@ -30,7 +25,13 @@
         <div class="journal-layout">
 
             <div class="date-grid-card">
-                <h2 id="monthTitle">Month</h2>
+
+                <div class="mini-calendar-header">
+                    <button id="prevMonth">‹</button>
+                    <h2 id="monthTitle">Month</h2>
+                    <button id="nextMonth">›</button>
+                </div>
+
                 <div id="dateGrid" class="date-grid"></div>
             </div>
 
@@ -79,4 +80,4 @@
     <script src="journal.js"></script>
 
 </body>
-</html>
+</html>>
