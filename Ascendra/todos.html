@@ -34,93 +34,115 @@
     <button onclick="window.location.href='home.html'"><i class="fa-solid fa-mug-saucer"></i><br>Home</button>
     <button onclick="window.location.href='alerts.html'"><i class="fa-regular fa-bell"></i><br>Alerts</button>
     <button class="current"><i class="fa-solid fa-list-check"></i><br>To-Dos</button>
-    <button><i class="fa-regular fa-thumbs-up"></i><br>Habits</button>
+    <button onclick="window.location.href='habits.html'"><i class="fa-regular fa-thumbs-up"></i><br>Habits</button>
     <button><i class="fa-solid fa-wind"></i><br>Breathing</button>
     <button onclick="window.location.href='calendar.html'"><i class="fa-regular fa-calendar"></i><br>Calendar</button>
     <button onclick="window.location.href='journal.html'"><i class="fa-solid fa-book-open"></i><br>Journal</button>
     <button><i class="fa-solid fa-bars-staggered"></i><br>Menu</button>
 </div>
+<script>
+    const addBtn = document.getElementById("add-btn");
+    const popup = document.getElementById("popup");
+    const saveBtn = document.getElementById("save-btn");
+    const cancelBtn = document.getElementById("cancel-btn");
 
-    <script>
-        const addBtn = document.getElementById("add-btn");
-        const popup = document.getElementById("popup");
-        const saveBtn = document.getElementById("save-btn");
-        const cancelBtn = document.getElementById("cancel-btn");
+    const taskInput = document.getElementById("task-input");
+    const dateInput = document.getElementById("date-input");
+    const todoList = document.getElementById("todo-list");
 
-        const taskInput = document.getElementById("task-input");
-        const dateInput = document.getElementById("date-input");
-        const todoList = document.getElementById("todo-list");
+    let todos = JSON.parse(localStorage.getItem("todos")) || [];
 
-        let todos = JSON.parse(localStorage.getItem("todos")) || [];
+    function saveTodos() {
+        localStorage.setItem("todos", JSON.stringify(todos));
+    }
 
-        function saveTodos() {
-            localStorage.setItem("todos", JSON.stringify(todos));
+    function showTodos() {
+        todoList.innerHTML = "";
+
+        if (todos.length === 0) {
+            todoList.innerHTML = "<p>No tasks yet</p>";
+            return;
         }
 
-        function showTodos() {
-            todoList.innerHTML = "";
+        todos.forEach(todo => {
+            const card = document.createElement("div");
+            card.classList.add("todo-card");
 
-            todos.forEach(todo => {
-                const card = document.createElement("div");
-                card.classList.add("todo-card");
-
-                card.innerHTML = `
-                    <div class="todo-info">
-                        <div class="todo-title">${todo.task}</div>
-                        <div class="todo-date">Due: ${todo.date}</div>
-                    </div>
-
-                    <button class="delete-btn">🗑️</button>
-                `;
-
-                const deleteBtn = card.querySelector(".delete-btn");
-
-                deleteBtn.onclick = () => {
-                    todos = todos.filter(t => t.id !== todo.id);
-                    saveTodos();
-                    showTodos();
-                };
-
-                todoList.appendChild(card);
-            });
-        }
-
-        addBtn.onclick = () => {
-            popup.style.display = "block";
-            taskInput.focus();
-        };
-
-        cancelBtn.onclick = () => {
-            popup.style.display = "none";
-            taskInput.value = "";
-            dateInput.value = "";
-        };
-
-        saveBtn.onclick = () => {
-            const task = taskInput.value.trim();
-            const date = dateInput.value;
-
-            if (task === "" || date === "") {
-                alert("Add a task and due date first!");
-                return;
+            if (todo.completed) {
+                card.classList.add("completed");
             }
 
-            todos.push({
-                id: Date.now(),
-                task: task,
-                date: date
-            });
+            card.innerHTML = `
+                <div class="todo-info">
+                    <div class="todo-title">
+                        ${todo.completed ? "✅" : "⬜"} ${todo.task}
+                    </div>
+                    <div class="todo-date">Due: ${todo.date}</div>
+                </div>
 
-            saveTodos();
-            showTodos();
+                <button class="complete-btn">
+                    ${todo.completed ? "Undo" : "Done"}
+                </button>
 
-            popup.style.display = "none";
-            taskInput.value = "";
-            dateInput.value = "";
-        };
+                <button class="delete-btn">🗑️</button>
+            `;
 
+            const completeBtn = card.querySelector(".complete-btn");
+            const deleteBtn = card.querySelector(".delete-btn");
+
+            completeBtn.onclick = () => {
+                todo.completed = !todo.completed;
+                saveTodos();
+                showTodos();
+            };
+
+            deleteBtn.onclick = () => {
+                todos = todos.filter(t => t.id !== todo.id);
+                saveTodos();
+                showTodos();
+            };
+
+            todoList.appendChild(card);
+        });
+    }
+
+    addBtn.onclick = () => {
+        popup.style.display = "block";
+        taskInput.focus();
+    };
+
+    cancelBtn.onclick = () => {
+        popup.style.display = "none";
+        taskInput.value = "";
+        dateInput.value = "";
+    };
+
+    saveBtn.onclick = () => {
+        const task = taskInput.value.trim();
+        const date = dateInput.value;
+
+        if (task === "" || date === "") {
+            alert("Add a task and due date first!");
+            return;
+        }
+
+        todos.push({
+            id: Date.now(),
+            task: task,
+            date: date,
+            completed: false
+        });
+
+        saveTodos();
         showTodos();
-    </script>
+
+        popup.style.display = "none";
+        taskInput.value = "";
+        dateInput.value = "";
+    };
+
+    showTodos();
+</script>
 
 </body>
 </html>
