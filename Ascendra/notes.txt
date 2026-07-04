@@ -57,6 +57,9 @@ Reply:
 
 Declan:
 "just saying, im probably going to delete that fox you made, it look s pretty cool tho but it tsakes up a lot of space. and that is what users are going to see first"
+
+Declan:
+"just make sure at the beginning of each file there is <meta name="viewport" content="width=device-width, initial-scale=1.0">"
 ────────────────────────────────────────
 
 🚀 Version Roadmap
