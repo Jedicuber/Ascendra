@@ -36,77 +36,29 @@
             <button class="addEvent">+ Add Event</button>
         </div>
 
-        <div class="calendar-card">
-            <div class="calendar-header">
-                <span>‹</span>
-                <h2>July 2026</h2>
-                <span>›</span>
-            </div>
-
-            <table>
-                <tr>
-                    <th>Sun</th>
-                    <th>Mon</th>
-                    <th>Tue</th>
-                    <th>Wed</th>
-                    <th>Thu</th>
-                    <th>Fri</th>
-                    <th>Sat</th>
-                </tr>
-
-                <tr>
-                    <td class="empty-day">28</td>
-                    <td class="empty-day">29</td>
-                    <td class="empty-day">30</td>
-                    <td id="day-1">1</td>
-                    <td id="day-2">2</td>
-                    <td id="day-3">3</td>
-                    <td id="day-4">4</td>
-                </tr>
-
-                <tr>
-                    <td id="day-5">5</td>
-                    <td id="day-6">6</td>
-                    <td id="day-7">7</td>
-                    <td id="day-8">8</td>
-                    <td id="day-9">9</td>
-                    <td id="day-10">10</td>
-                    <td id="day-11">11</td>
-                </tr>
-
-                <tr>
-                    <td id="day-12">12</td>
-                    <td id="day-13">13</td>
-                    <td id="day-14">14</td>
-                    <td id="day-15">15</td>
-                    <td id="day-16">16</td>
-                    <td id="day-17">17</td>
-                    <td id="day-18">18</td>
-                </tr>
-
-                <tr>
-                    <td id="day-19">19</td>
-                    <td id="day-20">20</td>
-                    <td id="day-21">21</td>
-                    <td id="day-22">22</td>
-                    <td id="day-23">23</td>
-                    <td id="day-24">24</td>
-                    <td id="day-25">25</td>
-                </tr>
-
-                <tr>
-                    <td id="day-26">26</td>
-                    <td id="day-27">27</td>
-                    <td id="day-28">28</td>
-                    <td id="day-29">29</td>
-                    <td id="day-30">30</td>
-                    <td id="day-31">31</td>
-                    <td class="empty-day">1</td>
-                </tr>
-            </table>
-        </div>
+<div class="calendar-card">
+    <div class="calendar-header">
+        <span id="prevMonth">‹</span>
+        <h2></h2>
+        <span id="nextMonth">›</span>
     </div>
 
+    <table>
+        <thead>
+            <tr>
+                <th>Sun</th>
+                <th>Mon</th>
+                <th>Tue</th>
+                <th>Wed</th>
+                <th>Thu</th>
+                <th>Fri</th>
+                <th>Sat</th>
+            </tr>
+        </thead>
+
+        <tbody id="calendarBody"></tbody>
+    </table>
+</div>
     <div id="eventPopup" class="popup">
         <h2>New Event</h2>
 
