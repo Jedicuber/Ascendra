@@ -1,8 +1,12 @@
 const today = new Date();
 
-const currentDay = today.getDate();
-const currentMonth = today.getMonth();
-const currentYear = today.getFullYear();
+const todayDay = today.getDate();
+const todayMonth = today.getMonth();
+const todayYear = today.getFullYear();
+
+let currentMonth = todayMonth;
+let currentYear = todayYear;
+let selectedDay = todayDay;
 
 const monthNames = [
     "January", "February", "March", "April", "May", "June",
@@ -13,6 +17,9 @@ const monthTitle = document.getElementById("monthTitle");
 const dateGrid = document.getElementById("dateGrid");
 const entryTitle = document.getElementById("entryTitle");
 
+const prevMonth = document.getElementById("prevMonth");
+const nextMonth = document.getElementById("nextMonth");
+
 const mood = document.getElementById("mood");
 const dayText = document.getElementById("dayText");
 const gratefulText = document.getElementById("gratefulText");
@@ -22,12 +29,23 @@ const goalText = document.getElementById("goalText");
 const saveEntry = document.getElementById("saveEntry");
 const statusMessage = document.getElementById("statusMessage");
 
-let selectedDay = currentDay;
-
-monthTitle.textContent = `${monthNames[currentMonth]} ${currentYear}`;
-
 function getEntryKey(day) {
     return `journal-${currentYear}-${currentMonth + 1}-${day}`;
+}
+
+function isFutureDate(day) {
+    const date = new Date(currentYear, currentMonth, day);
+    const todayDate = new Date(todayYear, todayMonth, todayDay);
+
+    return date > todayDate;
+}
+
+function isTodayDate(day) {
+    return (
+        day === todayDay &&
+        currentMonth === todayMonth &&
+        currentYear === todayYear
+    );
 }
 
 function loadEntry(day) {
@@ -36,7 +54,7 @@ function loadEntry(day) {
     const key = getEntryKey(day);
     const entry = JSON.parse(localStorage.getItem(key));
 
-    entryTitle.textContent = `Entry for ${monthNames[currentMonth]} ${day}`;
+    entryTitle.textContent = `Entry for ${monthNames[currentMonth]} ${day}, ${currentYear}`;
 
     if (entry) {
         mood.value = entry.mood;
@@ -52,23 +70,31 @@ function loadEntry(day) {
         goalText.value = "";
     }
 
-    const isToday = day === currentDay;
+    const canEdit = isTodayDate(day);
 
-    mood.disabled = !isToday;
-    dayText.disabled = !isToday;
-    gratefulText.disabled = !isToday;
-    learnText.disabled = !isToday;
-    goalText.disabled = !isToday;
-    saveEntry.style.display = isToday ? "block" : "none";
+    mood.disabled = !canEdit;
+    dayText.disabled = !canEdit;
+    gratefulText.disabled = !canEdit;
+    learnText.disabled = !canEdit;
+    goalText.disabled = !canEdit;
 
-    statusMessage.textContent = isToday ? "" : "Past entries are read-only.";
+    saveEntry.style.display = canEdit ? "block" : "none";
+    statusMessage.textContent = canEdit ? "" : "Past entries are read-only.";
 }
 
 function buildDateGrid() {
+    dateGrid.innerHTML = "";
+    monthTitle.textContent = `${monthNames[currentMonth]} ${currentYear}`;
+
     const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
+
+    if (selectedDay > daysInMonth) {
+        selectedDay = daysInMonth;
+    }
 
     for (let day = 1; day <= daysInMonth; day++) {
         const button = document.createElement("button");
+
         button.textContent = day;
         button.classList.add("date-button");
 
@@ -78,22 +104,65 @@ function buildDateGrid() {
             button.classList.add("has-entry");
         }
 
-        if (day === currentDay) {
+        if (isTodayDate(day)) {
             button.classList.add("today");
         }
 
-        if (day > currentDay) {
+        if (day === selectedDay) {
+            button.classList.add("selected-day");
+        }
+
+        if (isFutureDate(day)) {
             button.classList.add("future");
             button.disabled = true;
         } else {
             button.addEventListener("click", function () {
                 loadEntry(day);
+                buildDateGrid();
             });
         }
 
         dateGrid.appendChild(button);
     }
 }
+
+prevMonth.onclick = function () {
+    currentMonth--;
+
+    if (currentMonth < 0) {
+        currentMonth = 11;
+        currentYear--;
+    }
+
+    selectedDay = 1;
+    buildDateGrid();
+    loadEntry(selectedDay);
+};
+
+nextMonth.onclick = function () {
+    currentMonth++;
+
+    if (currentMonth > 11) {
+        currentMonth = 0;
+        currentYear++;
+    }
+
+    selectedDay = 1;
+    buildDateGrid();
+
+    if (isFutureDate(selectedDay)) {
+        entryTitle.textContent = `Entry for ${monthNames[currentMonth]} ${selectedDay}, ${currentYear}`;
+        mood.disabled = true;
+        dayText.disabled = true;
+        gratefulText.disabled = true;
+        learnText.disabled = true;
+        goalText.disabled = true;
+        saveEntry.style.display = "none";
+        statusMessage.textContent = "Future entries are locked.";
+    } else {
+        loadEntry(selectedDay);
+    }
+};
 
 saveEntry.addEventListener("click", function () {
     const key = getEntryKey(selectedDay);
@@ -109,8 +178,8 @@ saveEntry.addEventListener("click", function () {
     localStorage.setItem(key, JSON.stringify(entry));
 
     statusMessage.textContent = "Entry saved!";
-    dateGrid.innerHTML = "";
     buildDateGrid();
 });
 
 buildDateGrid();
+loadEntry(selectedDay);
