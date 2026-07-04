@@ -15,5 +15,5 @@ function draw() {
     ellipse(x, y, 250, 250);
 
     //ears
-    triangle(110, 140, 110, 50, 165, 85)
+    triangle(x - 90, y - 60, x - 90, y - 150, x - 35, y - 115)
 }
