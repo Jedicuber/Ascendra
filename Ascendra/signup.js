@@ -1,20 +1,29 @@
-const form = document.getElementById("signupForm");
+const signupForm = document.getElementById("signupForm");
 
-form.addEventListener("submit", function(event) {
+signupForm.addEventListener("submit", function(event) {
     event.preventDefault();
 
-    const username = document.getElementById("username").value;
-    const name = document.getElementById("name").value;
-    const surname = document.getElementById("surname").value;
-    const password = document.getElementById("password").value;
+   const name = document.getElementById("name").value.trim();
+const surname = document.getElementById("surname").value.trim();
+const username = document.getElementById("username").value.trim();
+const password = document.getElementById("password").value;
 
+localStorage.setItem("name", name);
+localStorage.setItem("surname", surname);
+localStorage.setItem("username", username);
+localStorage.setItem("password", password);
     const user = {
         name: name,
         surname: surname,
-        username: username
+        username: username,
+        password: password
     };
 
-    console.log("Form submitted!");
-    console.log(user);
-    console.log("Password entered");
+    localStorage.setItem(username, JSON.stringify(user));
+
+    alert("Account created!");
+
+    window.location.href = "home.html";
+
+    signupForm.reset();
 });
