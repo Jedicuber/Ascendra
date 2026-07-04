@@ -1,9 +1,9 @@
 body {
     font-family: Arial, sans-serif;
-    background: #f4f6fb;
+    background:rgb(246,242,255);
     text-align: center;
-    margin: 0;
-    padding: 30px;
+    margin-top: 0px;
+    padding-bottom: 30pxpx
 }
 
 #todo_list {
@@ -18,7 +18,8 @@ body {
     padding: 12px 22px;
     border-radius: 999px;
     border: none;
-    background: white;
+    background-color: rgb(143, 63, 216);
+    color:white;
     box-shadow: 0 5px 15px rgba(0,0,0,0.15);
     cursor: pointer;
     font-size: 16px;
