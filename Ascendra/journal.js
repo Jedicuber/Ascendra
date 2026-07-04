@@ -33,42 +33,28 @@ function getEntryKey(day) {
     return `journal-${currentYear}-${currentMonth + 1}-${day}`;
 }
 
-function isFutureDate(day) {
-    const date = new Date(currentYear, currentMonth, day);
-    const todayDate = new Date(todayYear, todayMonth, todayDay);
-
-    return date > todayDate;
+function isTodayDate(day) {
+    return day === todayDay && currentMonth === todayMonth && currentYear === todayYear;
 }
 
-function isTodayDate(day) {
-    return (
-        day === todayDay &&
-        currentMonth === todayMonth &&
-        currentYear === todayYear
-    );
+function isFutureDate(day) {
+    const selectedDate = new Date(currentYear, currentMonth, day);
+    const realToday = new Date(todayYear, todayMonth, todayDay);
+    return selectedDate > realToday;
 }
 
 function loadEntry(day) {
     selectedDay = day;
 
-    const key = getEntryKey(day);
-    const entry = JSON.parse(localStorage.getItem(key));
+    const entry = JSON.parse(localStorage.getItem(getEntryKey(day)));
 
     entryTitle.textContent = `Entry for ${monthNames[currentMonth]} ${day}, ${currentYear}`;
 
-    if (entry) {
-        mood.value = entry.mood;
-        dayText.value = entry.day;
-        gratefulText.value = entry.grateful;
-        learnText.value = entry.learn;
-        goalText.value = entry.goal;
-    } else {
-        mood.value = "😄 Happy";
-        dayText.value = "";
-        gratefulText.value = "";
-        learnText.value = "";
-        goalText.value = "";
-    }
+    mood.value = entry?.mood || "😄 Happy";
+    dayText.value = entry?.day || "";
+    gratefulText.value = entry?.grateful || "";
+    learnText.value = entry?.learn || "";
+    goalText.value = entry?.goal || "";
 
     const canEdit = isTodayDate(day);
 
@@ -88,19 +74,12 @@ function buildDateGrid() {
 
     const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
 
-    if (selectedDay > daysInMonth) {
-        selectedDay = daysInMonth;
-    }
-
     for (let day = 1; day <= daysInMonth; day++) {
         const button = document.createElement("button");
-
         button.textContent = day;
         button.classList.add("date-button");
 
-        const entryExists = localStorage.getItem(getEntryKey(day));
-
-        if (entryExists) {
+        if (localStorage.getItem(getEntryKey(day))) {
             button.classList.add("has-entry");
         }
 
@@ -116,17 +95,17 @@ function buildDateGrid() {
             button.classList.add("future");
             button.disabled = true;
         } else {
-            button.addEventListener("click", function () {
+            button.onclick = () => {
                 loadEntry(day);
                 buildDateGrid();
-            });
+            };
         }
 
         dateGrid.appendChild(button);
     }
 }
 
-prevMonth.onclick = function () {
+prevMonth.onclick = () => {
     currentMonth--;
 
     if (currentMonth < 0) {
@@ -139,7 +118,7 @@ prevMonth.onclick = function () {
     loadEntry(selectedDay);
 };
 
-nextMonth.onclick = function () {
+nextMonth.onclick = () => {
     currentMonth++;
 
     if (currentMonth > 11) {
@@ -150,23 +129,12 @@ nextMonth.onclick = function () {
     selectedDay = 1;
     buildDateGrid();
 
-    if (isFutureDate(selectedDay)) {
-        entryTitle.textContent = `Entry for ${monthNames[currentMonth]} ${selectedDay}, ${currentYear}`;
-        mood.disabled = true;
-        dayText.disabled = true;
-        gratefulText.disabled = true;
-        learnText.disabled = true;
-        goalText.disabled = true;
-        saveEntry.style.display = "none";
-        statusMessage.textContent = "Future entries are locked.";
-    } else {
+    if (!isFutureDate(selectedDay)) {
         loadEntry(selectedDay);
     }
 };
 
-saveEntry.addEventListener("click", function () {
-    const key = getEntryKey(selectedDay);
-
+saveEntry.onclick = () => {
     const entry = {
         mood: mood.value,
         day: dayText.value,
@@ -175,11 +143,11 @@ saveEntry.addEventListener("click", function () {
         goal: goalText.value
     };
 
-    localStorage.setItem(key, JSON.stringify(entry));
+    localStorage.setItem(getEntryKey(selectedDay), JSON.stringify(entry));
 
     statusMessage.textContent = "Entry saved!";
     buildDateGrid();
-});
+};
 
 buildDateGrid();
 loadEntry(selectedDay);
