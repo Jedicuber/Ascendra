@@ -154,3 +154,34 @@ textarea {
     color: white;
     border-radius: 25px;
 }
+.mini-calendar-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.mini-calendar-header button {
+    width: 42px;
+    height: 42px;
+
+    border: none;
+    border-radius: 50%;
+
+    background-color: rgb(143, 63, 216);
+    color: white;
+
+    font-size: 26px;
+    cursor: pointer;
+
+    transition: 0.2s;
+}
+
+.mini-calendar-header button:hover {
+    background-color: rgb(127, 0, 255);
+    transform: scale(1.05);
+}
+
+.selected-day {
+    outline: 3px solid rgb(0, 128, 0);
+}
