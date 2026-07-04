@@ -1,22 +1,17 @@
-const today = new Date();
-
-const currentDay = today.getDate();
-const currentMonth = today.getMonth();
-const currentYear = today.getFullYear();
+let today = new Date();
+let currentMonth = today.getMonth();
+let currentYear = today.getFullYear();
 
 const monthNames = [
     "January", "February", "March", "April", "May", "June",
     "July", "August", "September", "October", "November", "December"
 ];
 
-document.querySelector(".calendar-header h2").textContent =
-    `${monthNames[currentMonth]} ${currentYear}`;
+const calendarTitle = document.querySelector(".calendar-header h2");
+const calendarBody = document.getElementById("calendarBody");
 
-const todayCell = document.getElementById(`day-${currentDay}`);
-
-if (todayCell) {
-    todayCell.classList.add("today");
-}
+const prevMonth = document.getElementById("prevMonth");
+const nextMonth = document.getElementById("nextMonth");
 
 const addEventBtn = document.querySelector(".addEvent");
 const popup = document.getElementById("eventPopup");
@@ -36,44 +31,104 @@ flatpickr("#eventDate", {
     minDate: "today"
 });
 
-function showEventOnCalendar(event) {
-    const selectedDate = new Date(event.date);
-    const selectedDay = selectedDate.getDate();
+function renderCalendar() {
+    calendarBody.innerHTML = "";
+    calendarTitle.textContent = `${monthNames[currentMonth]} ${currentYear}`;
 
-    const dayCell = document.getElementById(`day-${selectedDay}`);
+    const firstDay = new Date(currentYear, currentMonth, 1).getDay();
+    const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
 
-    if (dayCell) {
-        const eventText = document.createElement("div");
-        eventText.classList.add("calendar-event");
-        eventText.textContent = event.title;
+    let date = 1;
 
-        eventText.addEventListener("click", () => {
-            if (confirm(`Delete "${event.title}"?`)) {
-                events = events.filter(e => e.id !== event.id);
-                localStorage.setItem("events", JSON.stringify(events));
-                eventText.remove();
+    for (let row = 0; row < 6; row++) {
+        const tr = document.createElement("tr");
+
+        for (let col = 0; col < 7; col++) {
+            const td = document.createElement("td");
+
+            if (row === 0 && col < firstDay) {
+                td.classList.add("empty-day");
+            } else if (date > daysInMonth) {
+                td.classList.add("empty-day");
+            } else {
+                td.textContent = date;
+
+                if (
+                    date === today.getDate() &&
+                    currentMonth === today.getMonth() &&
+                    currentYear === today.getFullYear()
+                ) {
+                    td.classList.add("today");
+                }
+
+                showEventsForDay(td, date);
+                date++;
             }
-        });
 
-        dayCell.appendChild(eventText);
+            tr.appendChild(td);
+        }
+
+        calendarBody.appendChild(tr);
     }
 }
 
-function loadEvents() {
+function showEventsForDay(dayCell, dayNumber) {
     events.forEach(event => {
-        showEventOnCalendar(event);
+        const eventDate = new Date(event.date);
+
+        if (
+            eventDate.getDate() === dayNumber &&
+            eventDate.getMonth() === currentMonth &&
+            eventDate.getFullYear() === currentYear
+        ) {
+            const eventText = document.createElement("div");
+            eventText.classList.add("calendar-event");
+            eventText.textContent = event.title;
+
+            eventText.onclick = () => {
+                if (confirm(`Delete "${event.title}"?`)) {
+                    events = events.filter(e => e.id !== event.id);
+                    localStorage.setItem("events", JSON.stringify(events));
+                    renderCalendar();
+                }
+            };
+
+            dayCell.appendChild(eventText);
+        }
     });
 }
 
-addEventBtn.addEventListener("click", () => {
+prevMonth.onclick = () => {
+    currentMonth--;
+
+    if (currentMonth < 0) {
+        currentMonth = 11;
+        currentYear--;
+    }
+
+    renderCalendar();
+};
+
+nextMonth.onclick = () => {
+    currentMonth++;
+
+    if (currentMonth > 11) {
+        currentMonth = 0;
+        currentYear++;
+    }
+
+    renderCalendar();
+};
+
+addEventBtn.onclick = () => {
     popup.style.display = "block";
-});
+};
 
-closePopup.addEventListener("click", () => {
+closePopup.onclick = () => {
     popup.style.display = "none";
-});
+};
 
-saveEvent.addEventListener("click", () => {
+saveEvent.onclick = () => {
     const title = eventTitleInput.value.trim();
     const dateValue = eventDateInput.value;
 
@@ -82,21 +137,19 @@ saveEvent.addEventListener("click", () => {
         return;
     }
 
-    const newEvent = {
+    events.push({
         id: Date.now(),
         title: title,
         date: dateValue
-    };
+    });
 
-    events.push(newEvent);
     localStorage.setItem("events", JSON.stringify(events));
-
-    showEventOnCalendar(newEvent);
 
     eventTitleInput.value = "";
     eventDateInput.value = "";
-
     popup.style.display = "none";
-});
 
-loadEvents();
+    renderCalendar();
+};
+
+renderCalendar();
