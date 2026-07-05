@@ -1,21 +1,25 @@
 body {
     font-family: sans-serif;
-    background: #87CEEB;
-    margin: none;
+    background: #ffffff;
     text-align: center;
 }
 
-#menu {
-    text-decoration: underline;
-    color: blue;
+#settings {
+    border-radius: 50px;
+    height: 350px;
+    width: 350px;
+    font-size: 50px;
+    display: block;
+    margin-right: auto;
+    margin-left: 0;
 }
 
-#menu_paragraph {
-    color: purple;
-    width: 50%;
-    height: 200px;
-    overflow: auto;
-    word-wrap: break-word;
-    overflow-wrap: break-word;
-    white-space: normal;
+#stats {
+    border-radius: 50px;
+    height: 350px;
+    width: 350px;
+    font-size: 50px;
+    display: block;
+    margin-right: auto;
+    margin-left: 0;
 }
