@@ -112,3 +112,66 @@ body {
     color: white;
     border-radius: 25px;
 }
+
+.hero{
+    position: relative;
+    overflow: hidden;
+}
+
+#shootingStars{
+    position:absolute;
+    inset:0;
+    pointer-events:none;
+}
+
+.star{
+    position:absolute;
+
+    width:12px;
+    height:12px;
+
+    border-radius:50%;
+    background:white;
+
+    box-shadow:
+        0 0 12px white,
+        0 0 25px white,
+        0 0 40px white;
+
+    animation:shootingStar 1.6s linear forwards;
+}
+
+.star::after{
+    content:"";
+
+    position:absolute;
+
+    right:8px;
+    top:4px;
+
+    width:180px;
+    height:4px;
+
+    border-radius:999px;
+
+    background:linear-gradient(
+        to left,
+        white,
+        rgba(255,255,255,.7),
+        rgba(255,255,255,0)
+    );
+}
+
+@keyframes shootingStar{
+
+    from{
+        transform:translate(0,0);
+        opacity:1;
+    }
+
+    to{
+        transform:translate(-420px,220px);
+        opacity:0;
+    }
+
+}
