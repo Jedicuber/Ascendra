@@ -189,3 +189,39 @@ if (progressFill && progressText) {
     progressFill.style.width = progress + "%";
     progressText.textContent = progress + "% complete";
 }
+
+// ===========================
+// Shooting Star
+// ===========================
+
+const starContainer = document.getElementById("shootingStars");
+
+function createStar(){
+
+    if(!starContainer) return;
+
+    const star = document.createElement("div");
+    star.className = "star";
+
+    // Start on the RIGHT side of the hero
+    star.style.left = (starContainer.offsetWidth - 30) + "px";
+
+    // Random height near the top
+    star.style.top = (Math.random() * 80 + 20) + "px";
+
+    starContainer.appendChild(star);
+
+    star.addEventListener("animationend", () => {
+        star.remove();
+    });
+
+}
+
+// Random every 3–7 seconds
+createStar();
+
+setInterval(() => {
+
+    createStar();
+
+}, Math.random() * 4000 + 3000);
