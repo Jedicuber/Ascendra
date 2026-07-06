@@ -6,13 +6,18 @@ body {
     font-family: sans-serif;
 }
 
- h1 {
-     position: absolute;
-     top: 20px;
-     left: 20px;
-     color: white;
+/* CENTER TITLE (this is your "menu center") */
+#menuTitle {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+    z-index: 1;
+    font-size: 28px;
 }
 
+/* ORBIT SYSTEM CONTAINER */
 #nav {
     position: absolute;
     left: 50%;
@@ -21,16 +26,17 @@ body {
     height: 0;
 }
 
+/* BUTTON STYLE */
 #nav button {
     position: absolute;
     width: 130px;
     height: 130px;
     transform: translate(-50%, -50%);
-    border-radius: 12px;
     border: none;
-    cursor: pointer;
+    border-radius: 12px;
     background: #222;
     color: white;
+    cursor: pointer;
 }
 
 #nav button:hover {
@@ -41,36 +47,4 @@ i {
     display: block;
     margin-top: 8px;
     font-size: 20px;
-}
-
-#settings i {
-    color: #2563eb;
-}
-
-#stats i {
-    color: #16a34a;
-}
-
-#profile i {
-    color: #7c3aed;
-}
-
-#extras i {
-    color: #f59e0b;
-}
-
-#privacy-security i {
-    color: #dc2626;
-}
-
-#help i {
-    color: #0891b2;
-}
-
-#about i {
-    color: #4b5563;
-}
-
-#credits i {
-    color: #db2777;
 }
