@@ -48,3 +48,35 @@ i {
     margin-top: 8px;
     font-size: 20px;
 }
+
+#settings i {
+    color: #2563eb;
+}
+
+#stats i {
+    color: #16a34a;
+}
+
+#profile i {
+    color: #7c3aed;
+}
+
+#extras i {
+    color: #f59e0b;
+}
+
+#privacy-security i {
+    color: #dc2626;
+}
+
+#help i {
+    color: #0891b2;
+}
+
+#about i {
+    color: #4b5563;
+}
+
+#credits i {
+    color: #db2777;
+}
