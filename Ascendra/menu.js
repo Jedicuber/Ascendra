@@ -1,3 +1,6 @@
+function goTo(page) {
+    window.location.href=page;
+}
 const buttons = document.querySelectorAll("#nav button");
 
 const radius = 220;   // distance from "Menu"
