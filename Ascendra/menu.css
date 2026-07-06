@@ -35,6 +35,21 @@ body {
     cursor: pointer;
 
     transition: transform .2s;
+
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 0;
+    height: 0;
+}
+
+#nav button {
+    position: absolute;
+    width: 120px;
+    height: 120px;
+    transform: translate(-50%, -50%);
+    border-radius: 15px;
+    font-size: 18px;
 }
 
 #nav button:hover {
