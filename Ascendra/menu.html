@@ -11,63 +11,39 @@
     <h1>Menu</h1>
 
     <!-- Buttons -->
-  <script>
-        const buttons = document.querySelectorAll("#nav button");
-
-        const radius = 250;
-        let angle = 0;
-
-        function animate() {
-            angle += 0.002;
-
-            buttons.forEach((button, i) => {
-                const a = angle + i * (Math.PI * 2 / buttons.length);
-
-                const x = Math.cos(a) * radius;
-                const y = Math.sin(a) * radius;
-
-                button.style.left = x + "px";
-                button.style.top = y + "px";
-            });
-
-            requestAnimationFrame(animate);
-        }
-
-        animate();
-    </script>
 
 <div id="nav">
-    <button onclick="window.location.href='settings.html'" id="settings">
+    <button onclick="goTo('settings.html')" id="settings">
         Settings<br>
         <i id="settingsIcon" class="fa-solid fa-gears"></i>
     </button>
 
-    <button id="stats">
+    <button onclick="goTo('stats.html')" id="stats">
         Statistics<br>
         <i class="fa-solid fa-chart-line"></i>
     </button>
 
-    <button id="profile">
+    <button onclick="goTo('profile.html')" id="profile">
         Profile<br>
         <i class="fa-regular fa-user"></i>
     </button>
 
-    <button id="extras">
+    <button onclick="goTo('extras.html')" id="extras">
         Extras<br>
         <i class="fa-solid fa-wand-magic-sparkles"></i>
     </button>
 
-    <button id="privacy-security">
-        Privacy<br>
+    <button onclick="goTo('security.html')" id="privacy-security">
+        Privacy & Security<br>
         <i class="fa-solid fa-user-shield"></i>
     </button>
 
-    <button id="help">
+    <button onclick="goTo('help.html')" id="help">
         Help<br>
         <i class="fa-regular fa-circle-question"></i>
     </button>
 
-    <button id="about">
+    <button onclick="goTo('about.html')" id="about">
         About<br>
         <i class="fa-solid fa-info"></i>
     </button>
@@ -77,5 +53,7 @@
         <i class="fa-solid fa-users"></i>
     </button>
 </div>
+
+<script src="menu.js"></script>
 </body> 
 </html>
