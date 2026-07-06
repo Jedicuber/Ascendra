@@ -1,1 +1,80 @@
+body {
+    margin: 0;
+    font-family: sans-serif;
+    background: #111;
+    color: white;
+}
 
+h1 {
+    text-align: center;
+    margin-top: 20px;
+}
+
+#settings-container {
+    width: 500px;
+    margin: 30px auto;
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+}
+
+/* each section */
+.setting-block {
+    background: #1e1e1e;
+    padding: 15px;
+    border-radius: 12px;
+}
+
+.setting-block h2 {
+    margin-bottom: 10px;
+}
+
+/* button rows */
+.options {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+/* normal option buttons */
+.option-btn {
+    padding: 10px 14px;
+    border: none;
+    border-radius: 8px;
+    background: #2a2a2a;
+    color: white;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.option-btn:hover {
+    background: #3a3a3a;
+    transform: scale(1.05);
+}
+
+/* version box */
+.info-box {
+    padding: 10px;
+    background: #2a2a2a;
+    border-radius: 8px;
+    display: inline-block;
+}
+
+/* danger zone */
+.danger {
+    border: 1px solid #aa3333;
+}
+
+.danger-btn {
+    padding: 10px 14px;
+    border: none;
+    border-radius: 8px;
+    background: #5a1a1a;
+    color: white;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.danger-btn:hover {
+    background: #7a2222;
+}
