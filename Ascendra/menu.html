@@ -1,59 +1,134 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <link rel="stylesheet" href="menu.css">
     <meta charset="UTF-8">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
     <title>Menu</title>
-</head>
-<body>
-    <h1>Menu</h1>
 
-    <!-- Buttons -->
+    <link rel="stylesheet" href="menu.css">
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+
+    <style>
+        body {
+            margin: 0;
+            height: 100vh;
+            overflow: hidden;
+            background: #111;
+            font-family: sans-serif;
+        }
+
+        h1 {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            color: white;
+        }
+
+        #nav {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            width: 0;
+            height: 0;
+        }
+
+        #nav button {
+            position: absolute;
+            width: 130px;
+            height: 130px;
+            transform: translate(-50%, -50%);
+            border-radius: 12px;
+            border: none;
+            cursor: pointer;
+            background: #222;
+            color: white;
+        }
+
+        #nav button:hover {
+            background: #333;
+        }
+
+        i {
+            display: block;
+            margin-top: 8px;
+            font-size: 20px;
+        }
+    </style>
+</head>
+
+<body>
+
+<h1>Menu</h1>
 
 <div id="nav">
-    <button onclick="goTo('settings.html')" id="settings">
+
+    <button id="settings" onclick="location.href='settings.html'">
         Settings<br>
-        <i id="settingsIcon" class="fa-solid fa-gears"></i>
+        <i class="fa-solid fa-gears"></i>
     </button>
 
-    <button onclick="goTo('stats.html')" id="stats">
+    <button id="statistics" onclick="location.href='statistics.html'">
         Statistics<br>
         <i class="fa-solid fa-chart-line"></i>
     </button>
 
-    <button onclick="goTo('profile.html')" id="profile">
+    <button id="profile" onclick="location.href='profile.html'">
         Profile<br>
         <i class="fa-regular fa-user"></i>
     </button>
 
-    <button onclick="goTo('extras.html')" id="extras">
+    <button id="extras" onclick="location.href='extras.html'">
         Extras<br>
         <i class="fa-solid fa-wand-magic-sparkles"></i>
     </button>
 
-    <button onclick="goTo('security.html')" id="privacy-security">
-        Privacy & Security<br>
+    <button id="privacy-security" onclick="location.href='privacy.html'">
+        Privacy &amp; Security<br>
         <i class="fa-solid fa-user-shield"></i>
     </button>
 
-    <button onclick="goTo('help.html')" id="help">
-        Help<br>
-        <i class="fa-regular fa-circle-question"></i>
+    <button id="health" onclick="location.href='health.html'">
+        Health<br>
+        <i class="fa-solid fa-heart-pulse"></i>
     </button>
 
-    <button onclick="goTo('about.html')" id="about">
+    <button id="about" onclick="location.href='about.html'">
         About<br>
-        <i class="fa-solid fa-info"></i>
+        <i class="fa-solid fa-circle-info"></i>
     </button>
 
-    <button id="credits">
+    <button id="credits" onclick="location.href='credits.html'">
         Credits<br>
         <i class="fa-solid fa-users"></i>
     </button>
+
 </div>
 
-<script src="menu.js"></script>
-</body> 
+<script>
+    const buttons = document.querySelectorAll("#nav button");
+
+    const radius = 220;
+    let angle = 0;
+
+    function animate() {
+        angle += 0.002;
+
+        buttons.forEach((button, i) => {
+
+            const a = angle + i * (Math.PI * 2 / buttons.length);
+
+            const x = Math.cos(a) * radius;
+            const y = Math.sin(a) * radius;
+
+            button.style.left = x + "px";
+            button.style.top = y + "px";
+        });
+
+        requestAnimationFrame(animate);
+    }
+
+    animate();
+</script>
+
+</body>
 </html>
