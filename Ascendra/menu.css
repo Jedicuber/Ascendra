@@ -1,82 +1,104 @@
+* {
+    box-sizing: border-box;
+}
+
 body {
     margin: 0;
     height: 100vh;
     overflow: hidden;
-    background: #111;
-    font-family: sans-serif;
+    font-family: Arial, sans-serif;
+
+    background:
+        radial-gradient(circle at top left, rgba(37, 99, 235, 0.35), transparent 35%),
+        radial-gradient(circle at bottom right, rgba(168, 85, 247, 0.35), transparent 35%),
+        #020617;
+
+    color: white;
 }
 
-/* CENTER TITLE (this is your "menu center") */
 #menuTitle {
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
-    color: white;
-    z-index: 1;
-    font-size: 28px;
+    text-align: center;
+    margin: 28px 0 0;
+    font-size: 52px;
+    letter-spacing: 1px;
 }
 
-/* ORBIT SYSTEM CONTAINER */
 #nav {
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    width: 0;
-    height: 0;
+    height: calc(100vh - 100px);
+    padding: 28px;
+
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+    gap: 24px;
 }
 
-/* BUTTON STYLE */
 #nav button {
-    position: absolute;
-    width: 130px;
-    height: 130px;
-    transform: translate(-50%, -50%);
-    border: none;
-    border-radius: 12px;
-    background: #222;
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    border-radius: 34px;
+
+    background: rgba(255, 255, 255, 0.1);
     color: white;
+
+    font-size: 27px;
+    font-weight: bold;
+
     cursor: pointer;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 18px;
+
+    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.25);
+    backdrop-filter: blur(14px);
+
+    transition: 0.22s ease;
 }
 
 #nav button:hover {
-    background: #333;
+    transform: translateY(-8px) scale(1.02);
+    background: rgba(255, 255, 255, 0.18);
+    box-shadow: 0 18px 40px rgba(37, 99, 235, 0.35);
 }
 
-i {
-    display: block;
-    margin-top: 8px;
-    font-size: 20px;
+#nav button:active {
+    transform: scale(0.97);
+}
+
+#nav button i {
+    font-size: 62px;
 }
 
 #settings i {
-    color: #2563eb;
+    color: #60a5fa;
 }
 
-#stats i {
-    color: #16a34a;
+#statistics i {
+    color: #22c55e;
 }
 
 #profile i {
-    color: #7c3aed;
+    color: #a78bfa;
 }
 
 #extras i {
-    color: #f59e0b;
+    color: #fbbf24;
 }
 
 #privacy-security i {
-    color: #dc2626;
+    color: #f87171;
 }
 
-#help i {
-    color: #0891b2;
+#health i {
+    color: #fb7185;
 }
 
 #about i {
-    color: #4b5563;
+    color: #94a3b8;
 }
 
 #credits i {
-    color: #db2777;
+    color: #f472b6;
 }
