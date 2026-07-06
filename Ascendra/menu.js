@@ -1,4 +1,7 @@
- const buttons = document.querySelectorAll("#nav button");
+function goTo(page) {
+    location.window.href=page;
+}
+const buttons = document.querySelectorAll("#nav button");
 
         const radius = 250;
         let angle = 0;
