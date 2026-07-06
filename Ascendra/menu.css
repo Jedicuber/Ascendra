@@ -17,7 +17,6 @@ body {
 ========================== */
 
 #menuTitle {
-
     position: absolute;
 
     top: 50%;
@@ -27,32 +26,32 @@ body {
 
     margin: 0;
 
-    color: rgb(127, 0, 255);
-
-    font-size: 70px;
+    font-size: 72px;
     font-weight: bold;
+
+    color: rgb(127, 0, 255);
 
     letter-spacing: 2px;
 
-    z-index: 100;
+    text-shadow:
+        0 4px 18px rgba(127,0,255,.18);
 
-    text-shadow: 0 4px 18px rgba(127,0,255,.15);
+    pointer-events: none;
+    user-select: none;
 }
 
 /* ==========================
       BUTTON CONTAINER
 ========================== */
 
-#nav{
+#nav {
+    position: absolute;
 
-    position:absolute;
+    left: 50%;
+    top: 50%;
 
-    left:50%;
-    top:50%;
-
-    width:0;
-    height:0;
-
+    width: 0;
+    height: 0;
 }
 
 /* ==========================
@@ -69,7 +68,7 @@ body {
     transform: translate(-50%, -50%);
 
     border: none;
-    border-radius: 30px;
+    border-radius: 28px;
 
     background: white;
     color: #333;
@@ -79,23 +78,29 @@ body {
 
     cursor: pointer;
 
-    box-shadow: 0 8px 22px rgba(0,0,0,.10);
+    box-shadow:
+        0 10px 25px rgba(0,0,0,.10);
 
     transition:
-        transform .25s,
-        background .25s,
-        color .25s,
-        box-shadow .25s;
+        transform .25s ease,
+        background .25s ease,
+        color .25s ease,
+        box-shadow .25s ease;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 12px;
 }
 
 #nav button:hover {
 
     transform:
-        translate(-50%,-50%)
+        translate(-50%, -50%)
         scale(1.08);
 
-    background: rgb(127, 0, 255);
-
+    background: rgb(127,0,255);
     color: white;
 
     box-shadow:
@@ -106,8 +111,8 @@ body {
 #nav button:active {
 
     transform:
-        translate(-50%,-50%)
-        scale(.97);
+        translate(-50%, -50%)
+        scale(.96);
 
 }
 
@@ -115,46 +120,49 @@ body {
             ICONS
 ========================== */
 
-#nav button i{
+#nav button i {
 
-    display:block;
+    font-size: 56px;
 
-    margin-top:16px;
+    color: rgb(127,0,255);
 
-    font-size:55px;
+    transition:
+        color .25s,
+        transform .25s;
+}
+
+#nav button:hover i {
+
+    color: white;
+
+    transform: scale(1.1);
 
 }
 
-/* Purple accent icons */
+/* ==========================
+      BUTTON SHADOW GLOW
+========================== */
 
-#settings i{
-    color:rgb(127,0,255);
+#nav button::after {
+
+    content: "";
+
+    position: absolute;
+
+    inset: 0;
+
+    border-radius: inherit;
+
+    opacity: 0;
+
+    box-shadow:
+        0 0 40px rgba(127,0,255,.25);
+
+    transition: opacity .25s;
 }
 
-#statistics i{
-    color:rgb(127,0,255);
-}
+#nav button:hover::after {
 
-#profile i{
-    color:rgb(127,0,255);
-}
+    opacity: 1;
 
-#extras i{
-    color:rgb(127,0,255);
-}
-
-#privacy-security i{
-    color:rgb(127,0,255);
-}
-
-#health i{
-    color:rgb(127,0,255);
-}
-
-#about i{
-    color:rgb(127,0,255);
-}
-
-#credits i{
-    color:rgb(127,0,255);
 }
