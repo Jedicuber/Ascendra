@@ -2,69 +2,111 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Settings</title>
-
+    <title>Ascendra - Settings</title>
     <link rel="stylesheet" href="settings.css">
 </head>
-
 <body>
-<h1>Settings</h1>
 
-<div id="settings-container">
+    <div class="page">
 
-    <!-- LANGUAGE -->
-    <div class="setting-block">
-        <h2>Language</h2>
-        <div class="options">
-            <button class="option-btn">English</button>
-            <button class="option-btn">Spanish</button>
-            <button class="option-btn">French</button>
-            <button class="option-btn">Chinese</button>
-        </div>
+        <main class="content">
+            <header>
+                <h2>Settings</h2>
+                <p>Customize Ascendra so it feels like yours ✨</p>
+            </header>
+
+            <section class="card">
+                <h3>🎨 Appearance</h3>
+
+                <label>Accent Color</label>
+                <select id="accentColor">
+                    <option value="purple">Purple</option>
+                    <option value="blue">Blue</option>
+                    <option value="green">Green</option>
+                    <option value="pink">Pink</option>
+                </select>
+
+                <div class="toggle-row">
+                    <div>
+                        <h4>Light Mode</h4>
+                        <p>Clean bright Ascendra style.</p>
+                    </div>
+                    <input type="checkbox" id="lightMode" checked>
+                </div>
+            </section>
+
+            <section class="card">
+                <h3>🧩 Dashboard</h3>
+
+                <div class="toggle-row">
+                    <div>
+                        <h4>Show Daily Quote</h4>
+                        <p>A small motivational boost.</p>
+                    </div>
+                    <input type="checkbox" id="dailyQuote">
+                </div>
+
+                <div class="toggle-row">
+                    <div>
+                        <h4>Show Habit Tracker</h4>
+                        <p>Track good habits and streaks.</p>
+                    </div>
+                    <input type="checkbox" id="habitTracker">
+                </div>
+
+                <div class="toggle-row">
+                    <div>
+                        <h4>Enable Night Mode</h4>
+                        <p>Sleep sounds, stories, prayer, and calm mode.</p>
+                    </div>
+                    <input type="checkbox" id="nightMode">
+                </div>
+            </section>
+
+            <section class="card">
+                <h3>🔔 Notifications</h3>
+
+                <div class="toggle-row">
+                    <div>
+                        <h4>Task Reminders</h4>
+                        <p>Get reminded about important tasks.</p>
+                    </div>
+                    <input type="checkbox" id="taskReminders">
+                </div>
+
+                <div class="toggle-row">
+                    <div>
+                        <h4>Event Alerts</h4>
+                        <p>Calendar alerts before events.</p>
+                    </div>
+                    <input type="checkbox" id="eventAlerts">
+                </div>
+            </section>
+
+            <section class="card danger">
+                <h3>🚨 Danger Zone</h3>
+                <p>Be careful. These actions can remove your Ascendra data.</p>
+
+                <div class="danger-item">
+                    <div>
+                        <h4>Reset Settings</h4>
+                        <p>Resets settings back to default.</p>
+                    </div>
+                    <button onclick="resetSettings()">Reset</button>
+                </div>
+
+                <div class="danger-item">
+                    <div>
+                        <h4>Delete All Local Data</h4>
+                        <p>Deletes saved Ascendra data from this browser.</p>
+                    </div>
+                    <button onclick="deleteAllData()">Delete</button>
+                </div>
+            </section>
+        </main>
+
     </div>
 
-    <!-- THEME -->
-    <div class="setting-block">
-        <h2>Theme</h2>
-        <div class="options">
-            <button class="option-btn">Dark</button>
-            <button class="option-btn">Light</button>
-            <button class="option-btn">Auto</button>
-        </div>
-    </div>
-
-    <!-- TEXT -->
-    <div class="setting-block">
-        <h2>Text Size</h2>
-        <div class="options">
-            <button class="option-btn">Small</button>
-            <button class="option-btn">Medium</button>
-            <button class="option-btn">Large</button>
-        </div>
-    </div>
-
-    <!-- VERSION -->
-    <div class="setting-block">
-        <h2>Version</h2>
-        <div class="info-box">
-            1.0.0
-        </div>
-    </div>
-
-    <!-- DANGER ZONE -->
-    <div class="setting-block danger">
-
-        <h2>Danger Zone</h2>
-
-        <div class="options">
-            <button class="danger-btn">Reset Settings</button>
-            <button class="danger-btn">Delete Data</button>
-            <button class="danger-btn">Enter z9jjui</button>
-        </div>
-
-    </div>
-
-</div>
-<script src="settings.js"></script>
+    <script src="settings.js"></script>
 </body>
 </html>
