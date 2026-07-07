@@ -1,60 +1,121 @@
 const canvas = document.getElementById("canvas");
 const ctx = canvas.getContext("2d");
 
-// Make the canvas fill the window
-function resizeCanvas() {
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
+// ----------------------
+// Resize Canvas
+// ----------------------
 
+let backgroundStars = [];
+
+function generateStars() {
     backgroundStars = [];
 
-    for (let i = 0; i < 120; i++) {
+    // Roughly one star every 18,000 pixels
+    const numberOfStars = Math.floor(canvas.width * canvas.height / 18000);
+
+    for (let i = 0; i < numberOfStars; i++) {
         backgroundStars.push({
             x: Math.random() * canvas.width,
             y: Math.random() * canvas.height,
             size: Math.random() * 4 + 2,
-            color: Math.random() < 0.8
-                ? "white"
-                : (Math.random() < 0.5 ? "rgb(242,241,153)" : "yellow")
+            type: Math.random()
         });
     }
+}
+
+function resizeCanvas() {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    generateStars();
 }
 
 resizeCanvas();
 window.addEventListener("resize", resizeCanvas);
 
-// Original variables
+// ----------------------
+// Original Variables
+// ----------------------
+
 let xPos = 300;
 let yPos = 100;
+
 let starSize = 0;
+
 let stars = 5;
 let starEdge = 8;
+
 let mediumStar = 8;
+
 let largeStars = 13;
 let starStroke = largeStars + 4;
 
-// Draw a circle
+// ----------------------
+// Helper Function
+// ----------------------
+
 function circle(x, y, size, color) {
     ctx.fillStyle = color;
+
     ctx.beginPath();
     ctx.arc(x, y, size / 2, 0, Math.PI * 2);
     ctx.fill();
 }
 
+// ----------------------
+// Draw
+// ----------------------
+
 function draw() {
 
-    // Black background
+    // Background
     ctx.fillStyle = "black";
     ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-    // Keep the original 400x400 drawing centered
+    // Random stars
+    for (let star of backgroundStars) {
+
+        if (star.type < 0.75) {
+
+            circle(star.x, star.y, star.size, "white");
+
+        } else if (star.type < 0.95) {
+
+            circle(
+                star.x,
+                star.y,
+                star.size + 1,
+                "rgb(242,241,153)"
+            );
+
+        } else {
+
+            circle(
+                star.x,
+                star.y,
+                star.size + 3,
+                "orange"
+            );
+
+            circle(
+                star.x,
+                star.y,
+                star.size + 1,
+                "yellow"
+            );
+
+        }
+    }
+
+    // Keep the original 400x400 animation centered
     ctx.save();
 
     const offsetX = (canvas.width - 400) / 2;
     const offsetY = (canvas.height - 400) / 2;
+
     ctx.translate(offsetX, offsetY);
 
-    // Small stars
+    // Original small stars
     circle(85, 100, stars, "white");
     circle(200, 150, stars, "white");
     circle(350, 50, stars, "white");
@@ -72,12 +133,11 @@ function draw() {
     circle(300, 201, mediumStar, "rgb(242,241,153)");
     circle(230, 271, mediumStar, "rgb(242,241,153)");
     circle(81, 336, mediumStar, "rgb(242,241,153)");
-
-    // Large glowing star
+        // Large glowing star
     circle(47, 149, starStroke, "orange");
     circle(47, 149, largeStars, "yellow");
 
-    // Red outline
+    // Red edge of shooting star
     circle(xPos, yPos, starEdge, "red");
 
     // Shooting star
@@ -90,15 +150,32 @@ function draw() {
     ctx.fill();
     ctx.stroke();
 
+    // Stop translating so the rest of the canvas isn't affected
     ctx.restore();
 
+    // ----------------------
     // Animation
+    // ----------------------
+
     xPos -= 3;
     yPos += 3;
+
     starSize += 0.7;
     starEdge += 0.7;
+
+    // Restart the shooting star once it leaves the screen
+    if (
+        xPos < -100 ||
+        yPos > canvas.height + 100
+    ) {
+        xPos = 300;
+        yPos = 100;
+        starSize = 0;
+        starEdge = 8;
+    }
 
     requestAnimationFrame(draw);
 }
 
+// Start animation
 draw();
