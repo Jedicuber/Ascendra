@@ -1,0 +1,13 @@
+body {
+    background-color: rgb(240, 248, 255);
+    margin: 3px;
+    text-align: center;
+    font-family: sans-serif;
+}
+
+.policies {
+    color: rgb(5, 10, 35);
+    width: 75%;
+    height: 50%;
+    overflow: auto;
+}
