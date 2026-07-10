@@ -3,22 +3,34 @@
     <head>
         <title>Ascendra - Extras</title>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
-        <link rel="stylesheet" href="style.css">
+        <link rel="stylesheet" href="extras.css">
         <meta charset="UTF-8">
     </head>
     <body>
         <h1>Extras</h1>
 
         <div id="button-container">
-            <button id="time-capsule">Time Capsule<br><i class="fa-solid fa-hourglass-half"></i></button>
+            <button class="options" id="time-capsule">Time Capsule<br><i class="fa-solid fa-hourglass-half"></i></button>
 
-            <button id="soundscape">Soundscape<br><i class="fa-solid fa-music"></i></button>
+            <button class="options" id="soundscape">Soundscape<br><i class="fa-solid fa-music"></i></button>
 
-            <button id="unwind">Unwind<br><i class="fa-solid fa-cloud-moon"></i></button>
+            <button class="options" id="unwind">Unwind<br><i class="fa-solid fa-cloud-moon"></i></button>
 
-            <button id="achievements">Achievements<br><i class="fa-solid fa-medal"></i></button>
+            <button class="options"  id="achievements">Achievements<br><i class="fa-solid fa-medal"></i></button>
 
-            <button id="mini-tools">Mini Tools<br><i class="fa-solid fa-gamepad"></i></button>
+            <button class="options" id="mini-tools">Mini Tools<br><i class="fa-solid fa-gamepad"></i></button>
         </div>
+
+    <div class="navbar">
+    <button onclick="window.location.href='home.html'"><i class="fa-solid fa-mug-saucer"></i><br>Home</button>
+        <button onclick="window.location.href='alerts.html'"><i class="fa-regular fa-bell"></i><br>Alerts</button>
+        <button onclick="window.location.href='breathing.html'"><i class="fa-solid fa-list-check"></i><br>To-Dos</button>
+        <button onclick="window.location.href='habits.html'"><i class="fa-regular fa-thumbs-up"></i><br>Habits</button>
+        <button onclick="window.location.href='breathing.html'"><i class="fa-solid fa-wind"></i><br>Breathing</button>
+        <button onclick="window.location.href='calendar.html'"><i class="fa-regular fa-calendar"></i><br>Calendar</button>
+        <button onclick="window.location.href='journal.html'"><i class="fa-solid fa-book-open"></i><br>Journal</button>
+        <button class="current" onclick="window.location.href='menu.html'"><i class="fa-solid fa-bars-staggered"></i><br>Menu</button>
+    </div>
     </body>
+
 </html>
