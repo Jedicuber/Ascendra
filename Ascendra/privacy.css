@@ -11,8 +11,8 @@ body {
     padding: 30px;
 
     background-color: white;
-    border: 2px solid rgb(5, 10, 35);
-    border-radius: 15px;
+    border: none;
+    border-radius: 50px;
 
     box-shadow: 0 4px 15px rgba(5, 10, 35, 0.15);
 }
