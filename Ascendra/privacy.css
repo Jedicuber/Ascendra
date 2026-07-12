@@ -5,9 +5,18 @@ body {
     font-family: sans-serif;
 }
 
+.policy-container {
+    width: 75%;
+    margin: 40px auto;
+    padding: 30px;
+
+    background-color: white;
+    border: 2px solid rgb(5, 10, 35);
+    border-radius: 15px;
+
+    box-shadow: 0 4px 15px rgba(5, 10, 35, 0.15);
+}
+
 .policies {
     color: rgb(5, 10, 35);
-    width: 75%;
-    height: 50%;
-    overflow: auto;
 }
