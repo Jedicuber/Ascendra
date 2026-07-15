@@ -1,0 +1,309 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Ascendra - Statistics</title>
+
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+    >
+
+    <link rel="stylesheet" href="stats.css">
+</head>
+
+<body>
+
+    <header class="top-bar">
+
+        <a href="home.html" class="icon-button" aria-label="Go home">
+            <i class="fa-solid fa-arrow-left"></i>
+        </a>
+
+        <h1>Statistics</h1>
+
+        <a href="profile.html" class="icon-button" aria-label="Open profile">
+            <i class="fa-solid fa-user"></i>
+        </a>
+
+    </header>
+
+    <main>
+
+        <section class="welcome-section">
+            <p class="eyebrow">YOUR PROGRESS</p>
+
+            <h2 id="welcome-message">
+                Keep building momentum.
+            </h2>
+
+            <p>
+                Here is how your Ascendra journey is going.
+            </p>
+        </section>
+
+        <h2 class="category-title">
+            <i class="fa-solid fa-list-check"></i>
+            Task Statistics
+        </h2>
+
+        <section class="stats-grid">
+
+            <article class="stat-card">
+                <div class="stat-icon">
+                    <i class="fa-solid fa-list"></i>
+                </div>
+
+                <div>
+                    <h3 id="total-tasks">0</h3>
+                    <p>Total Tasks</p>
+                </div>
+            </article>
+
+            <article class="stat-card">
+                <div class="stat-icon">
+                    <i class="fa-solid fa-circle-check"></i>
+                </div>
+
+                <div>
+                    <h3 id="completed-tasks">0</h3>
+                    <p>Completed Tasks</p>
+                </div>
+            </article>
+
+            <article class="stat-card">
+                <div class="stat-icon">
+                    <i class="fa-solid fa-hourglass-half"></i>
+                </div>
+
+                <div>
+                    <h3 id="remaining-tasks">0</h3>
+                    <p>Remaining Tasks</p>
+                </div>
+            </article>
+
+            <article class="stat-card">
+                <div class="stat-icon">
+                    <i class="fa-solid fa-percent"></i>
+                </div>
+
+                <div>
+                    <h3 id="task-completion-rate">0%</h3>
+                    <p>Task Completion</p>
+                </div>
+            </article>
+
+        </section>
+
+        <section class="progress-card">
+
+            <div class="section-heading">
+                <div>
+                    <p class="eyebrow">TASK PROGRESS</p>
+                    <h2>Overall Task Completion</h2>
+                </div>
+
+                <strong id="task-progress-label">0%</strong>
+            </div>
+
+            <div class="progress-track">
+                <div id="task-progress-fill"></div>
+            </div>
+
+            <p id="task-progress-message">
+                Add your first task to begin tracking progress.
+            </p>
+
+        </section>
+
+        <h2 class="category-title">
+            <i class="fa-solid fa-repeat"></i>
+            Habit Statistics
+        </h2>
+
+        <section class="stats-grid">
+
+            <article class="stat-card habit-stat-card">
+                <div class="stat-icon habit-icon">
+                    <i class="fa-solid fa-layer-group"></i>
+                </div>
+
+                <div>
+                    <h3 id="total-habits">0</h3>
+                    <p>Total Habits</p>
+                </div>
+            </article>
+
+            <article class="stat-card habit-stat-card">
+                <div class="stat-icon habit-icon">
+                    <i class="fa-solid fa-thumbs-up"></i>
+                </div>
+
+                <div>
+                    <h3 id="successful-habit-days">0</h3>
+                    <p>Successful Check-ins</p>
+                </div>
+            </article>
+
+            <article class="stat-card habit-stat-card">
+                <div class="stat-icon habit-icon">
+                    <i class="fa-solid fa-xmark"></i>
+                </div>
+
+                <div>
+                    <h3 id="missed-habit-days">0</h3>
+                    <p>Missed Check-ins</p>
+                </div>
+            </article>
+
+            <article class="stat-card habit-stat-card">
+                <div class="stat-icon habit-icon">
+                    <i class="fa-solid fa-chart-line"></i>
+                </div>
+
+                <div>
+                    <h3 id="habit-success-rate">0%</h3>
+                    <p>Habit Success Rate</p>
+                </div>
+            </article>
+
+        </section>
+
+        <section class="progress-card">
+
+            <div class="section-heading">
+                <div>
+                    <p class="eyebrow habit-eyebrow">HABIT PROGRESS</p>
+                    <h2>Overall Habit Success</h2>
+                </div>
+
+                <strong id="habit-progress-label">0%</strong>
+            </div>
+
+            <div class="progress-track">
+                <div id="habit-progress-fill"></div>
+            </div>
+
+            <p id="habit-progress-message">
+                Check off a habit to begin tracking it.
+            </p>
+
+        </section>
+
+        <section class="details-grid">
+
+            <article class="details-card">
+
+                <div class="section-heading">
+                    <div>
+                        <p class="eyebrow">TASK OVERVIEW</p>
+                        <h2>Due Dates</h2>
+                    </div>
+
+                    <i class="fa-solid fa-calendar-days section-icon"></i>
+                </div>
+
+                <div class="detail-row">
+                    <span>Due today</span>
+                    <strong id="due-today">0</strong>
+                </div>
+
+                <div class="detail-row">
+                    <span>Overdue</span>
+                    <strong id="overdue-tasks">0</strong>
+                </div>
+
+                <div class="detail-row">
+                    <span>Future tasks</span>
+                    <strong id="future-tasks">0</strong>
+                </div>
+
+            </article>
+
+            <article class="details-card">
+
+                <div class="section-heading">
+                    <div>
+                        <p class="eyebrow habit-eyebrow">TODAY</p>
+                        <h2>Habit Check-ins</h2>
+                    </div>
+
+                    <i class="fa-solid fa-calendar-check section-icon"></i>
+                </div>
+
+                <div class="detail-row">
+                    <span>Successful today</span>
+                    <strong id="habits-successful-today">0</strong>
+                </div>
+
+                <div class="detail-row">
+                    <span>Missed today</span>
+                    <strong id="habits-missed-today">0</strong>
+                </div>
+
+                <div class="detail-row">
+                    <span>Not checked today</span>
+                    <strong id="habits-unchecked-today">0</strong>
+                </div>
+
+            </article>
+
+        </section>
+
+        <section class="details-card achievement-card">
+
+            <div class="section-heading">
+                <div>
+                    <p class="eyebrow">MOMENTUM</p>
+                    <h2>Current Achievement</h2>
+                </div>
+
+                <i class="fa-solid fa-trophy section-icon"></i>
+            </div>
+
+            <div class="achievement-box">
+                <div id="achievement-icon">🌱</div>
+
+                <div>
+                    <h3 id="achievement-title">
+                        Getting Started
+                    </h3>
+
+                    <p id="achievement-description">
+                        Complete a task or habit check-in to begin.
+                    </p>
+                </div>
+            </div>
+
+        </section>
+
+        <section class="recent-card">
+
+            <div class="section-heading">
+                <div>
+                    <p class="eyebrow">RECENT ACTIVITY</p>
+                    <h2>Latest Tasks</h2>
+                </div>
+
+                <a href="todos.html" class="view-link">
+                    View Tasks
+                    <i class="fa-solid fa-arrow-right"></i>
+                </a>
+            </div>
+
+            <div id="recent-tasks"></div>
+
+        </section>
+
+    </main>
+
+    <script src="stats.js"></script>
+
+</body>
+
+</html>
+
