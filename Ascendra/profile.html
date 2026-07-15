@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Ascendra - Profile</title>
+
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+    >
+
+    <link rel="stylesheet" href="profile.css">
+</head>
+
+<body>
+
+    <header class="top-bar">
+
+        <a href="home.html" class="icon-button" aria-label="Go home">
+            <i class="fa-solid fa-arrow-left"></i>
+        </a>
+
+        <h1>My Profile</h1>
+
+        <a href="settings.html" class="icon-button" aria-label="Open settings">
+            <i class="fa-solid fa-gear"></i>
+        </a>
+
+    </header>
+
+    <main>
+
+        <section class="profile-card">
+
+            <div class="profile-picture-container">
+
+                <img
+                    id="profile-picture"
+                    src="https://placehold.co/160x160?text=Profile"
+                    alt="Profile picture"
+                >
+
+                <label for="profile-upload" class="camera-button">
+                    <i class="fa-solid fa-camera"></i>
+                </label>
+
+                <input
+                    type="file"
+                    id="profile-upload"
+                    accept="image/*"
+                    hidden
+                >
+
+            </div>
+
+            <h2 id="display-name">Ascendra User</h2>
+
+            <p id="display-username">@ascendrauser</p>
+
+            <p id="display-bio">
+                Becoming better, one day at a time.
+            </p>
+
+        </section>
+
+        <section class="stats-container">
+
+            <div class="stat-card">
+                <i class="fa-solid fa-fire"></i>
+                <h3 id="streak-number">0</h3>
+                <p>Day Streak</p>
+            </div>
+
+            <div class="stat-card">
+                <i class="fa-solid fa-list-check"></i>
+                <h3 id="tasks-number">0</h3>
+                <p>Tasks Done</p>
+            </div>
+
+            <div class="stat-card">
+                <i class="fa-solid fa-trophy"></i>
+                <h3 id="achievements-number">0</h3>
+                <p>Achievements</p>
+            </div>
+
+        </section>
+
+        <section class="edit-profile-card">
+
+            <h2>
+                <i class="fa-solid fa-user-pen"></i>
+                Edit Profile
+            </h2>
+
+            <div class="input-group">
+
+                <label for="name-input">First Name</label>
+
+                <div class="input-wrapper">
+                    <i class="fa-solid fa-user"></i>
+
+                    <input
+                        type="text"
+                        id="name-input"
+                        placeholder="Enter your first name"
+                        maxlength="30"
+                    >
+                </div>
+
+            </div>
+
+            <div class="input-group">
+
+                <label for="surname-input">Surname</label>
+
+                <div class="input-wrapper">
+                    <i class="fa-solid fa-user"></i>
+
+                    <input
+                        type="text"
+                        id="surname-input"
+                        placeholder="Enter your surname"
+                        maxlength="30"
+                    >
+                </div>
+
+            </div>
+
+            <div class="input-group">
+
+                <label for="username-input">Username</label>
+
+                <div class="input-wrapper">
+                    <i class="fa-solid fa-at"></i>
+
+                    <input
+                        type="text"
+                        id="username-input"
+                        placeholder="Enter your username"
+                        maxlength="20"
+                    >
+                </div>
+
+            </div>
+
+            <div class="input-group">
+
+                <label for="bio-input">Bio</label>
+
+                <textarea
+                    id="bio-input"
+                    placeholder="Write something about yourself..."
+                    maxlength="120"
+                ></textarea>
+
+                <p id="character-count">0 / 120</p>
+
+            </div>
+
+            <button id="save-button" type="button">
+                <i class="fa-solid fa-floppy-disk"></i>
+                Save Changes
+            </button>
+
+            <p id="save-message"></p>
+
+            <button onclick="window.location.href='login.html'" id="logout-button" type="button">Log Out <i class="fa-solid fa-right-from-bracket"></i></button>
+
+        </section>
+
+    </main>
+
+    <script src="profile.js"></script>
+
+</body>
+
+</html>
