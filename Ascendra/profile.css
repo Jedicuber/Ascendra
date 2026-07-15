@@ -363,3 +363,31 @@ textarea:focus {
         padding: 24px 18px;
     }
 }
+#logout-button {
+    width: 100%;
+    padding: 15px 20px;
+    margin-top: 12px;
+
+    color: rgb(205, 48, 48);
+    background-color: rgb(255, 238, 238);
+
+    border: 2px solid rgb(255, 205, 205);
+    border-radius: 14px;
+
+    font-weight: bold;
+    cursor: pointer;
+
+    transition: 0.2s ease;
+}
+
+#logout-button:hover {
+    color: white;
+    background-color: rgb(205, 48, 48);
+    border-color: rgb(205, 48, 48);
+
+    transform: translateY(-2px);
+}
+
+#logout-button i {
+    margin-right: 7px;
+}
