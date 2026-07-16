@@ -1272,7 +1272,7 @@ function goTo(page) {
 
 const buttons = document.querySelectorAll("#nav button");
 
-const radius = window.innerWidth <= 650 ? 115 : 240;
+const radius = window.innerWidth <= 650 ? 165 : 240;
 let angle = 0;
 let paused = false;
 
