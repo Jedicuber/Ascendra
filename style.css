@@ -4954,3 +4954,34 @@ body{min-height:100vh;background:#f4f1ff;color:#222;font-family:Arial,sans-serif
         max-width: 100%;
     }
 }
+@media (max-width: 768px) {
+
+    .ascendra-page[data-route="welcome"] h1{
+        font-size: 52px;
+        text-align: center;
+        padding: 0 15px;
+    }
+
+    .ascendra-page[data-route="welcome"] #subtitle1{
+        font-size: 18px;
+        text-align: center;
+        padding: 0 20px;
+    }
+
+    .ascendra-page[data-route="welcome"] #main_paragraph{
+        width: calc(100% - 30px);
+        max-width: none;
+        padding: 25px;
+        font-size: 18px;
+    }
+
+    .ascendra-page[data-route="welcome"] h2{
+        font-size: 36px;
+        text-align: center;
+    }
+
+    .ascendra-page[data-route="welcome"] .credits-link{
+        font-size: 20px;
+    }
+
+}
