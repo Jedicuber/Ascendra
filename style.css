@@ -4891,6 +4891,7 @@ body{min-height:100vh;background:#f4f1ff;color:#222;font-family:Arial,sans-serif
 .fa-brands {
     font-family: "Font Awesome 6 Brands" !important;
 }
+
 /* =========================
    MOBILE FIXES
 ========================= */
@@ -5019,22 +5020,35 @@ body{min-height:100vh;background:#f4f1ff;color:#222;font-family:Arial,sans-serif
 }
 @media (max-width: 650px) {
     .ascendra-page[data-route="menu"] #nav button {
-        width: 130px !important;
-        height: 78px !important;
-        min-height: 78px;
-        padding: 10px 8px !important;
+        width: 135px !important;
+        height: 135px !important;
+        min-width: 135px;
+        min-height: 135px;
 
-        font-size: 13px !important;
-        line-height: 1.15;
-        text-align: center;
+        padding: 12px !important;
+        font-size: 15px !important;
+        line-height: 1.2;
 
         white-space: normal;
-        overflow-wrap: anywhere;
-        border-radius: 18px !important;
-        gap: 6px !important;
+        overflow-wrap: normal;
+        word-break: keep-all;
+
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+
+        border-radius: 22px !important;
     }
 
     .ascendra-page[data-route="menu"] #nav button i {
-        font-size: 18px !important;
+        font-size: 30px !important;
     }
 }
+
+    .ascendra-page[data-route="menu"] #nav button i {
+        font-size: 22px !important;
+        margin-top: 6px;
+    }
+
