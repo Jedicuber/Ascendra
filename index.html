@@ -182,16 +182,24 @@
 <h1 id="todo_list">To-Dos</h1>
 <h5 id="subtitle3">For better task management</h5>
 <button id="add-btn"><strong>+ Add Task</strong></button>
-<div id="todo-list"></div>
-<div class="popup" id="popup">
-<div class="popup-box">
-<h2>Add Task</h2>
-<input id="task-input" placeholder="Task name" type="text"/>
-<input id="date-input" type="date"/>
-<br/><br/>
-<button id="save-btn">Save</button>
-<button id="cancel-btn">Cancel</button>
+<div class="todo-toolbar" aria-label="Filter tasks">
+<button class="todo-filter active" data-filter="all" type="button">All</button>
+<button class="todo-filter" data-filter="active" type="button">Active</button>
+<button class="todo-filter" data-filter="completed" type="button">Completed</button>
 </div>
+<p id="todo-summary" aria-live="polite"></p>
+<div id="todo-list" aria-live="polite"></div>
+<div aria-hidden="true" aria-labelledby="todo-dialog-title" class="popup" id="popup" role="dialog">
+<form class="popup-box" id="todo-form">
+<h2 id="todo-dialog-title">Add Task</h2>
+<label for="task-input">Task name</label>
+<input id="task-input" maxlength="120" placeholder="Task name" required="" type="text"/>
+<label for="date-input">Due date</label>
+<input id="date-input" required="" type="date"/>
+<br/><br/>
+<button id="save-btn" type="submit">Save</button>
+<button id="cancel-btn" type="button">Cancel</button>
+</form>
 </div>
 <div class="navbar">
 <button onclick="navigate('home')"><i class="fa-solid fa-mug-saucer"></i><br/>Home</button>

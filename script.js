@@ -530,14 +530,17 @@ if (todos.length === 0) {
 
     const addBtn = document.getElementById("add-btn");
     const popup = document.getElementById("popup");
-    const saveBtn = document.getElementById("save-btn");
     const cancelBtn = document.getElementById("cancel-btn");
+    const todoForm = document.getElementById("todo-form");
 
     const taskInput = document.getElementById("task-input");
     const dateInput = document.getElementById("date-input");
     const todoList = document.getElementById("todo-list");
+    const todoSummary = document.getElementById("todo-summary");
+    const filterButtons = [...document.querySelectorAll(".todo-filter")];
 
     let todos = JSON.parse(localStorage.getItem("todos")) || [];
+    let activeFilter = "all";
 
     function saveTodos() {
         localStorage.setItem("todos", JSON.stringify(todos));
@@ -545,13 +548,22 @@ if (todos.length === 0) {
 
     function showTodos() {
         todoList.innerHTML = "";
+        const remaining = todos.filter(todo => !todo.completed).length;
+        todoSummary.textContent = `${remaining} ${remaining === 1 ? "task" : "tasks"} remaining`;
 
-        if (todos.length === 0) {
-            todoList.innerHTML = "<p>No tasks yet</p>";
+        const visibleTodos = todos
+            .filter(todo => activeFilter === "all" || (activeFilter === "completed" ? todo.completed : !todo.completed))
+            .sort((a, b) => String(a.date).localeCompare(String(b.date)) || Number(a.id) - Number(b.id));
+
+        if (visibleTodos.length === 0) {
+            const emptyMessage = document.createElement("p");
+            emptyMessage.className = "todo-empty";
+            emptyMessage.textContent = todos.length === 0 ? "No tasks yet" : `No ${activeFilter} tasks`;
+            todoList.appendChild(emptyMessage);
             return;
         }
 
-        todos.forEach(todo => {
+        visibleTodos.forEach(todo => {
             const card = document.createElement("div");
             card.classList.add("todo-card");
 
@@ -559,23 +571,27 @@ if (todos.length === 0) {
                 card.classList.add("completed");
             }
 
-            card.innerHTML = `
-                <div class="todo-info">
-                    <div class="todo-title">
-                        ${todo.completed ? "✅" : "⬜"} ${todo.task}
-                    </div>
-                    <div class="todo-date">Due: ${todo.date}</div>
-                </div>
+            const info = document.createElement("div");
+            info.className = "todo-info";
+            const title = document.createElement("div");
+            title.className = "todo-title";
+            title.textContent = todo.task;
+            const dueDate = document.createElement("div");
+            dueDate.className = "todo-date";
+            dueDate.textContent = `Due: ${todo.date}`;
+            info.append(title, dueDate);
 
-                <button class="complete-btn">
-                    ${todo.completed ? "Undo" : "Done"}
-                </button>
+            const completeBtn = document.createElement("button");
+            completeBtn.className = "complete-btn";
+            completeBtn.type = "button";
+            completeBtn.textContent = todo.completed ? "Undo" : "Done";
+            completeBtn.setAttribute("aria-label", `${todo.completed ? "Mark incomplete" : "Mark complete"}: ${todo.task}`);
 
-                <button class="delete-btn">🗑️</button>
-            `;
-
-            const completeBtn = card.querySelector(".complete-btn");
-            const deleteBtn = card.querySelector(".delete-btn");
+            const deleteBtn = document.createElement("button");
+            deleteBtn.className = "delete-btn";
+            deleteBtn.type = "button";
+            deleteBtn.textContent = "Delete";
+            deleteBtn.setAttribute("aria-label", `Delete task: ${todo.task}`);
 
             completeBtn.onclick = () => {
                 todo.completed = !todo.completed;
@@ -589,22 +605,42 @@ if (todos.length === 0) {
                 showTodos();
             };
 
+            card.append(info, completeBtn, deleteBtn);
             todoList.appendChild(card);
         });
     }
 
+    function closePopup() {
+        popup.style.display = "none";
+        popup.setAttribute("aria-hidden", "true");
+        todoForm.reset();
+        addBtn.focus();
+    }
+
     addBtn.onclick = () => {
         popup.style.display = "block";
+        popup.setAttribute("aria-hidden", "false");
+        dateInput.min = new Date().toISOString().split("T")[0];
         taskInput.focus();
     };
 
-    cancelBtn.onclick = () => {
-        popup.style.display = "none";
-        taskInput.value = "";
-        dateInput.value = "";
-    };
+    cancelBtn.onclick = closePopup;
 
-    saveBtn.onclick = () => {
+    filterButtons.forEach(button => {
+        button.onclick = () => {
+            activeFilter = button.dataset.filter;
+            filterButtons.forEach(item => {
+                const selected = item === button;
+                item.classList.toggle("active", selected);
+                item.setAttribute("aria-pressed", String(selected));
+            });
+            showTodos();
+        };
+        button.setAttribute("aria-pressed", String(button.dataset.filter === activeFilter));
+    });
+
+    todoForm.onsubmit = event => {
+        event.preventDefault();
         const task = taskInput.value.trim();
         const date = dateInput.value;
 
@@ -622,16 +658,23 @@ if (todos.length === 0) {
 
         saveTodos();
         showTodos();
-
-        popup.style.display = "none";
-        taskInput.value = "";
-        dateInput.value = "";
+        closePopup();
     };
+
+    popup.onclick = event => {
+        if (event.target === popup) closePopup();
+    };
+
+    const handleEscape = event => {
+        if (event.key === "Escape" && popup.style.display === "block") closePopup();
+    };
+    document.addEventListener("keydown", handleEscape);
 
     showTodos();
 
 window.saveTodos = saveTodos;
 window.showTodos = showTodos;
+return () => document.removeEventListener("keydown", handleEscape);
 },
 "habits": function init_habits(){
 

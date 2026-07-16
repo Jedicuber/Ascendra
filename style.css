@@ -949,6 +949,33 @@ body{min-height:100vh;background:#f4f1ff;color:#222;font-family:Arial,sans-serif
     font-size: 16px;
 }
 
+.ascendra-page[data-route="todos"] .todo-toolbar{
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    margin: 22px auto 8px;
+}
+
+.ascendra-page[data-route="todos"] .todo-filter{
+    border: 1px solid rgba(127, 0, 255, .25);
+    border-radius: 999px;
+    background: var(--card);
+    color: var(--text);
+    cursor: pointer;
+    padding: 8px 16px;
+}
+
+.ascendra-page[data-route="todos"] .todo-filter.active,
+.ascendra-page[data-route="todos"] .todo-filter:hover{
+    background: var(--accent);
+    color: white;
+}
+
+.ascendra-page[data-route="todos"] #todo-summary{
+    color: var(--muted);
+    margin: 8px 0 0;
+}
+
 .ascendra-page[data-route="todos"] .todo-card{
     width: 70%;
     max-width: 700px;
@@ -991,15 +1018,12 @@ body{min-height:100vh;background:#f4f1ff;color:#222;font-family:Arial,sans-serif
 }
 
 .ascendra-page[data-route="todos"] .delete-btn{
-    opacity: 0;
-    border: none;
-    background: none;
-    font-size: 22px;
+    border: 1px solid #fecaca;
+    border-radius: 10px;
+    background: #fff1f2;
+    color: #be123c;
+    padding: 8px 12px;
     cursor: pointer;
-}
-
-.ascendra-page[data-route="todos"] .todo-card:hover .delete-btn{
-    opacity: 1;
 }
 
 .ascendra-page[data-route="todos"] .popup{
@@ -1016,6 +1040,33 @@ body{min-height:100vh;background:#f4f1ff;color:#222;font-family:Arial,sans-serif
     padding: 25px;
     border-radius: 20px;
     text-align: center;
+}
+
+.ascendra-page[data-route="todos"] .popup-box label{
+    display: block;
+    margin: 12px 0 6px;
+    text-align: left;
+}
+
+.ascendra-page[data-route="todos"] .popup-box input{
+    box-sizing: border-box;
+    width: 100%;
+    padding: 10px 12px;
+}
+
+@media (max-width: 600px) {
+    .ascendra-page[data-route="todos"] .todo-card{
+        width: auto;
+        margin: 18px 8px;
+        padding: 18px;
+        border-radius: 22px;
+        flex-wrap: wrap;
+        gap: 12px;
+    }
+
+    .ascendra-page[data-route="todos"] .todo-info{
+        flex-basis: 100%;
+    }
 }
 .ascendra-page[data-route="todos"] .navbar{
     position: fixed;
