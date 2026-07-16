@@ -4985,3 +4985,35 @@ body{min-height:100vh;background:#f4f1ff;color:#222;font-family:Arial,sans-serif
     }
 
 }
+@media (max-width: 650px) {
+    .navbar {
+        width: calc(100% - 16px) !important;
+        max-width: none !important;
+        left: 8px !important;
+        transform: none !important;
+        bottom: 8px !important;
+        border-radius: 18px !important;
+        overflow-x: auto !important;
+        justify-content: flex-start;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    .navbar button {
+        flex: 0 0 72px !important;
+        min-width: 72px;
+        padding: 10px 4px !important;
+        font-size: 11px !important;
+        white-space: nowrap;
+    }
+
+    .navbar button i {
+        display: block;
+        margin-bottom: 4px;
+        font-size: 16px;
+    }
+}
+@media (max-width: 650px) {
+    .ascendra-page {
+        padding-bottom: 90px;
+    }
+}
