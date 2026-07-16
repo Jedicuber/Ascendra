@@ -4891,3 +4891,66 @@ body{min-height:100vh;background:#f4f1ff;color:#222;font-family:Arial,sans-serif
 .fa-brands {
     font-family: "Font Awesome 6 Brands" !important;
 }
+/* =========================
+   MOBILE FIXES
+========================= */
+
+@media (max-width: 600px) {
+
+    body {
+        overflow-x: hidden;
+    }
+
+    .ascendra-page {
+        width: 100%;
+        overflow-x: hidden;
+    }
+
+    h1 {
+        font-size: 3rem !important;
+        line-height: 1.05;
+        overflow-wrap: anywhere;
+    }
+
+    h2 {
+        font-size: 2rem !important;
+    }
+
+    p {
+        font-size: 1.1rem !important;
+        line-height: 1.6;
+    }
+
+    .welcome-card,
+    .about-card,
+    .hero-card {
+        width: calc(100% - 24px) !important;
+        max-width: 100% !important;
+        margin: 20px auto !important;
+        padding: 28px 18px !important;
+        box-sizing: border-box;
+    }
+
+    .welcome-card p,
+    .about-card p {
+        text-align: left;
+    }
+
+    .welcome-links,
+    .auth-links {
+        display: flex;
+        flex-direction: column;
+        gap: 14px;
+        align-items: center;
+    }
+
+    img {
+        max-width: 100%;
+        height: auto;
+    }
+
+    button,
+    a {
+        max-width: 100%;
+    }
+}
