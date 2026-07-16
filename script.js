@@ -1315,9 +1315,20 @@ function goTo(page) {
 
 const buttons = document.querySelectorAll("#nav button");
 
-const radius = window.innerWidth <= 650 ? 165 : 240;
+const compactMenuQuery = window.matchMedia("(max-width: 768px), (max-height: 500px)");
+
+function clearOrbitPositions() {
+    buttons.forEach(button => {
+        button.style.left = "";
+        button.style.top = "";
+        button.style.transform = "";
+    });
+}
+
+const radius = 240;
 let angle = 0;
 let paused = false;
+let animationFrame = null;
 
 // Pause rotation while hovering over a button
 buttons.forEach(button => {
@@ -1333,6 +1344,12 @@ buttons.forEach(button => {
 });
 
 function animate() {
+
+    if (compactMenuQuery.matches) {
+        clearOrbitPositions();
+        animationFrame = null;
+        return;
+    }
 
     if (!paused) {
         angle += 0.0015; // Rotation speed
@@ -1353,13 +1370,28 @@ function animate() {
 
     });
 
-    requestAnimationFrame(animate);
+    animationFrame = requestAnimationFrame(animate);
 
 }
 
-animate();
+function syncMenuLayout() {
+    if (compactMenuQuery.matches) {
+        cancelAnimationFrame(animationFrame);
+        animationFrame = null;
+        clearOrbitPositions();
+    } else if (animationFrame === null) {
+        animate();
+    }
+}
+
+window.addEventListener("resize", syncMenuLayout);
+syncMenuLayout();
 window.animate = animate;
 window.goTo = goTo;
+return () => {
+    cancelAnimationFrame(animationFrame);
+    window.removeEventListener("resize", syncMenuLayout);
+};
 },
 "settings": function init_settings() {
 
