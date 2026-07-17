@@ -2627,3 +2627,8 @@ return () => clearTimeout(messageTimeout);
 
 if(!location.hash){history.replaceState({route:"welcome"},"","#/welcome");}
 renderRoute(getRoute());
+
+document.addEventListener("keydown", function(event) {
+
+    // keyboard shortcuts
+});
