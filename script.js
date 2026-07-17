@@ -2693,13 +2693,10 @@ searchInput.addEventListener("input", function() {
     showSearchResults(matches);
 });
 document.addEventListener("keydown", function(event) {
-    if (event.ctrlKey && event.shiftKey && event.key.toLowerCase() === "k") {
-        event.preventDefault();
-        openSearch();
-    }
+    console.log(event.key, event.ctrlKey, event.shiftKey);
 
-    if (event.key === "Escape") {
-        closeSearch();
+    if (event.ctrlKey && event.shiftKey && event.key.toLowerCase() === "k") {
+        console.log("Shortcut works!");
     }
 });
 searchOverlay.addEventListener("click", function(event) {
