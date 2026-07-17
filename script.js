@@ -3,6 +3,268 @@
 const app = document.getElementById("app");
 const backButton = document.getElementById("spaBackButton");
 const initializedCleanups = new Map();
+const PASSWORD_ITERATIONS = 600000;
+const DAY_IN_MILLISECONDS = 24 * 60 * 60 * 1000;
+
+function formatLocalDate(date = new Date()) {
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, "0");
+    const day = String(date.getDate()).padStart(2, "0");
+    return `${year}-${month}-${day}`;
+}
+
+function parseLocalDateTime(value, fallbackTime = "") {
+    const match = String(value || "").trim().match(
+        /^(\d{4})-(\d{2})-(\d{2})(?:[ T](\d{1,2}):(\d{2}))?/
+    );
+    if (!match) return null;
+
+    const fallbackMatch = String(fallbackTime || "").match(/^(\d{1,2}):(\d{2})/);
+    const year = Number(match[1]);
+    const month = Number(match[2]);
+    const day = Number(match[3]);
+    const hour = Number(match[4] ?? fallbackMatch?.[1] ?? 0);
+    const minute = Number(match[5] ?? fallbackMatch?.[2] ?? 0);
+    const parsed = new Date(year, month - 1, day, hour, minute, 0, 0);
+
+    if (
+        parsed.getFullYear() !== year ||
+        parsed.getMonth() !== month - 1 ||
+        parsed.getDate() !== day ||
+        parsed.getHours() !== hour ||
+        parsed.getMinutes() !== minute
+    ) {
+        return null;
+    }
+
+    return parsed;
+}
+
+function dateKeyDayNumber(value) {
+    const parsed = value instanceof Date ? value : parseLocalDateTime(value);
+    if (!parsed) return Number.NaN;
+    return Date.UTC(parsed.getFullYear(), parsed.getMonth(), parsed.getDate()) / DAY_IN_MILLISECONDS;
+}
+
+function eventDateTime(event) {
+    return parseLocalDateTime(event?.date, event?.time);
+}
+
+function bytesToBase64(bytes) {
+    let binary = "";
+    bytes.forEach(byte => { binary += String.fromCharCode(byte); });
+    return btoa(binary);
+}
+
+function base64ToBytes(value) {
+    const binary = atob(value);
+    return Uint8Array.from(binary, character => character.charCodeAt(0));
+}
+
+async function derivePasswordDigest(password, salt, iterations) {
+    if (!globalThis.crypto?.subtle) {
+        throw new Error("Secure password storage requires HTTPS or localhost.");
+    }
+
+    const keyMaterial = await crypto.subtle.importKey(
+        "raw",
+        new TextEncoder().encode(password),
+        "PBKDF2",
+        false,
+        ["deriveBits"]
+    );
+
+    const bits = await crypto.subtle.deriveBits(
+        { name: "PBKDF2", hash: "SHA-256", salt, iterations },
+        keyMaterial,
+        256
+    );
+    return new Uint8Array(bits);
+}
+
+async function createPasswordCredentials(password) {
+    if (!globalThis.crypto?.subtle) {
+        throw new Error("Secure password storage requires HTTPS or localhost.");
+    }
+    const salt = crypto.getRandomValues(new Uint8Array(16));
+    const digest = await derivePasswordDigest(password, salt, PASSWORD_ITERATIONS);
+    return {
+        version: 1,
+        kdf: "PBKDF2",
+        hash: "SHA-256",
+        iterations: PASSWORD_ITERATIONS,
+        salt: bytesToBase64(salt),
+        digest: bytesToBase64(digest)
+    };
+}
+
+async function verifyPasswordCredentials(password, credentials) {
+    if (
+        !credentials ||
+        credentials.kdf !== "PBKDF2" ||
+        credentials.hash !== "SHA-256" ||
+        !Number.isInteger(credentials.iterations) ||
+        credentials.iterations < 100000 ||
+        credentials.iterations > 1000000
+    ) {
+        return false;
+    }
+
+    let salt;
+    let expected;
+    try {
+        salt = base64ToBytes(credentials.salt);
+        expected = base64ToBytes(credentials.digest);
+    } catch (error) {
+        return false;
+    }
+
+    const actual = await derivePasswordDigest(password, salt, credentials.iterations);
+    if (actual.length !== expected.length) return false;
+
+    let difference = 0;
+    for (let index = 0; index < actual.length; index++) {
+        difference |= actual[index] ^ expected[index];
+    }
+    return difference === 0;
+}
+
+function accountStorageKey(username) {
+    return `ascendra:user:${String(username || "").trim().toLowerCase()}`;
+}
+
+function readStoredJson(key) {
+    if (!key) return null;
+    try {
+        return JSON.parse(localStorage.getItem(key));
+    } catch (error) {
+        return null;
+    }
+}
+
+function findStoredAccount(username) {
+    const modernKey = accountStorageKey(username);
+    const modernAccount = readStoredJson(modernKey);
+    if (modernAccount && !Array.isArray(modernAccount)) {
+        return { account: modernAccount, key: modernKey, legacy: false };
+    }
+
+    const requestedUsername = String(username || "").trim();
+    const requestedUsernameLower = requestedUsername.toLowerCase();
+    const legacyKeys = [requestedUsername];
+
+    for (let index = 0; index < localStorage.length; index++) {
+        const candidateKey = localStorage.key(index);
+        if (
+            candidateKey &&
+            candidateKey.toLowerCase() === requestedUsernameLower &&
+            !legacyKeys.includes(candidateKey)
+        ) {
+            legacyKeys.push(candidateKey);
+        }
+    }
+
+    for (const legacyKey of legacyKeys) {
+        const legacyAccount = readStoredJson(legacyKey);
+        if (
+            legacyAccount &&
+            !Array.isArray(legacyAccount) &&
+            (legacyAccount.credentials || typeof legacyAccount.password === "string")
+        ) {
+            return { account: legacyAccount, key: legacyKey, legacy: true };
+        }
+    }
+
+    return null;
+}
+
+function saveStoredAccount(account) {
+    localStorage.setItem(accountStorageKey(account.username), JSON.stringify(account));
+}
+
+function createModalController(dialog, initialFocus, options = {}) {
+    const focusableSelector = [
+        "a[href]",
+        "button:not([disabled])",
+        "input:not([disabled]):not([type='hidden'])",
+        "select:not([disabled])",
+        "textarea:not([disabled])",
+        "[tabindex]:not([tabindex='-1'])"
+    ].join(",");
+    let previousFocus = null;
+
+    function getFocusableElements() {
+        return [...dialog.querySelectorAll(focusableSelector)]
+            .filter(element => element.getClientRects().length > 0);
+    }
+
+    function close({ restoreFocus = true } = {}) {
+        dialog.style.display = "none";
+        dialog.setAttribute("aria-hidden", "true");
+        document.removeEventListener("keydown", handleKeydown);
+        options.onClose?.();
+
+        if (restoreFocus && previousFocus?.isConnected) {
+            previousFocus.focus();
+        }
+        previousFocus = null;
+    }
+
+    function handleKeydown(event) {
+        if (dialog.getAttribute("aria-hidden") !== "false") return;
+
+        if (event.key === "Escape") {
+            event.preventDefault();
+            close();
+            return;
+        }
+
+        if (event.key !== "Tab") return;
+        const focusable = getFocusableElements();
+        if (focusable.length === 0) {
+            event.preventDefault();
+            dialog.focus();
+            return;
+        }
+
+        const first = focusable[0];
+        const last = focusable[focusable.length - 1];
+        if (!dialog.contains(document.activeElement)) {
+            event.preventDefault();
+            first.focus();
+        } else if (event.shiftKey && document.activeElement === first) {
+            event.preventDefault();
+            last.focus();
+        } else if (!event.shiftKey && document.activeElement === last) {
+            event.preventDefault();
+            first.focus();
+        }
+    }
+
+    function open() {
+        previousFocus = document.activeElement;
+        dialog.style.display = options.display || "block";
+        dialog.setAttribute("aria-hidden", "false");
+        options.onOpen?.();
+        document.addEventListener("keydown", handleKeydown);
+
+        requestAnimationFrame(() => {
+            if (dialog.getAttribute("aria-hidden") !== "false") return;
+            const target = typeof initialFocus === "function" ? initialFocus() : initialFocus;
+            (target || getFocusableElements()[0] || dialog).focus();
+        });
+    }
+
+    function destroy() {
+        document.removeEventListener("keydown", handleKeydown);
+        dialog.setAttribute("aria-hidden", "true");
+        previousFocus = null;
+    }
+
+    return { open, close, destroy };
+}
+
+localStorage.removeItem("password");
 
 function normalizeRoute(value) {
     let route = String(value || "welcome").replace(/^#\/?/, "").replace(/\.html$/, "");
@@ -86,19 +348,28 @@ const canvas = document.getElementById("canvas");
 const ctx = canvas.getContext("2d");
 
 let backgroundStars = [];
+let viewportWidth = window.innerWidth;
+let viewportHeight = window.innerHeight;
+let animationFrame = null;
 
 // Resize canvas and create stars
 function resizeCanvas() {
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
+    viewportWidth = window.innerWidth;
+    viewportHeight = window.innerHeight;
+    const pixelRatio = Math.min(window.devicePixelRatio || 1, 2);
+    canvas.style.width = viewportWidth + "px";
+    canvas.style.height = viewportHeight + "px";
+    canvas.width = Math.round(viewportWidth * pixelRatio);
+    canvas.height = Math.round(viewportHeight * pixelRatio);
+    ctx.setTransform(pixelRatio, 0, 0, pixelRatio, 0, 0);
 
     backgroundStars = [];
 
     // Create random stars
     for (let i = 0; i < 75; i++) {
         backgroundStars.push({
-            x: Math.random() * canvas.width,
-            y: Math.random() * canvas.height,
+            x: Math.random() * viewportWidth,
+            y: Math.random() * viewportHeight,
             size: Math.random() * 2.5 + 1,
             color: Math.random() < 0.85
                 ? "white"
@@ -128,7 +399,7 @@ function draw() {
 
     // Background
     ctx.fillStyle = "black";
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    ctx.fillRect(0, 0, viewportWidth, viewportHeight);
 
     // Draw random stars
     for (const star of backgroundStars) {
@@ -138,9 +409,11 @@ function draw() {
     // Center the shooting star
     ctx.save();
 
-    const offsetX = (canvas.width - 400) / 2;
-    const offsetY = (canvas.height - 400) / 2;
+    const sceneScale = Math.min(1, viewportWidth * 0.9 / 400, viewportHeight * 0.9 / 400);
+    const offsetX = (viewportWidth - 400 * sceneScale) / 2;
+    const offsetY = (viewportHeight - 400 * sceneScale) / 2;
     ctx.translate(offsetX, offsetY);
+    ctx.scale(sceneScale, sceneScale);
 
     // Red glow
     circle(xPos, yPos, starEdge, "red");
@@ -172,78 +445,135 @@ if (xPos < -150 || yPos > 550) {
     starEdge = 12;
 }
 
-    requestAnimationFrame(draw);
+    animationFrame = requestAnimationFrame(draw);
 }
 
 draw();
-window.circle = circle;
-window.draw = draw;
-window.resizeCanvas = resizeCanvas;
+return () => {
+    cancelAnimationFrame(animationFrame);
+    window.removeEventListener("resize", resizeCanvas);
+};
 },
 "login": function init_login(){
 const loginForm = document.getElementById("login");
+const usernameInput = document.getElementById("username");
+const passwordInput = document.getElementById("password");
+const submitButton = loginForm.querySelector('[type="submit"]');
 
-loginForm.addEventListener("submit", function(event) {
+loginForm.addEventListener("submit", async function(event) {
     event.preventDefault();
 
-    const username = document.getElementById("username").value;
-    const password = document.getElementById("password").value;
+    const username = usernameInput.value.trim();
+    const password = passwordInput.value;
+    const record = findStoredAccount(username);
 
-    const savedUser = JSON.parse(localStorage.getItem(username));
+    submitButton.disabled = true;
+    try {
+        let savedUser = record?.account || null;
+        let passwordMatches = false;
+        let needsMigration = false;
 
-    if (savedUser && savedUser.password === password) {
+        if (savedUser?.credentials) {
+            passwordMatches = await verifyPasswordCredentials(password, savedUser.credentials);
+            needsMigration = passwordMatches && (
+                savedUser.credentials.iterations < PASSWORD_ITERATIONS ||
+                typeof savedUser.password === "string"
+            );
+        } else if (savedUser && typeof savedUser.password === "string") {
+            passwordMatches = savedUser.password === password;
+            needsMigration = passwordMatches;
+        }
+
+        if (!passwordMatches) {
+            alert("Wrong username or password!");
+            passwordInput.value = "";
+            passwordInput.focus();
+            return;
+        }
+
+        if (needsMigration) {
+            savedUser = {
+                ...savedUser,
+                username: savedUser.username || username,
+                credentials: await createPasswordCredentials(password)
+            };
+            delete savedUser.password;
+            saveStoredAccount(savedUser);
+            if (record.key !== accountStorageKey(savedUser.username)) {
+                localStorage.removeItem(record.key);
+            }
+        }
+
+        const savedUsername = savedUser.username || username;
         localStorage.setItem("name", savedUser.name || "");
         localStorage.setItem("surname", savedUser.surname || "");
-        localStorage.setItem("username", savedUser.username || username);
-        localStorage.setItem("password", savedUser.password || "");
-        localStorage.setItem("loggedInUser", savedUser.username || username);
-        alert("Welcome back, " + savedUser.name + "!");
-            navigate('home');
-    } else {
-        alert("Wrong username or password!");
+        localStorage.setItem("username", savedUsername);
+        localStorage.setItem("loggedInUser", savedUsername);
+        localStorage.removeItem("password");
+        alert("Welcome back, " + (savedUser.name || savedUsername) + "!");
+        loginForm.reset();
+        navigate("home");
+    } catch (error) {
+        console.error("Could not verify the account:", error);
+        alert(error.message || "Could not securely verify this account.");
+    } finally {
+        submitButton.disabled = false;
     }
-
-    loginForm.reset();
 });
 
 },
 "signup": function init_signup(){
 const signupForm = document.getElementById("signupForm");
+const submitButton = signupForm.querySelector('[type="submit"]');
 
-signupForm.addEventListener("submit", function(event) {
+signupForm.addEventListener("submit", async function(event) {
     event.preventDefault();
 
-   const name = document.getElementById("name").value.trim();
+const name = document.getElementById("name").value.trim();
 const surname = document.getElementById("surname").value.trim();
 const username = document.getElementById("username").value.trim();
 const password = document.getElementById("password").value;
 
-localStorage.setItem("name", name);
-localStorage.setItem("surname", surname);
-localStorage.setItem("username", username);
-localStorage.setItem("password", password);
-    const user = {
-        name: name,
-        surname: surname,
-        username: username,
-        password: password
-    };
+    if (password.length < 8) {
+        alert("Use a password with at least 8 characters.");
+        return;
+    }
 
-    localStorage.setItem(username, JSON.stringify(user));
+    if (findStoredAccount(username)) {
+        alert("That username is already in use.");
+        return;
+    }
 
-    alert("Account created!");
+    submitButton.disabled = true;
+    try {
+        const user = {
+            version: 2,
+            name,
+            surname,
+            username,
+            credentials: await createPasswordCredentials(password)
+        };
 
-    navigate('home');
+        saveStoredAccount(user);
+        localStorage.setItem("name", name);
+        localStorage.setItem("surname", surname);
+        localStorage.setItem("username", username);
+        localStorage.setItem("loggedInUser", username);
+        localStorage.removeItem("password");
 
-    signupForm.reset();
+        alert("Account created!");
+        signupForm.reset();
+        navigate("home");
+    } catch (error) {
+        console.error("Could not create the account:", error);
+        alert(error.message || "Could not securely create this account.");
+    } finally {
+        submitButton.disabled = false;
+    }
 });
 
 },
 "home": function init_home(){
-function goTo(page) {
-    window.location.href = page;
-}
-
 // ===========================
 // Greeting
 // ===========================
@@ -296,7 +626,7 @@ if (dateText) {
 // Load Data
 // ===========================
 
-const todayKey = now.toISOString().split("T")[0];
+const todayDayNumber = dateKeyDayNumber(now);
 
 const todos = JSON.parse(localStorage.getItem("todos")) || [];
 const events = JSON.parse(localStorage.getItem("events")) || [];
@@ -347,14 +677,15 @@ if (calendarList) {
     calendarList.innerHTML = "";
 
     const nextEvents = events
-        .filter(event => event.date >= todayKey)
+        .filter(event => {
+            const date = eventDateTime(event);
+            return date && dateKeyDayNumber(date) >= todayDayNumber;
+        })
         .sort((a, b) => {
-
-            const dateA = new Date(`${a.date}T${a.time || "00:00"}`);
-            const dateB = new Date(`${b.date}T${b.time || "00:00"}`);
-
-            return dateA - dateB;
-
+            const dateA = eventDateTime(a);
+            const dateB = eventDateTime(b);
+            return (dateA?.getTime() ?? Number.POSITIVE_INFINITY) -
+                (dateB?.getTime() ?? Number.POSITIVE_INFINITY);
         })
         .slice(0, 3);
 
@@ -462,14 +793,13 @@ function createStar(){
 // Random every 3–7 seconds
 createStar();
 
-setInterval(() => {
+const starInterval = setInterval(() => {
 
     createStar();
 
 }, Math.random() * 4000 + 3000);
 
-window.createStar = createStar;
-window.goTo = goTo;
+return () => clearInterval(starInterval);
 },
 "alerts": function init_alerts(){
 const alertList = document.getElementById("alertList");
@@ -484,26 +814,24 @@ if (todos.length === 0) {
 
 } else {
 
-    // Sort by due date
-    todos.sort((a, b) => new Date(a.date) - new Date(b.date));
+    // Sort by local calendar day without converting date-only values to UTC.
+    todos.sort((a, b) => dateKeyDayNumber(a.date) - dateKeyDayNumber(b.date));
+
+    const todayDayNumber = dateKeyDayNumber(new Date());
 
     todos.forEach(todo => {
 
         const card = document.createElement("div");
         card.classList.add("alert-card");
 
-        const dueDate = new Date(todo.date);
-        const today = new Date();
-
-        // Remove the time part so the comparison is by date only
-        dueDate.setHours(0, 0, 0, 0);
-        today.setHours(0, 0, 0, 0);
-
-        const daysLeft = Math.floor((dueDate - today) / (1000 * 60 * 60 * 24));
+        const dueDayNumber = dateKeyDayNumber(todo.date);
+        const daysLeft = dueDayNumber - todayDayNumber;
 
         let status = "";
 
-        if (daysLeft < 0) {
+        if (!Number.isFinite(daysLeft)) {
+            status = "Date unavailable";
+        } else if (daysLeft < 0) {
             status = "🔴 Overdue";
         } else if (daysLeft === 0) {
             status = "🟠 Due Today";
@@ -513,11 +841,13 @@ if (todos.length === 0) {
             status = `🟢 Due in ${daysLeft} days`;
         }
 
-        card.innerHTML = `
-            <h3>${todo.task}</h3>
-            <p>📅 ${todo.date}</p>
-            <p>${status}</p>
-        `;
+        const title = document.createElement("h3");
+        const date = document.createElement("p");
+        const statusText = document.createElement("p");
+        title.textContent = todo.task;
+        date.textContent = `📅 ${todo.date}`;
+        statusText.textContent = status;
+        card.append(title, date, statusText);
 
         alertList.appendChild(card);
 
@@ -538,6 +868,9 @@ if (todos.length === 0) {
     const todoList = document.getElementById("todo-list");
     const todoSummary = document.getElementById("todo-summary");
     const filterButtons = [...document.querySelectorAll(".todo-filter")];
+    const modal = createModalController(popup, taskInput, {
+        onClose: () => todoForm.reset()
+    });
 
     let todos = JSON.parse(localStorage.getItem("todos")) || [];
     let activeFilter = "all";
@@ -610,21 +943,12 @@ if (todos.length === 0) {
         });
     }
 
-    function closePopup() {
-        popup.style.display = "none";
-        popup.setAttribute("aria-hidden", "true");
-        todoForm.reset();
-        addBtn.focus();
-    }
-
     addBtn.onclick = () => {
-        popup.style.display = "block";
-        popup.setAttribute("aria-hidden", "false");
-        dateInput.min = new Date().toISOString().split("T")[0];
-        taskInput.focus();
+        dateInput.min = formatLocalDate();
+        modal.open();
     };
 
-    cancelBtn.onclick = closePopup;
+    cancelBtn.onclick = () => modal.close();
 
     filterButtons.forEach(button => {
         button.onclick = () => {
@@ -658,23 +982,18 @@ if (todos.length === 0) {
 
         saveTodos();
         showTodos();
-        closePopup();
+        modal.close();
     };
 
     popup.onclick = event => {
-        if (event.target === popup) closePopup();
+        if (event.target === popup) modal.close();
     };
-
-    const handleEscape = event => {
-        if (event.key === "Escape" && popup.style.display === "block") closePopup();
-    };
-    document.addEventListener("keydown", handleEscape);
 
     showTodos();
 
 window.saveTodos = saveTodos;
 window.showTodos = showTodos;
-return () => document.removeEventListener("keydown", handleEscape);
+return () => modal.destroy();
 },
 "habits": function init_habits(){
 
@@ -686,6 +1005,9 @@ const cancelHabitBtn = document.getElementById("cancelHabitBtn");
 const habitInput = document.getElementById("habitInput");
 const habitType = document.getElementById("habitType");
 const habitList = document.getElementById("habitList");
+const modal = createModalController(habitPopup, habitInput, {
+    onClose: () => { habitInput.value = ""; }
+});
 
 let habits = JSON.parse(localStorage.getItem("habits")) || [];
 
@@ -694,13 +1016,7 @@ function saveHabits() {
 }
 
 function getToday() {
-    const today = new Date();
-
-    const year = today.getFullYear();
-    const month = String(today.getMonth() + 1).padStart(2, "0");
-    const day = String(today.getDate()).padStart(2, "0");
-
-    return year + "-" + month + "-" + day;
+    return formatLocalDate();
 }
 
 function saveHabitResult(habit, result) {
@@ -786,15 +1102,21 @@ function showHabits() {
 
         const checkButton = document.createElement("button");
         checkButton.classList.add("check-btn");
+        checkButton.type = "button";
         checkButton.textContent = "✅";
+        checkButton.setAttribute("aria-label", `Mark ${habit.name} successful today`);
 
         const xButton = document.createElement("button");
         xButton.classList.add("x-btn");
+        xButton.type = "button";
         xButton.textContent = "❌";
+        xButton.setAttribute("aria-label", `Mark ${habit.name} missed today`);
 
         const deleteButton = document.createElement("button");
         deleteButton.classList.add("delete-btn");
+        deleteButton.type = "button";
         deleteButton.textContent = "🗑️";
+        deleteButton.setAttribute("aria-label", `Delete habit: ${habit.name}`);
 
         checkButton.onclick = function () {
             saveHabitResult(habit, true);
@@ -841,13 +1163,15 @@ function showHabits() {
 }
 
 addHabitBtn.onclick = function () {
-    habitPopup.style.display = "block";
-    habitInput.focus();
+    modal.open();
 };
 
 cancelHabitBtn.onclick = function () {
-    habitPopup.style.display = "none";
-    habitInput.value = "";
+    modal.close();
+};
+
+habitPopup.onclick = function (event) {
+    if (event.target === habitPopup) modal.close();
 };
 
 saveHabitBtn.onclick = function () {
@@ -870,8 +1194,7 @@ saveHabitBtn.onclick = function () {
     saveHabits();
     showHabits();
 
-    habitPopup.style.display = "none";
-    habitInput.value = "";
+    modal.close();
 };
 
 showHabits();
@@ -882,6 +1205,7 @@ window.getToday = getToday;
 window.saveHabitResult = saveHabitResult;
 window.saveHabits = saveHabits;
 window.showHabits = showHabits;
+return () => modal.destroy();
 },
 "breathing": function init_breathing(){
 const exercises = {
@@ -1006,7 +1330,7 @@ const nextMonth = document.getElementById("nextMonth");
 
 const addEventBtn = document.querySelector(".addEvent");
 const popup = document.getElementById("eventPopup");
-const closePopup = document.getElementById("closePopup");
+const closePopupButton = document.getElementById("closePopup");
 const saveEvent = document.getElementById("saveEvent");
 
 const eventTitleInput = document.getElementById("eventTitle");
@@ -1014,12 +1338,21 @@ const eventDateInput = document.getElementById("eventDate");
 
 let events = JSON.parse(localStorage.getItem("events")) || [];
 
-flatpickr("#eventDate", {
+const eventPicker = flatpickr(eventDateInput, {
     enableTime: true,
     dateFormat: "Y-m-d H:i",
     altInput: true,
     altFormat: "F j, Y h:i K",
     minDate: "today"
+});
+eventPicker.altInput?.setAttribute("aria-label", "Event date and time");
+
+const modal = createModalController(popup, eventTitleInput, {
+    display: "flex",
+    onClose: () => {
+        eventTitleInput.value = "";
+        eventPicker.clear();
+    }
 });
 
 function renderCalendar() {
@@ -1065,9 +1398,10 @@ function renderCalendar() {
 
 function showEventsForDay(dayCell, dayNumber) {
     events.forEach(event => {
-        const eventDate = new Date(event.date);
+        const eventDate = eventDateTime(event);
 
         if (
+            eventDate &&
             eventDate.getDate() === dayNumber &&
             eventDate.getMonth() === currentMonth &&
             eventDate.getFullYear() === currentYear
@@ -1112,11 +1446,15 @@ nextMonth.onclick = () => {
 };
 
 addEventBtn.onclick = () => {
-    popup.style.display = "block";
+    modal.open();
 };
 
-closePopup.onclick = () => {
-    popup.style.display = "none";
+closePopupButton.onclick = () => {
+    modal.close();
+};
+
+popup.onclick = event => {
+    if (event.target === popup) modal.close();
 };
 
 saveEvent.onclick = () => {
@@ -1136,16 +1474,17 @@ saveEvent.onclick = () => {
 
     localStorage.setItem("events", JSON.stringify(events));
 
-    eventTitleInput.value = "";
-    eventDateInput.value = "";
-    popup.style.display = "none";
-
     renderCalendar();
+    modal.close();
 };
 
 renderCalendar();
 window.renderCalendar = renderCalendar;
 window.showEventsForDay = showEventsForDay;
+return () => {
+    modal.destroy();
+    eventPicker.destroy();
+};
 },
 "journal": function init_journal(){
 const today = new Date();
@@ -1309,10 +1648,6 @@ window.isTodayDate = isTodayDate;
 window.loadEntry = loadEntry;
 },
 "menu": function init_menu(){
-function goTo(page) {
-    window.location.href = page;
-}
-
 const buttons = document.querySelectorAll("#nav button");
 
 const compactMenuQuery = window.matchMedia("(max-width: 768px), (max-height: 500px)");
@@ -1386,8 +1721,6 @@ function syncMenuLayout() {
 
 window.addEventListener("resize", syncMenuLayout);
 syncMenuLayout();
-window.animate = animate;
-window.goTo = goTo;
 return () => {
     cancelAnimationFrame(animationFrame);
     window.removeEventListener("resize", syncMenuLayout);
@@ -2023,6 +2356,7 @@ window.updateWelcomeMessage = updateWelcomeMessage;
     const tasksNumber = document.getElementById("tasks-number");
     const achievementsNumber =
         document.getElementById("achievements-number");
+    let messageTimeout = null;
 
     function loadProfile() {
         const savedName =
@@ -2087,7 +2421,8 @@ window.updateWelcomeMessage = updateWelcomeMessage;
             saveMessage.className = "error-message";
         }
 
-        setTimeout(function () {
+        clearTimeout(messageTimeout);
+        messageTimeout = setTimeout(function () {
             saveMessage.textContent = "";
             saveMessage.className = "";
         }, 3000);
@@ -2128,56 +2463,54 @@ window.updateWelcomeMessage = updateWelcomeMessage;
 
         const oldUsername =
             localStorage.getItem("username");
+        const accountRecord = findStoredAccount(oldUsername);
+        const usernameRecord = findStoredAccount(username);
 
-        let savedPassword = "";
+        if (usernameRecord && usernameRecord.key !== accountRecord?.key) {
+            showMessage("That username is already in use.", "error");
+            return;
+        }
 
-        if (oldUsername) {
-            const oldUserData =
-                localStorage.getItem(oldUsername);
+        if (
+            accountRecord?.legacy &&
+            oldUsername !== username &&
+            typeof accountRecord.account.password === "string"
+        ) {
+            showMessage("Log in once before changing this legacy username.", "error");
+            return;
+        }
 
-            if (oldUserData) {
-                try {
-                    const oldUser =
-                        JSON.parse(oldUserData);
+        if (accountRecord) {
+            const updatedUser = {
+                ...accountRecord.account,
+                name,
+                surname,
+                username
+            };
 
-                    savedPassword =
-                        oldUser.password || "";
-                } catch (error) {
-                    console.error(
-                        "Could not read saved user:",
-                        error
-                    );
+            if (accountRecord.legacy && typeof updatedUser.password === "string") {
+                localStorage.setItem(accountRecord.key, JSON.stringify(updatedUser));
+            } else {
+                saveStoredAccount(updatedUser);
+                const updatedKey = accountStorageKey(username);
+                if (accountRecord.key !== updatedKey) {
+                    localStorage.removeItem(accountRecord.key);
                 }
             }
         }
-
-        const updatedUser = {
-            name: name,
-            surname: surname,
-            username: username,
-            password: savedPassword
-        };
 
         localStorage.setItem("name", name);
         localStorage.setItem("surname", surname);
         localStorage.setItem("username", username);
 
+        if (localStorage.getItem("loggedInUser")) {
+            localStorage.setItem("loggedInUser", username);
+        }
+
         localStorage.setItem(
             "ascendra-profile-bio",
             bio
         );
-
-        localStorage.setItem(
-            username,
-            JSON.stringify(updatedUser)
-        );
-
-        if (
-            oldUsername &&
-            oldUsername !== username
-        ) {
-            localStorage.removeItem(oldUsername);
-        }
 
         displayName.textContent =
             name + " " + surname;
@@ -2260,6 +2593,7 @@ window.updateWelcomeMessage = updateWelcomeMessage;
 window.cleanUsername = cleanUsername;
 window.loadProfile = loadProfile;
 window.showMessage = showMessage;
+return () => clearTimeout(messageTimeout);
 },
 "extras": function init_extras(){
 

@@ -56,9 +56,9 @@
 <form id="login">
 <h1>Welcome back to <a id="ascendraLogo">Ascendra!</a></h1>
 <h2>Log In</h2>
-<input id="username" placeholder="Username" required="" type="text"/>
+<input aria-label="Username" autocomplete="username" id="username" maxlength="60" placeholder="Username" required="" type="text"/>
 <br/><br/>
-<input id="password" placeholder="Password" required="" type="password"/>
+<input aria-label="Password" autocomplete="current-password" id="password" maxlength="128" placeholder="Password" required="" type="password"/>
 <br/><br/>
 <input type="submit" value="Log In"/>
 <br/><br/>
@@ -74,13 +74,13 @@
 <form id="signupForm">
 <h1>Welcome to <a id="ascendraLogo">Ascendra</a></h1>
 <h2>Sign Up</h2>
-<input id="name" placeholder="First Name" required="" type="text"/>
+<input aria-label="First name" autocomplete="given-name" id="name" maxlength="60" placeholder="First Name" required="" type="text"/>
 <br/><br/>
-<input id="surname" placeholder="Last Name" required="" type="text"/>
+<input aria-label="Last name" autocomplete="family-name" id="surname" maxlength="60" placeholder="Last Name" required="" type="text"/>
 <br/><br/>
-<input id="username" placeholder="Username" required="" type="text"/>
+<input aria-label="Username" autocomplete="username" id="username" maxlength="60" placeholder="Username" required="" type="text"/>
 <br/><br/>
-<input id="password" placeholder="Password" required="" type="password"/>
+<input aria-label="Password" autocomplete="new-password" id="password" maxlength="128" minlength="8" placeholder="Password (8+ characters)" required="" type="password"/>
 <br/><br/>
 <p>Have an account? <a href="#/login">Sign in</a></p>
 <br/>
@@ -189,7 +189,7 @@
 </div>
 <p id="todo-summary" aria-live="polite"></p>
 <div id="todo-list" aria-live="polite"></div>
-<div aria-hidden="true" aria-labelledby="todo-dialog-title" class="popup" id="popup" role="dialog">
+<div aria-hidden="true" aria-labelledby="todo-dialog-title" aria-modal="true" class="popup" id="popup" role="dialog" tabindex="-1">
 <form class="popup-box" id="todo-form">
 <h2 id="todo-dialog-title">Add Task</h2>
 <label for="task-input">Task name</label>
@@ -223,24 +223,24 @@
 <h5>Build better routines</h5>
 <button id="addHabitBtn">+ Add Habit</button>
 <div id="habitList"></div>
-<div class="popup" id="habitPopup">
+<div aria-hidden="true" aria-labelledby="habit-dialog-title" aria-modal="true" class="popup" id="habitPopup" role="dialog" tabindex="-1">
 <div class="popup-box">
-<h2>Add Habit</h2>
-<input id="habitInput" placeholder="Habit name" type="text"/>
-<select id="habitType">
+<h2 id="habit-dialog-title">Add Habit</h2>
+<input aria-label="Habit name" id="habitInput" maxlength="120" placeholder="Habit name" type="text"/>
+<select aria-label="Habit type" id="habitType">
 <option value="good">Good habit</option>
 <option value="bad">Bad habit</option>
 </select>
 <br/><br/>
-<button id="saveHabitBtn">Save</button>
-<button id="cancelHabitBtn">Cancel</button>
+<button id="saveHabitBtn" type="button">Save</button>
+<button id="cancelHabitBtn" type="button">Cancel</button>
 </div>
 </div>
 <div class="navbar">
 <button onclick="navigate('home')">
 <i class="fa-solid fa-mug-saucer"></i><br/>Home
     </button>
-<button onclick="navigate('alert')">
+<button onclick="navigate('alerts')">
 <i class="fa-regular fa-bell"></i><br/>Alerts
     </button>
 <button onclick="navigate('todos')">
@@ -310,7 +310,7 @@
 <div class="calendar-container">
 <div class="top-title">
 <h1>Calendar</h1>
-<button class="addEvent">+ Add Event</button>
+<button class="addEvent" type="button">+ Add Event</button>
 </div>
 <div class="calendar-card">
 <div class="calendar-header">
@@ -333,17 +333,19 @@
 <tbody id="calendarBody"></tbody>
 </table>
 </div>
-<div class="popup" id="eventPopup">
-<h2>New Event</h2>
-<input id="eventTitle" placeholder="Event name" type="text"/>
-<input id="eventDate" placeholder="Choose date" type="text"/>
-<button id="saveEvent">Save</button>
-<button id="closePopup">Close</button>
+<div aria-hidden="true" aria-labelledby="event-dialog-title" aria-modal="true" class="popup" id="eventPopup" role="dialog" tabindex="-1">
+<div class="popup-box">
+<h2 id="event-dialog-title">New Event</h2>
+<input aria-label="Event name" id="eventTitle" maxlength="120" placeholder="Event name" type="text"/>
+<input aria-label="Event date and time" id="eventDate" placeholder="Choose date" type="text"/>
+<button id="saveEvent" type="button">Save</button>
+<button id="closePopup" type="button">Close</button>
+</div>
 </div>
 <div class="navbar">
 <button onclick="navigate('home')"><i class="fa-solid fa-mug-saucer"></i><br/>Home</button>
 <button onclick="navigate('alerts')"><i class="fa-regular fa-bell"></i><br/>Alerts</button>
-<button onclick="navigate('breathing')"><i class="fa-solid fa-list-check"></i><br/>To-Dos</button>
+<button onclick="navigate('todos')"><i class="fa-solid fa-list-check"></i><br/>To-Dos</button>
 <button onclick="navigate('habits')"><i class="fa-regular fa-thumbs-up"></i><br/>Habits</button>
 <button onclick="navigate('breathing')"><i class="fa-solid fa-wind"></i><br/>Breathing</button>
 <button class="current" onclick="navigate('calendar')"><i class="fa-regular fa-calendar"></i><br/>Calendar</button>
@@ -810,7 +812,7 @@
 <div class="navbar">
 <button onclick="navigate('home')"><i class="fa-solid fa-mug-saucer"></i><br/>Home</button>
 <button onclick="navigate('alerts')"><i class="fa-regular fa-bell"></i><br/>Alerts</button>
-<button onclick="navigate('breathing')"><i class="fa-solid fa-list-check"></i><br/>To-Dos</button>
+<button onclick="navigate('todos')"><i class="fa-solid fa-list-check"></i><br/>To-Dos</button>
 <button onclick="navigate('habits')"><i class="fa-regular fa-thumbs-up"></i><br/>Habits</button>
 <button onclick="navigate('breathing')"><i class="fa-solid fa-wind"></i><br/>Breathing</button>
 <button onclick="navigate('calendar')"><i class="fa-regular fa-calendar"></i><br/>Calendar</button>
