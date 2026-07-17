@@ -2632,3 +2632,81 @@ document.addEventListener("keydown", function(event) {
 
     // keyboard shortcuts
 });
+
+const searchOverlay = document.getElementById("searchOverlay");
+const searchInput = document.getElementById("searchInput");
+const searchResults = document.getElementById("searchResults");
+
+const searchablePages = [
+    { name: "Home", route: "home" },
+    { name: "Calendar", route: "calendar" },
+    { name: "Journal", route: "journal" },
+    { name: "Habits", route: "habits" },
+    { name: "Tasks", route: "tasks" },
+    { name: "Profile", route: "profile" },
+    { name: "Statistics", route: "statistics" },
+    { name: "Settings", route: "settings" }
+];
+
+function openSearch() {
+    searchOverlay.hidden = false;
+    searchInput.value = "";
+    showSearchResults(searchablePages);
+    searchInput.focus();
+}
+
+function closeSearch() {
+    searchOverlay.hidden = true;
+}
+
+function showSearchResults(pages) {
+    searchResults.innerHTML = "";
+
+    if (pages.length === 0) {
+        searchResults.innerHTML =
+            '<p class="no-results">No results found</p>';
+        return;
+    }
+
+    pages.forEach(function(page) {
+        const button = document.createElement("button");
+
+        button.className = "search-result";
+        button.textContent = page.name;
+
+        button.addEventListener("click", function() {
+            navigate(page.route);
+            closeSearch();
+        });
+
+        searchResults.appendChild(button);
+    });
+}
+
+searchInput.addEventListener("input", function() {
+    const searchText = searchInput.value.toLowerCase().trim();
+
+    const matches = searchablePages.filter(function(page) {
+        return page.name.toLowerCase().includes(searchText);
+    });
+
+    showSearchResults(matches);
+});
+document.addEventListener("keydown", function(event) {
+    if (
+        (event.ctrlKey || event.metaKey) &&
+        event.key.toLowerCase() === "k"
+    ) {
+        event.preventDefault();
+        openSearch();
+    }
+
+    if (event.key === "Escape") {
+        closeSearch();
+    }
+});
+searchOverlay.addEventListener("click", function(event) {
+    if (event.target === searchOverlay) {
+        closeSearch();
+    }
+});
