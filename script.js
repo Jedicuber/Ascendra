@@ -920,54 +920,62 @@ return () => clearInterval(starInterval);
 
     const todos = JSON.parse(getUserItem("todos")) || [];
 
-    // Completed tasks should not create alerts.
-    const unfinishedTodos = todos.filter(todo => todo.completed !== true);
+    function isCompleted(todo) {
+        return (
+            todo.completed === true ||
+            todo.completed === "true" ||
+            todo.done === true ||
+            todo.done === "true"
+        );
+    }
+
+    const unfinishedTodos = todos.filter(todo => !isCompleted(todo));
 
     alertList.innerHTML = "";
 
     if (unfinishedTodos.length === 0) {
         alertList.innerHTML = "<p>No alerts 🎉</p>";
-    } else {
-        // Sort by local calendar day without converting date-only values to UTC.
-        unfinishedTodos.sort(
-            (a, b) => dateKeyDayNumber(a.date) - dateKeyDayNumber(b.date)
-        );
-
-        const todayDayNumber = dateKeyDayNumber(new Date());
-
-        unfinishedTodos.forEach(todo => {
-            const card = document.createElement("div");
-            card.classList.add("alert-card");
-
-            const dueDayNumber = dateKeyDayNumber(todo.date);
-            const daysLeft = dueDayNumber - todayDayNumber;
-
-            let status = "";
-
-            if (!Number.isFinite(daysLeft)) {
-                status = "Date unavailable";
-            } else if (daysLeft < 0) {
-                status = "🔴 Overdue";
-            } else if (daysLeft === 0) {
-                status = "🟠 Due Today";
-            } else if (daysLeft === 1) {
-                status = "🟡 Due Tomorrow";
-            } else {
-                status = `🟢 Due in ${daysLeft} days`;
-            }
-
-            const title = document.createElement("h3");
-            const date = document.createElement("p");
-            const statusText = document.createElement("p");
-
-            title.textContent = todo.task;
-            date.textContent = `📅 ${todo.date}`;
-            statusText.textContent = status;
-
-            card.append(title, date, statusText);
-            alertList.appendChild(card);
-        });
+        return;
     }
+
+    unfinishedTodos.sort(
+        (a, b) => dateKeyDayNumber(a.date) - dateKeyDayNumber(b.date)
+    );
+
+    const todayDayNumber = dateKeyDayNumber(new Date());
+
+    unfinishedTodos.forEach(todo => {
+        const card = document.createElement("div");
+        card.classList.add("alert-card");
+
+        const dueDayNumber = dateKeyDayNumber(todo.date);
+        const daysLeft = dueDayNumber - todayDayNumber;
+
+        let status = "";
+
+        if (!Number.isFinite(daysLeft)) {
+            status = "Date unavailable";
+        } else if (daysLeft < 0) {
+            status = "🔴 Overdue";
+        } else if (daysLeft === 0) {
+            status = "🟠 Due Today";
+        } else if (daysLeft === 1) {
+            status = "🟡 Due Tomorrow";
+        } else {
+            status = `🟢 Due in ${daysLeft} days`;
+        }
+
+        const title = document.createElement("h3");
+        const date = document.createElement("p");
+        const statusText = document.createElement("p");
+
+        title.textContent = todo.task;
+        date.textContent = `📅 ${todo.date}`;
+        statusText.textContent = status;
+
+        card.append(title, date, statusText);
+        alertList.appendChild(card);
+    });
 },
 
 
