@@ -135,3 +135,5 @@ https://guides.github.com/introduction/git-handbook/
 
 ────────────────────────────────────────
 
+Note: The url for Ascendra is: jedicuber.github.io/Ascendra/#/welcome
+
