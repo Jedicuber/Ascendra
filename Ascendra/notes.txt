@@ -2,11 +2,8 @@
 📌 Ascendra Development Notes
 
 🐞 Current Tasks
--make the loading screen html and css file --> add canvas
-- Finish home.html with css and js
-- Need to add Navigation bar to all files that don't
-- Note: Declan makes js and adds navigation bar
-- put inputs for the day of the week in calendar so user can change it according to the month 🧐
+- Fix account spreading issue
+- Fix alert/todos issue
 ────────────────────────────────────────
 
 💬 Messeges
