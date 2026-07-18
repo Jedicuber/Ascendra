@@ -182,6 +182,117 @@ function saveStoredAccount(account) {
     localStorage.setItem(accountStorageKey(account.username), JSON.stringify(account));
 }
 
+function getLoggedInUsername() {
+    return String(localStorage.getItem("loggedInUser") || "").trim().toLowerCase();
+}
+
+function userStorageKey(key, username = getLoggedInUsername()) {
+    const cleanUsername = String(username || "").trim().toLowerCase();
+    return cleanUsername ? `ascendra:data:${cleanUsername}:${key}` : `ascendra:guest:${key}`;
+}
+
+function getUserItem(key) {
+    return localStorage.getItem(userStorageKey(key));
+}
+
+function setUserItem(key, value) {
+    localStorage.setItem(userStorageKey(key), value);
+}
+
+function removeUserItem(key) {
+    localStorage.removeItem(userStorageKey(key));
+}
+
+function moveUserDataNamespace(oldUsername, newUsername) {
+    const oldClean = String(oldUsername || "").trim().toLowerCase();
+    const newClean = String(newUsername || "").trim().toLowerCase();
+    if (!oldClean || !newClean || oldClean === newClean) return;
+
+    const oldPrefix = `ascendra:data:${oldClean}:`;
+    const newPrefix = `ascendra:data:${newClean}:`;
+    const keysToMove = [];
+    for (let index = 0; index < localStorage.length; index++) {
+        const key = localStorage.key(index);
+        if (key?.startsWith(oldPrefix)) keysToMove.push(key);
+    }
+
+    for (const oldKey of keysToMove) {
+        const suffix = oldKey.slice(oldPrefix.length);
+        const newKey = newPrefix + suffix;
+        if (localStorage.getItem(newKey) === null) {
+            localStorage.setItem(newKey, localStorage.getItem(oldKey));
+        }
+        localStorage.removeItem(oldKey);
+    }
+
+    const ownerKey = "ascendra:legacy-data-owner";
+    if (String(localStorage.getItem(ownerKey) || "").toLowerCase() === oldClean) {
+        localStorage.setItem(ownerKey, newClean);
+    }
+}
+
+function deleteCurrentAccountData() {
+    const username = getLoggedInUsername();
+    if (!username) return;
+
+    const dataPrefix = `ascendra:data:${username}:`;
+    const keysToDelete = [];
+    for (let index = 0; index < localStorage.length; index++) {
+        const key = localStorage.key(index);
+        if (key?.startsWith(dataPrefix)) keysToDelete.push(key);
+    }
+    keysToDelete.forEach(key => localStorage.removeItem(key));
+    localStorage.removeItem(accountStorageKey(username));
+
+    ["name", "surname", "username", "loggedInUser", "password"].forEach(key => {
+        localStorage.removeItem(key);
+    });
+}
+
+function migrateLegacyUserData(username) {
+    const cleanUsername = String(username || "").trim().toLowerCase();
+    if (!cleanUsername) return;
+
+    const ownerKey = "ascendra:legacy-data-owner";
+    const existingOwner = String(localStorage.getItem(ownerKey) || "").trim().toLowerCase();
+    if (existingOwner && existingOwner !== cleanUsername) return;
+
+    const legacyKeys = [
+        "todos", "habits", "events", "ascendraSettings",
+        "ascendra-profile-bio", "ascendra-profile-picture",
+        "ascendra-streak", "ascendra-tasks-completed", "ascendra-achievements"
+    ];
+
+    let foundLegacyData = false;
+    for (const key of legacyKeys) {
+        const oldValue = localStorage.getItem(key);
+        const newKey = userStorageKey(key, cleanUsername);
+        if (oldValue !== null && localStorage.getItem(newKey) === null) {
+            localStorage.setItem(newKey, oldValue);
+            foundLegacyData = true;
+        }
+    }
+
+    const journalPrefix = "journal-";
+    const journalKeys = [];
+    for (let index = 0; index < localStorage.length; index++) {
+        const key = localStorage.key(index);
+        if (key?.startsWith(journalPrefix)) journalKeys.push(key);
+    }
+    for (const key of journalKeys) {
+        const oldValue = localStorage.getItem(key);
+        const newKey = userStorageKey(key, cleanUsername);
+        if (oldValue !== null && localStorage.getItem(newKey) === null) {
+            localStorage.setItem(newKey, oldValue);
+            foundLegacyData = true;
+        }
+    }
+
+    if (foundLegacyData || !existingOwner) {
+        localStorage.setItem(ownerKey, cleanUsername);
+    }
+}
+
 function createModalController(dialog, initialFocus, options = {}) {
     const focusableSelector = [
         "a[href]",
@@ -291,7 +402,7 @@ window.goBack=goBack;
 
 function applySavedSettings(){
     const colors={purple:"rgb(127, 0, 255)",blue:"rgb(37, 99, 235)",green:"rgb(22, 163, 74)",pink:"rgb(219, 39, 119)"};
-    let s=null; try{s=JSON.parse(localStorage.getItem("ascendraSettings"));}catch(e){}
+    let s=null; try{s=JSON.parse(getUserItem("ascendraSettings"));}catch(e){}
     s=s||{accentColor:"purple",lightMode:true};
     document.documentElement.style.setProperty("--accent",colors[s.accentColor]||colors.purple);
     document.documentElement.style.setProperty("--bg",s.lightMode===false?"#111827":"#f6f3ff");
@@ -509,6 +620,7 @@ loginForm.addEventListener("submit", async function(event) {
         localStorage.setItem("surname", savedUser.surname || "");
         localStorage.setItem("username", savedUsername);
         localStorage.setItem("loggedInUser", savedUsername);
+        migrateLegacyUserData(savedUsername);
         localStorage.removeItem("password");
         alert("Welcome back, " + (savedUser.name || savedUsername) + "!");
         loginForm.reset();
@@ -559,6 +671,7 @@ const password = document.getElementById("password").value;
         localStorage.setItem("surname", surname);
         localStorage.setItem("username", username);
         localStorage.setItem("loggedInUser", username);
+        migrateLegacyUserData(username);
         localStorage.removeItem("password");
 
         alert("Account created!");
@@ -628,9 +741,9 @@ if (dateText) {
 
 const todayDayNumber = dateKeyDayNumber(now);
 
-const todos = JSON.parse(localStorage.getItem("todos")) || [];
-const events = JSON.parse(localStorage.getItem("events")) || [];
-const habits = JSON.parse(localStorage.getItem("habits")) || [];
+const todos = JSON.parse(getUserItem("todos")) || [];
+const events = JSON.parse(getUserItem("events")) || [];
+const habits = JSON.parse(getUserItem("habits")) || [];
 
 // ===========================
 // Elements
@@ -804,7 +917,7 @@ return () => clearInterval(starInterval);
 "alerts": function init_alerts(){
 const alertList = document.getElementById("alertList");
 
-const todos = JSON.parse(localStorage.getItem("todos")) || [];
+const todos = JSON.parse(getUserItem("todos")) || [];
 
 alertList.innerHTML = "";
 
@@ -872,11 +985,11 @@ if (todos.length === 0) {
         onClose: () => todoForm.reset()
     });
 
-    let todos = JSON.parse(localStorage.getItem("todos")) || [];
+    let todos = JSON.parse(getUserItem("todos")) || [];
     let activeFilter = "all";
 
     function saveTodos() {
-        localStorage.setItem("todos", JSON.stringify(todos));
+        setUserItem("todos", JSON.stringify(todos));
     }
 
     function showTodos() {
@@ -1009,10 +1122,10 @@ const modal = createModalController(habitPopup, habitInput, {
     onClose: () => { habitInput.value = ""; }
 });
 
-let habits = JSON.parse(localStorage.getItem("habits")) || [];
+let habits = JSON.parse(getUserItem("habits")) || [];
 
 function saveHabits() {
-    localStorage.setItem("habits", JSON.stringify(habits));
+    setUserItem("habits", JSON.stringify(habits));
 }
 
 function getToday() {
@@ -1336,7 +1449,7 @@ const saveEvent = document.getElementById("saveEvent");
 const eventTitleInput = document.getElementById("eventTitle");
 const eventDateInput = document.getElementById("eventDate");
 
-let events = JSON.parse(localStorage.getItem("events")) || [];
+let events = JSON.parse(getUserItem("events")) || [];
 
 const eventPicker = flatpickr(eventDateInput, {
     enableTime: true,
@@ -1413,7 +1526,7 @@ function showEventsForDay(dayCell, dayNumber) {
             eventText.onclick = () => {
                 if (confirm(`Delete "${event.title}"?`)) {
                     events = events.filter(e => e.id !== event.id);
-                    localStorage.setItem("events", JSON.stringify(events));
+                    setUserItem("events", JSON.stringify(events));
                     renderCalendar();
                 }
             };
@@ -1472,7 +1585,7 @@ saveEvent.onclick = () => {
         date: dateValue
     });
 
-    localStorage.setItem("events", JSON.stringify(events));
+    setUserItem("events", JSON.stringify(events));
 
     renderCalendar();
     modal.close();
@@ -1535,7 +1648,7 @@ function isFutureDate(day) {
 function loadEntry(day) {
     selectedDay = day;
 
-    const entry = JSON.parse(localStorage.getItem(getEntryKey(day)));
+    const entry = JSON.parse(getUserItem(getEntryKey(day)));
 
     entryTitle.textContent = `Entry for ${monthNames[currentMonth]} ${day}, ${currentYear}`;
 
@@ -1568,7 +1681,7 @@ function buildDateGrid() {
         button.textContent = day;
         button.classList.add("date-button");
 
-        if (localStorage.getItem(getEntryKey(day))) {
+        if (getUserItem(getEntryKey(day))) {
             button.classList.add("has-entry");
         }
 
@@ -1632,7 +1745,7 @@ saveEntry.onclick = () => {
         goal: goalText.value
     };
 
-    localStorage.setItem(getEntryKey(selectedDay), JSON.stringify(entry));
+    setUserItem(getEntryKey(selectedDay), JSON.stringify(entry));
 
     statusMessage.textContent = "Entry saved!";
     buildDateGrid();
@@ -1734,7 +1847,7 @@ return () => {
         );
 
         if (confirmReset) {
-            localStorage.removeItem("ascendraSettings");
+            removeUserItem("ascendraSettings");
             applySavedSettings();
             alert("Settings reset.");
         }
@@ -1746,8 +1859,8 @@ return () => {
         );
 
         if (warning === "DELETE") {
-            localStorage.clear();
-            alert("All local Ascendra data has been deleted.");
+            deleteCurrentAccountData();
+            alert("This account and its Ascendra data have been deleted.");
             navigate("welcome");
         } else if (warning !== null) {
             alert("Delete cancelled.");
@@ -1836,7 +1949,7 @@ return () => {
         document.getElementById("welcome-message");
 
     function getStoredArray(key) {
-        const savedData = localStorage.getItem(key);
+        const savedData = getUserItem(key);
 
         if (!savedData) {
             return [];
@@ -2369,11 +2482,11 @@ window.updateWelcomeMessage = updateWelcomeMessage;
             localStorage.getItem("username") || "ascendrauser";
 
         const savedBio =
-            localStorage.getItem("ascendra-profile-bio") ||
+            getUserItem("ascendra-profile-bio") ||
             "Becoming better, one day at a time.";
 
         const savedPicture =
-            localStorage.getItem("ascendra-profile-picture");
+            getUserItem("ascendra-profile-picture");
 
         nameInput.value = savedName;
         surnameInput.value = savedSurname;
@@ -2392,13 +2505,13 @@ window.updateWelcomeMessage = updateWelcomeMessage;
             savedBio.length + " / 120";
 
         streakNumber.textContent =
-            localStorage.getItem("ascendra-streak") || "0";
+            getUserItem("ascendra-streak") || "0";
 
         tasksNumber.textContent =
-            localStorage.getItem("ascendra-tasks-completed") || "0";
+            getUserItem("ascendra-tasks-completed") || "0";
 
         achievementsNumber.textContent =
-            localStorage.getItem("ascendra-achievements") || "0";
+            getUserItem("ascendra-achievements") || "0";
 
         if (savedPicture) {
             profilePicture.src = savedPicture;
@@ -2499,6 +2612,8 @@ window.updateWelcomeMessage = updateWelcomeMessage;
             }
         }
 
+        moveUserDataNamespace(oldUsername, username);
+
         localStorage.setItem("name", name);
         localStorage.setItem("surname", surname);
         localStorage.setItem("username", username);
@@ -2507,7 +2622,7 @@ window.updateWelcomeMessage = updateWelcomeMessage;
             localStorage.setItem("loggedInUser", username);
         }
 
-        localStorage.setItem(
+        setUserItem(
             "ascendra-profile-bio",
             bio
         );
@@ -2566,7 +2681,7 @@ window.updateWelcomeMessage = updateWelcomeMessage;
                         reader.result;
 
                     try {
-                        localStorage.setItem(
+                        setUserItem(
                             "ascendra-profile-picture",
                             reader.result
                         );
