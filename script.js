@@ -943,6 +943,7 @@ return () => clearInterval(starInterval);
     );
 
     const todayDayNumber = dateKeyDayNumber(new Date());
+    console.log(todos);
 
     unfinishedTodos.forEach(todo => {
         const card = document.createElement("div");
