@@ -1,0 +1,5696 @@
+
+*{box-sizing:border-box}
+html,body{margin:0;min-height:100%;}
+body{min-height:100vh;background:#f4f1ff;color:#222;font-family:Arial,sans-serif;}
+#app{min-height:100vh;}
+.ascendra-page{display:block;min-height:100vh;position:relative;}
+.spa-back-button{position:fixed;left:18px;top:18px;z-index:10000;width:44px;height:44px;border:0;border-radius:14px;background:rgba(255,255,255,.92);box-shadow:0 8px 24px rgba(0,0,0,.15);cursor:pointer;font-size:20px;color:#301060;display:flex;align-items:center;justify-content:center;}
+.spa-back-button:hover{transform:translateY(-2px)}
+.spa-back-button[hidden]{display:none}
+.spa-error{max-width:720px;margin:80px auto;padding:24px;background:white;border-radius:20px;box-shadow:0 12px 35px rgba(0,0,0,.12)}
+
+/* ===== WELCOME ===== */
+.ascendra-page[data-route="welcome"]{
+    margin: 0;
+    min-height: 100vh;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    font-family: Arial, sans-serif;
+
+    background: linear-gradient(
+        135deg,
+        rgb(243,245,250),
+        rgb(228,235,255)
+    );
+
+    overflow-x: hidden;
+}
+
+/* ---------- Title ---------- */
+
+.ascendra-page[data-route="welcome"] h1{
+    margin-bottom: 10px;
+
+    font-size: 68px;
+    color: rgb(127,0,255);
+
+    animation: slideDown .8s ease;
+}
+
+.ascendra-page[data-route="welcome"] #subtitle1{
+    margin-top: 0;
+    margin-bottom: 35px;
+
+    font-size: 24px;
+    color: rgb(120,120,120);
+
+    opacity: 0;
+    animation: fadeUp .8s ease forwards;
+    animation-delay: .3s;
+}
+
+/* ---------- Main Card ---------- */
+
+.ascendra-page[data-route="welcome"] #main_paragraph{
+    max-width: 760px;
+
+    background: white;
+
+    padding: 35px 45px;
+
+    border-radius: 24px;
+
+    box-shadow:
+        0 15px 35px rgba(0,0,0,.08);
+
+    font-size: 19px;
+    line-height: 1.8;
+    color: rgb(70,70,70);
+
+    text-align: center;
+
+    opacity: 0;
+    animation: fadeUp .8s ease forwards;
+    animation-delay: .6s;
+
+    transition: .3s;
+}
+
+.ascendra-page[data-route="welcome"] #main_paragraph:hover{
+    transform: translateY(-5px);
+    box-shadow:
+        0 20px 45px rgba(0,0,0,.12);
+}
+
+/* ---------- Logo ---------- */
+
+.ascendra-page[data-route="welcome"] .ascendra{
+    color: rgb(127,0,255);
+    font-size: 26px;
+}
+
+/* ---------- Links ---------- */
+
+.ascendra-page[data-route="welcome"] #main_paragraph a{
+    color: rgb(37,99,235);
+    text-decoration:none;
+    font-weight:bold;
+
+    transition:.25s;
+}
+
+.ascendra-page[data-route="welcome"] #main_paragraph a:hover{
+    color:rgb(127,0,255);
+}
+
+/* ---------- Version ---------- */
+
+.ascendra-page[data-route="welcome"] h2{
+    margin-top:35px;
+    color:rgb(80,80,80);
+
+    opacity:0;
+    animation:fadeUp .8s forwards;
+    animation-delay:.9s;
+}
+
+/* ---------- Credits ---------- */
+
+.ascendra-page[data-route="welcome"] .credits-link{
+
+    margin-top:5px;
+
+    color:gray;
+
+    text-decoration:none;
+
+    transition:.25s;
+
+    opacity:0;
+    animation:fadeUp .8s forwards;
+    animation-delay:1.2s;
+}
+
+.ascendra-page[data-route="welcome"] .credits-link:hover{
+    color:rgb(127,0,255);
+}
+
+/* ---------- Animations ---------- */
+
+@keyframes slideDown{
+
+    from{
+
+        opacity:0;
+        transform:translateY(-40px);
+
+    }
+
+    to{
+
+        opacity:1;
+        transform:translateY(0);
+
+    }
+
+}
+
+@keyframes fadeUp{
+
+    from{
+
+        opacity:0;
+        transform:translateY(30px);
+
+    }
+
+    to{
+
+        opacity:1;
+        transform:translateY(0);
+
+    }
+
+}
+
+/* ===== LOADING-SCREEN ===== */
+
+/* ===== LOGIN ===== */
+.ascendra-page[data-route="login"]{
+    font-family: Arial, sans-serif;
+    background-color: #f5f7fa;
+    text-align: center;
+    margin-top: 50px;
+}
+
+.ascendra-page[data-route="login"] h1{
+    color: #2563eb;
+}
+
+.ascendra-page[data-route="login"] form{
+    background-color: white;
+    width: 320px;
+    margin: auto;
+    padding: 25px;
+    border-radius: 15px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+.ascendra-page[data-route="login"] input{
+    width: 90%;
+    padding: 10px;
+    margin: 5px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+}
+
+.ascendra-page[data-route="login"] input[type="submit"]{
+    background-color: #2563eb;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+.ascendra-page[data-route="login"] input[type="submit"]:hover{
+    background-color: #1d4ed8;
+}
+
+.ascendra-page[data-route="login"] #ascendraLogo{
+    font-family: "Brush Script MT", cursive;
+}
+
+/* ===== SIGNUP ===== */
+.ascendra-page[data-route="signup"]{
+    font-family: Arial, sans-serif;
+    background-color: #f5f7fa;
+    text-align: center;
+    margin-top: 50px;
+}
+
+.ascendra-page[data-route="signup"] h1{
+    color: #2563eb;
+}
+
+.ascendra-page[data-route="signup"] form{
+    background-color: white;
+    width: 320px;
+    margin: auto;
+    padding: 25px;
+    border-radius: 15px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+.ascendra-page[data-route="signup"] input{
+    width: 90%;
+    padding: 10px;
+    margin: 5px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+}
+
+.ascendra-page[data-route="signup"] input[type="submit"]{
+    background-color: #2563eb;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+.ascendra-page[data-route="signup"] input[type="submit"]:hover{
+    background-color: #1d4ed8;
+}
+
+.ascendra-page[data-route="signup"] #ascendraLogo{
+    font-family: "Brush Script MT", cursive;
+}
+
+/* ===== HOME ===== */
+.ascendra-page[data-route="home"] *{
+    box-sizing: border-box;
+}
+
+.ascendra-page[data-route="home"]{
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #f5f7fa;
+    color: #222;
+    padding-bottom: 120px;
+}
+
+.ascendra-page[data-route="home"] .home{
+    width: min(1100px, 92%);
+    margin: 40px auto;
+}
+
+.ascendra-page[data-route="home"] .hero{
+    background: linear-gradient(135deg, rgb(37, 99, 235), rgb(143, 63, 216));
+    color: white;
+    padding: 35px;
+    border-radius: 25px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+}
+
+.ascendra-page[data-route="home"] .hero h1{
+    margin: 0;
+    font-size: 36px;
+}
+
+.ascendra-page[data-route="home"] .hero p{
+    margin-bottom: 0;
+    opacity: 0.9;
+}
+
+.ascendra-page[data-route="home"] .widget-grid{
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 22px;
+    margin-top: 25px;
+}
+
+.ascendra-page[data-route="home"] .widget{
+    background: white;
+    padding: 25px;
+    border-radius: 22px;
+    box-shadow: 0 5px 14px rgba(0, 0, 0, 0.08);
+}
+
+.ascendra-page[data-route="home"] .widget h2{
+    margin-top: 0;
+    color: rgb(37, 99, 235);
+}
+
+.ascendra-page[data-route="home"] .widget ul{
+    padding-left: 20px;
+    line-height: 1.8;
+}
+
+.ascendra-page[data-route="home"] .big-number{
+    font-size: 32px;
+    font-weight: bold;
+}
+
+.ascendra-page[data-route="home"] .progress-bar{
+    width: 100%;
+    height: 18px;
+    background: #e5e7eb;
+    border-radius: 999px;
+    overflow: hidden;
+}
+
+.ascendra-page[data-route="home"] #progressFill{
+    height: 100%;
+    width: 0%;
+    background: rgb(37, 99, 235);
+    border-radius: 999px;
+    transition: width 0.6s ease;
+}
+
+.ascendra-page[data-route="home"] .navbar{
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+
+    display: flex;
+    width: 600px;
+
+    border-radius: 999px;
+    overflow: hidden;
+    background-color: rgb(240, 240, 240);
+    box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+}
+
+.ascendra-page[data-route="home"] .navbar button{
+    flex: 1;
+    border: none;
+    background: transparent;
+    padding: 15px 0;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.ascendra-page[data-route="home"] .navbar button:hover{
+    background-color: rgb(215, 215, 215);
+}
+
+.ascendra-page[data-route="home"] .navbar .current{
+    background-color: rgb(37, 99, 235);
+    color: white;
+    border-radius: 25px;
+}
+
+.ascendra-page[data-route="home"] .hero{
+    position: relative;
+    overflow: hidden;
+}
+
+.ascendra-page[data-route="home"] #shootingStars{
+    position:absolute;
+    inset:0;
+    pointer-events:none;
+}
+
+.ascendra-page[data-route="home"] .star{
+    position:absolute;
+
+    width:12px;
+    height:12px;
+
+    border-radius:50%;
+    background:white;
+
+    box-shadow:
+        0 0 12px white,
+        0 0 25px white,
+        0 0 40px white;
+
+    animation:shootingStar 1.6s linear forwards;
+}
+
+.ascendra-page[data-route="home"] .star::after{
+    content:"";
+
+    position:absolute;
+
+    right:8px;
+    top:4px;
+
+    width:180px;
+    height:4px;
+
+    border-radius:999px;
+
+    background:linear-gradient(
+        to left,
+        white,
+        rgba(255,255,255,.7),
+        rgba(255,255,255,0)
+    );
+}
+
+@keyframes shootingStar{
+
+    from{
+        transform:translate(0,0);
+        opacity:1;
+    }
+
+    to{
+        transform:translate(-420px,220px);
+        opacity:0;
+    }
+
+}
+.ascendra-page[data-route="home"] *{
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+.ascendra-page[data-route="home"]{
+    --accent: rgb(127, 0, 255);
+    --bg: #f6f3ff;
+    --card: white;
+    --text: #222;
+    --muted: #666;
+}
+
+.ascendra-page[data-route="home"]{
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+}
+
+.ascendra-page[data-route="home"] .page{
+    display: flex;
+    min-height: 100vh;
+}
+
+.ascendra-page[data-route="home"] .sidebar{
+    width: 250px;
+    background: white;
+    padding: 30px 22px;
+    box-shadow: 5px 0 20px rgba(0, 0, 0, 0.07);
+}
+
+.ascendra-page[data-route="home"] .sidebar h1{
+    color: var(--accent);
+    margin-bottom: 5px;
+}
+
+.ascendra-page[data-route="home"] .sidebar p{
+    color: var(--muted);
+    margin-bottom: 35px;
+}
+
+.ascendra-page[data-route="home"] .sidebar nav{
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.ascendra-page[data-route="home"] .sidebar a{
+    text-decoration: none;
+    color: #333;
+    padding: 13px 15px;
+    border-radius: 14px;
+    transition: 0.2s;
+}
+
+.ascendra-page[data-route="home"] .sidebar a:hover, .ascendra-page[data-route="home"] .sidebar a.active{
+    background: var(--accent);
+    color: white;
+    transform: translateX(4px);
+}
+
+.ascendra-page[data-route="home"] .content{
+    flex: 1;
+    padding: 40px;
+    max-width: 950px;
+}
+
+.ascendra-page[data-route="home"] header{
+    margin-bottom: 25px;
+}
+
+.ascendra-page[data-route="home"] header h2{
+    font-size: 36px;
+    margin: 0;
+}
+
+.ascendra-page[data-route="home"] header p{
+    color: var(--muted);
+}
+
+.ascendra-page[data-route="home"] .card{
+    background: var(--card);
+    padding: 25px;
+    border-radius: 22px;
+    margin-bottom: 25px;
+    box-shadow: 0 8px 22px rgba(0, 0, 0, 0.08);
+}
+
+.ascendra-page[data-route="home"] .card h3{
+    margin-top: 0;
+    color: var(--accent);
+}
+
+.ascendra-page[data-route="home"] label{
+    display: block;
+    font-weight: bold;
+    margin-bottom: 8px;
+}
+
+.ascendra-page[data-route="home"] select{
+    width: 100%;
+    padding: 13px;
+    border-radius: 13px;
+    border: 2px solid #ddd;
+    font-size: 15px;
+    margin-bottom: 15px;
+}
+
+.ascendra-page[data-route="home"] select:focus{
+    outline: none;
+    border-color: var(--accent);
+}
+
+.ascendra-page[data-route="home"] .toggle-row, .ascendra-page[data-route="home"] .danger-item{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 15px;
+    border-top: 1px solid #eee;
+    padding: 18px 0;
+}
+
+.ascendra-page[data-route="home"] .toggle-row h4, .ascendra-page[data-route="home"] .danger-item h4{
+    margin: 0 0 5px;
+}
+
+.ascendra-page[data-route="home"] .toggle-row p, .ascendra-page[data-route="home"] .danger-item p{
+    margin: 0;
+    color: var(--muted);
+}
+
+.ascendra-page[data-route="home"] input[type="checkbox"]{
+    width: 48px;
+    height: 25px;
+    accent-color: var(--accent);
+    cursor: pointer;
+}
+
+.ascendra-page[data-route="home"] .danger{
+    border: 2px solid #ef4444;
+    background: #fff7f7;
+}
+
+.ascendra-page[data-route="home"] .danger h3{
+    color: #dc2626;
+}
+
+.ascendra-page[data-route="home"] .danger button{
+    background: #dc2626;
+    color: white;
+    border: none;
+    padding: 11px 18px;
+    border-radius: 12px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.ascendra-page[data-route="home"] .danger button:hover{
+    background: #b91c1c;
+    transform: scale(1.04);
+}
+
+@media (max-width: 750px) {
+    .ascendra-page[data-route="home"] .page{
+        flex-direction: column;
+    }
+
+    .ascendra-page[data-route="home"] .content{
+        padding: 25px;
+    }
+
+    .ascendra-page[data-route="home"] .toggle-row, .ascendra-page[data-route="home"] .danger-item{
+        flex-direction: column;
+        align-items: flex-start;
+    }
+}
+
+/* ===== ALERTS ===== */
+.ascendra-page[data-route="alerts"] *{
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+.ascendra-page[data-route="alerts"]{
+    --accent: rgb(127, 0, 255);
+    --bg: #f6f3ff;
+    --card: white;
+    --text: #222;
+    --muted: #666;
+}
+
+.ascendra-page[data-route="alerts"]{
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+}
+
+.ascendra-page[data-route="alerts"] .page{
+    display: flex;
+    min-height: 100vh;
+}
+
+.ascendra-page[data-route="alerts"] .sidebar{
+    width: 250px;
+    background: white;
+    padding: 30px 22px;
+    box-shadow: 5px 0 20px rgba(0, 0, 0, 0.07);
+}
+
+.ascendra-page[data-route="alerts"] .sidebar h1{
+    color: var(--accent);
+    margin-bottom: 5px;
+}
+
+.ascendra-page[data-route="alerts"] .sidebar p{
+    color: var(--muted);
+    margin-bottom: 35px;
+}
+
+.ascendra-page[data-route="alerts"] .sidebar nav{
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.ascendra-page[data-route="alerts"] .sidebar a{
+    text-decoration: none;
+    color: #333;
+    padding: 13px 15px;
+    border-radius: 14px;
+    transition: 0.2s;
+}
+
+.ascendra-page[data-route="alerts"] .sidebar a:hover, .ascendra-page[data-route="alerts"] .sidebar a.active{
+    background: var(--accent);
+    color: white;
+    transform: translateX(4px);
+}
+
+.ascendra-page[data-route="alerts"] .content{
+    flex: 1;
+    padding: 40px;
+    max-width: 950px;
+}
+
+.ascendra-page[data-route="alerts"] header{
+    margin-bottom: 25px;
+}
+
+.ascendra-page[data-route="alerts"] header h2{
+    font-size: 36px;
+    margin: 0;
+}
+
+.ascendra-page[data-route="alerts"] header p{
+    color: var(--muted);
+}
+
+.ascendra-page[data-route="alerts"] .card{
+    background: var(--card);
+    padding: 25px;
+    border-radius: 22px;
+    margin-bottom: 25px;
+    box-shadow: 0 8px 22px rgba(0, 0, 0, 0.08);
+}
+
+.ascendra-page[data-route="alerts"] .card h3{
+    margin-top: 0;
+    color: var(--accent);
+}
+
+.ascendra-page[data-route="alerts"] label{
+    display: block;
+    font-weight: bold;
+    margin-bottom: 8px;
+}
+
+.ascendra-page[data-route="alerts"] select{
+    width: 100%;
+    padding: 13px;
+    border-radius: 13px;
+    border: 2px solid #ddd;
+    font-size: 15px;
+    margin-bottom: 15px;
+}
+
+.ascendra-page[data-route="alerts"] select:focus{
+    outline: none;
+    border-color: var(--accent);
+}
+
+.ascendra-page[data-route="alerts"] .toggle-row, .ascendra-page[data-route="alerts"] .danger-item{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 15px;
+    border-top: 1px solid #eee;
+    padding: 18px 0;
+}
+
+.ascendra-page[data-route="alerts"] .toggle-row h4, .ascendra-page[data-route="alerts"] .danger-item h4{
+    margin: 0 0 5px;
+}
+
+.ascendra-page[data-route="alerts"] .toggle-row p, .ascendra-page[data-route="alerts"] .danger-item p{
+    margin: 0;
+    color: var(--muted);
+}
+
+.ascendra-page[data-route="alerts"] input[type="checkbox"]{
+    width: 48px;
+    height: 25px;
+    accent-color: var(--accent);
+    cursor: pointer;
+}
+
+.ascendra-page[data-route="alerts"] .danger{
+    border: 2px solid #ef4444;
+    background: #fff7f7;
+}
+
+.ascendra-page[data-route="alerts"] .danger h3{
+    color: #dc2626;
+}
+
+.ascendra-page[data-route="alerts"] .danger button{
+    background: #dc2626;
+    color: white;
+    border: none;
+    padding: 11px 18px;
+    border-radius: 12px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.ascendra-page[data-route="alerts"] .danger button:hover{
+    background: #b91c1c;
+    transform: scale(1.04);
+}
+
+@media (max-width: 750px) {
+    .ascendra-page[data-route="alerts"] .page{
+        flex-direction: column;
+    }
+
+    .ascendra-page[data-route="alerts"] .content{
+        padding: 25px;
+    }
+
+    .ascendra-page[data-route="alerts"] .toggle-row, .ascendra-page[data-route="alerts"] .danger-item{
+        flex-direction: column;
+        align-items: flex-start;
+    }
+}
+.ascendra-page[data-route="alerts"] *{
+    box-sizing: border-box;
+}
+
+.ascendra-page[data-route="alerts"]{
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #f5f7fa;
+    color: #222;
+}
+
+.ascendra-page[data-route="alerts"] #alert{
+    margin-top: 35px;
+    text-align: center;
+    color: rgb(37, 99, 235);
+    font-size: 42px;
+}
+
+.ascendra-page[data-route="alerts"] #subtitle2{
+    text-align: center;
+    color: gray;
+    margin-top: -15px;
+    margin-bottom: 35px;
+}
+
+.ascendra-page[data-route="alerts"] #alertList{
+    width: min(900px, 90%);
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    padding-bottom: 120px;
+}
+
+.ascendra-page[data-route="alerts"] .alert-card{
+    background: white;
+    border-left: 8px solid rgb(37, 99, 235);
+    border-radius: 18px;
+    padding: 20px 25px;
+    box-shadow: 0 5px 14px rgba(0,0,0,0.08);
+    transition: 0.25s;
+}
+
+.ascendra-page[data-route="alerts"] .alert-card:hover{
+    transform: translateY(-3px);
+    box-shadow: 0 10px 22px rgba(0,0,0,0.12);
+}
+
+.ascendra-page[data-route="alerts"] .alert-card h3{
+    margin: 0;
+    color: rgb(37, 99, 235);
+    font-size: 24px;
+}
+
+.ascendra-page[data-route="alerts"] .alert-card p{
+    margin: 8px 0 0;
+    color: #555;
+    font-size: 17px;
+}
+
+/* Due status colors */
+
+.ascendra-page[data-route="alerts"] .overdue{
+    border-left-color: #ef4444;
+}
+
+.ascendra-page[data-route="alerts"] .today{
+    border-left-color: #f59e0b;
+}
+
+.ascendra-page[data-route="alerts"] .tomorrow{
+    border-left-color: #eab308;
+}
+
+.ascendra-page[data-route="alerts"] .future{
+    border-left-color: #22c55e;
+}
+
+/* No alerts */
+
+.ascendra-page[data-route="alerts"] #alertList p{
+    text-align: center;
+    color: gray;
+    font-size: 20px;
+}
+
+/* Navigation bar */
+.ascendra-page[data-route="alerts"] .navbar{
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+
+    display: flex;
+    width: 600px;
+
+    border-radius: 999px;
+    overflow: hidden;
+    background-color: rgb(240, 240, 240);
+    box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+}
+
+.ascendra-page[data-route="alerts"] .navbar button{
+    flex: 1;
+    border: none;
+    background: transparent;
+    padding: 15px 0;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.ascendra-page[data-route="alerts"] .navbar button:hover{
+    background-color: rgb(215, 215, 215);
+}
+
+.ascendra-page[data-route="alerts"] .navbar .current{
+    background-color: rgb(37, 99, 235);
+    color: white;
+    border-radius: 25px;
+}
+
+/* ===== TODOS ===== */
+.ascendra-page[data-route="todos"]{
+    font-family: Arial, sans-serif;
+    background:rgb(246,242,255);
+    text-align: center;
+    margin-top: 0px;
+    padding-bottom: 30pxpx
+}
+
+.ascendra-page[data-route="todos"] #todo_list{
+    font-size: 42px;
+}
+
+.ascendra-page[data-route="todos"] #subtitle3{
+    color: gray;
+}
+
+.ascendra-page[data-route="todos"] #add-btn{
+    padding: 12px 22px;
+    border-radius: 999px;
+    border: none;
+    background-color: rgb(143, 63, 216);
+    color:white;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.15);
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.ascendra-page[data-route="todos"] .todo-toolbar{
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    margin: 22px auto 8px;
+}
+
+.ascendra-page[data-route="todos"] .todo-filter{
+    border: 1px solid rgba(127, 0, 255, .25);
+    border-radius: 999px;
+    background: var(--card);
+    color: var(--text);
+    cursor: pointer;
+    padding: 8px 16px;
+}
+
+.ascendra-page[data-route="todos"] .todo-filter.active,
+.ascendra-page[data-route="todos"] .todo-filter:hover{
+    background: var(--accent);
+    color: white;
+}
+
+.ascendra-page[data-route="todos"] #todo-summary{
+    color: var(--muted);
+    margin: 8px 0 0;
+}
+
+.ascendra-page[data-route="todos"] .todo-card{
+    width: 70%;
+    max-width: 700px;
+    min-height: 80px;
+    margin: 25px auto;
+    padding: 20px 30px;
+    background: white;
+    border-radius: 999px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.15);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.ascendra-page[data-route="todos"] .completed .todo-title{
+    text-decoration: line-through;
+    opacity: 0.6;
+}
+
+.ascendra-page[data-route="todos"] .complete-btn{
+    border: none;
+    padding: 8px 12px;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.ascendra-page[data-route="todos"] .todo-info{
+    text-align: left;
+}
+
+.ascendra-page[data-route="todos"] .todo-title{
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.ascendra-page[data-route="todos"] .todo-date{
+    font-size: 14px;
+    color: gray;
+    margin-top: 6px;
+}
+
+.ascendra-page[data-route="todos"] .delete-btn{
+    border: 1px solid #fecaca;
+    border-radius: 10px;
+    background: #fff1f2;
+    color: #be123c;
+    padding: 8px 12px;
+    cursor: pointer;
+}
+
+.ascendra-page[data-route="todos"] .popup{
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.45);
+}
+
+.ascendra-page[data-route="todos"] .popup-box{
+    background: white;
+    width: 320px;
+    margin: 160px auto;
+    padding: 25px;
+    border-radius: 20px;
+    text-align: center;
+}
+
+.ascendra-page[data-route="todos"] .popup-box label{
+    display: block;
+    margin: 12px 0 6px;
+    text-align: left;
+}
+
+.ascendra-page[data-route="todos"] .popup-box input{
+    box-sizing: border-box;
+    width: 100%;
+    padding: 10px 12px;
+}
+
+@media (max-width: 600px) {
+    .ascendra-page[data-route="todos"] .todo-card{
+        width: auto;
+        margin: 18px 8px;
+        padding: 18px;
+        border-radius: 22px;
+        flex-wrap: wrap;
+        gap: 12px;
+    }
+
+    .ascendra-page[data-route="todos"] .todo-info{
+        flex-basis: 100%;
+    }
+}
+.ascendra-page[data-route="todos"] .navbar{
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+
+    display: flex;
+    width: 600px;
+
+    overflow: hidden;
+    border-radius: 999px;
+    background-color: rgb(240, 240, 240);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+}
+
+.ascendra-page[data-route="todos"] .navbar button{
+    flex: 1;
+    padding: 15px 0;
+
+    border: none;
+    background: transparent;
+
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.ascendra-page[data-route="todos"] .navbar button:hover{
+    background-color: rgb(215, 215, 215);
+}
+
+.ascendra-page[data-route="todos"] .navbar .current{
+    background-color: rgb(37, 99, 235);
+    color: white;
+    border-radius: 25px;
+}
+.ascendra-page[data-route="todos"] *{
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+.ascendra-page[data-route="todos"]{
+    --accent: rgb(127, 0, 255);
+    --bg: #f6f3ff;
+    --card: white;
+    --text: #222;
+    --muted: #666;
+}
+
+.ascendra-page[data-route="todos"]{
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+}
+
+.ascendra-page[data-route="todos"] .page{
+    display: flex;
+    min-height: 100vh;
+}
+
+.ascendra-page[data-route="todos"] .sidebar{
+    width: 250px;
+    background: white;
+    padding: 30px 22px;
+    box-shadow: 5px 0 20px rgba(0, 0, 0, 0.07);
+}
+
+.ascendra-page[data-route="todos"] .sidebar h1{
+    color: var(--accent);
+    margin-bottom: 5px;
+}
+
+.ascendra-page[data-route="todos"] .sidebar p{
+    color: var(--muted);
+    margin-bottom: 35px;
+}
+
+.ascendra-page[data-route="todos"] .sidebar nav{
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.ascendra-page[data-route="todos"] .sidebar a{
+    text-decoration: none;
+    color: #333;
+    padding: 13px 15px;
+    border-radius: 14px;
+    transition: 0.2s;
+}
+
+.ascendra-page[data-route="todos"] .sidebar a:hover, .ascendra-page[data-route="todos"] .sidebar a.active{
+    background: var(--accent);
+    color: white;
+    transform: translateX(4px);
+}
+
+.ascendra-page[data-route="todos"] .content{
+    flex: 1;
+    padding: 40px;
+    max-width: 950px;
+}
+
+.ascendra-page[data-route="todos"] header{
+    margin-bottom: 25px;
+}
+
+.ascendra-page[data-route="todos"] header h2{
+    font-size: 36px;
+    margin: 0;
+}
+
+.ascendra-page[data-route="todos"] header p{
+    color: var(--muted);
+}
+
+.ascendra-page[data-route="todos"] .card{
+    background: var(--card);
+    padding: 25px;
+    border-radius: 22px;
+    margin-bottom: 25px;
+    box-shadow: 0 8px 22px rgba(0, 0, 0, 0.08);
+}
+
+.ascendra-page[data-route="todos"] .card h3{
+    margin-top: 0;
+    color: var(--accent);
+}
+
+.ascendra-page[data-route="todos"] label{
+    display: block;
+    font-weight: bold;
+    margin-bottom: 8px;
+}
+
+.ascendra-page[data-route="todos"] select{
+    width: 100%;
+    padding: 13px;
+    border-radius: 13px;
+    border: 2px solid #ddd;
+    font-size: 15px;
+    margin-bottom: 15px;
+}
+
+.ascendra-page[data-route="todos"] select:focus{
+    outline: none;
+    border-color: var(--accent);
+}
+
+.ascendra-page[data-route="todos"] .toggle-row, .ascendra-page[data-route="todos"] .danger-item{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 15px;
+    border-top: 1px solid #eee;
+    padding: 18px 0;
+}
+
+.ascendra-page[data-route="todos"] .toggle-row h4, .ascendra-page[data-route="todos"] .danger-item h4{
+    margin: 0 0 5px;
+}
+
+.ascendra-page[data-route="todos"] .toggle-row p, .ascendra-page[data-route="todos"] .danger-item p{
+    margin: 0;
+    color: var(--muted);
+}
+
+.ascendra-page[data-route="todos"] input[type="checkbox"]{
+    width: 48px;
+    height: 25px;
+    accent-color: var(--accent);
+    cursor: pointer;
+}
+
+.ascendra-page[data-route="todos"] .danger{
+    border: 2px solid #ef4444;
+    background: #fff7f7;
+}
+
+.ascendra-page[data-route="todos"] .danger h3{
+    color: #dc2626;
+}
+
+.ascendra-page[data-route="todos"] .danger button{
+    background: #dc2626;
+    color: white;
+    border: none;
+    padding: 11px 18px;
+    border-radius: 12px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.ascendra-page[data-route="todos"] .danger button:hover{
+    background: #b91c1c;
+    transform: scale(1.04);
+}
+
+@media (max-width: 750px) {
+    .ascendra-page[data-route="todos"] .page{
+        flex-direction: column;
+    }
+
+    .ascendra-page[data-route="todos"] .content{
+        padding: 25px;
+    }
+
+    .ascendra-page[data-route="todos"] .toggle-row, .ascendra-page[data-route="todos"] .danger-item{
+        flex-direction: column;
+        align-items: flex-start;
+    }
+}
+
+/* ===== HABITS ===== */
+.ascendra-page[data-route="habits"]{
+    font-family:Arial, sans-serif;
+    background:rgb(246,242,255);
+    text-align:center;
+    margin:0;
+    padding:30px;
+}
+
+.ascendra-page[data-route="habits"] h5{
+    color:rgb(120,120,120);
+    margin-bottom:25px;
+}
+
+.ascendra-page[data-route="habits"] #addHabitBtn{
+    padding:12px 24px;
+    border:none;
+    border-radius:999px;
+    background:rgb(127,0,255);
+    color:white;
+    font-size:16px;
+    cursor:pointer;
+    box-shadow:0 5px 15px rgba(127,0,255,.35);
+    transition:.2s;
+}
+
+.ascendra-page[data-route="habits"] #addHabitBtn:hover{
+    background:rgb(143,63,216);
+}
+
+.ascendra-page[data-route="habits"] .habit{
+    width:70%;
+    max-width:700px;
+    min-height:80px;
+
+    margin:25px auto;
+    padding:20px 30px;
+
+    background:white;
+
+    border-radius:999px;
+
+    box-shadow:0 5px 15px rgba(127,0,255,.18);
+
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+
+    transition:.25s;
+}
+
+.ascendra-page[data-route="habits"] .habit:hover{
+    transform:translateY(-3px);
+    box-shadow:0 8px 20px rgba(127,0,255,.25);
+}
+
+.ascendra-page[data-route="habits"] .left{
+    text-align:left;
+}
+
+.ascendra-page[data-route="habits"] .habit-title{
+    font-size:22px;
+    font-weight:bold;
+}
+
+.ascendra-page[data-route="habits"] .habit-type{
+    color:gray;
+    margin-top:6px;
+}
+
+.ascendra-page[data-route="habits"] .right{
+    display:flex;
+    gap:12px;
+}
+
+.ascendra-page[data-route="habits"] .right button{
+    opacity:0;
+    background:none;
+    border:none;
+    cursor:pointer;
+    font-size:24px;
+    transition:.2s;
+}
+
+.ascendra-page[data-route="habits"] .habit:hover .right button{
+    opacity:1;
+}
+
+.ascendra-page[data-route="habits"] .popup{
+    display:none;
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,.45);
+}
+
+.ascendra-page[data-route="habits"] .popup-box{
+    width:330px;
+    margin:170px auto;
+    padding:25px;
+
+    background:white;
+
+    border-radius:20px;
+
+    text-align:center;
+}
+
+.ascendra-page[data-route="habits"] .popup-box h2{
+    color:rgb(127,0,255);
+}
+
+.ascendra-page[data-route="habits"] .popup-box input, .ascendra-page[data-route="habits"] .popup-box select{
+    width:90%;
+    padding:10px;
+    margin:8px 0;
+    border-radius:10px;
+    border:1px solid #ccc;
+}
+
+.ascendra-page[data-route="habits"] .popup-box button{
+    margin-top:10px;
+    padding:10px 18px;
+    border:none;
+    border-radius:10px;
+    background:rgb(127,0,255);
+    color:white;
+    cursor:pointer;
+}
+
+.ascendra-page[data-route="habits"] .popup-box button:hover{
+    background:rgb(143,63,216);
+}
+
+/* Navbar */
+
+.ascendra-page[data-route="habits"] .navbar{
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+
+    display: flex;
+    width: 600px;
+
+    border-radius: 999px;
+    overflow: hidden;
+    background-color: rgb(240, 240, 240);
+    box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+}
+
+.ascendra-page[data-route="habits"] .navbar button{
+    flex: 1;
+    border: none;
+    background: transparent;
+    padding: 15px 0;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.ascendra-page[data-route="habits"] .navbar button:hover{
+    background-color: rgb(215, 215, 215);
+}
+
+.ascendra-page[data-route="habits"] .navbar .current{
+    background-color: rgb(37, 99, 235);
+    color: white;
+    border-radius: 25px;
+}
+.ascendra-page[data-route="habits"] *{
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+.ascendra-page[data-route="habits"]{
+    --accent: rgb(127, 0, 255);
+    --bg: #f6f3ff;
+    --card: white;
+    --text: #222;
+    --muted: #666;
+}
+
+.ascendra-page[data-route="habits"]{
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+}
+
+.ascendra-page[data-route="habits"] .page{
+    display: flex;
+    min-height: 100vh;
+}
+
+.ascendra-page[data-route="habits"] .sidebar{
+    width: 250px;
+    background: white;
+    padding: 30px 22px;
+    box-shadow: 5px 0 20px rgba(0, 0, 0, 0.07);
+}
+
+.ascendra-page[data-route="habits"] .sidebar h1{
+    color: var(--accent);
+    margin-bottom: 5px;
+}
+
+.ascendra-page[data-route="habits"] .sidebar p{
+    color: var(--muted);
+    margin-bottom: 35px;
+}
+
+.ascendra-page[data-route="habits"] .sidebar nav{
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.ascendra-page[data-route="habits"] .sidebar a{
+    text-decoration: none;
+    color: #333;
+    padding: 13px 15px;
+    border-radius: 14px;
+    transition: 0.2s;
+}
+
+.ascendra-page[data-route="habits"] .sidebar a:hover, .ascendra-page[data-route="habits"] .sidebar a.active{
+    background: var(--accent);
+    color: white;
+    transform: translateX(4px);
+}
+
+.ascendra-page[data-route="habits"] .content{
+    flex: 1;
+    padding: 40px;
+    max-width: 950px;
+}
+
+.ascendra-page[data-route="habits"] header{
+    margin-bottom: 25px;
+}
+
+.ascendra-page[data-route="habits"] header h2{
+    font-size: 36px;
+    margin: 0;
+}
+
+.ascendra-page[data-route="habits"] header p{
+    color: var(--muted);
+}
+
+.ascendra-page[data-route="habits"] .card{
+    background: var(--card);
+    padding: 25px;
+    border-radius: 22px;
+    margin-bottom: 25px;
+    box-shadow: 0 8px 22px rgba(0, 0, 0, 0.08);
+}
+
+.ascendra-page[data-route="habits"] .card h3{
+    margin-top: 0;
+    color: var(--accent);
+}
+
+.ascendra-page[data-route="habits"] label{
+    display: block;
+    font-weight: bold;
+    margin-bottom: 8px;
+}
+
+.ascendra-page[data-route="habits"] select{
+    width: 100%;
+    padding: 13px;
+    border-radius: 13px;
+    border: 2px solid #ddd;
+    font-size: 15px;
+    margin-bottom: 15px;
+}
+
+.ascendra-page[data-route="habits"] select:focus{
+    outline: none;
+    border-color: var(--accent);
+}
+
+.ascendra-page[data-route="habits"] .toggle-row, .ascendra-page[data-route="habits"] .danger-item{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 15px;
+    border-top: 1px solid #eee;
+    padding: 18px 0;
+}
+
+.ascendra-page[data-route="habits"] .toggle-row h4, .ascendra-page[data-route="habits"] .danger-item h4{
+    margin: 0 0 5px;
+}
+
+.ascendra-page[data-route="habits"] .toggle-row p, .ascendra-page[data-route="habits"] .danger-item p{
+    margin: 0;
+    color: var(--muted);
+}
+
+.ascendra-page[data-route="habits"] input[type="checkbox"]{
+    width: 48px;
+    height: 25px;
+    accent-color: var(--accent);
+    cursor: pointer;
+}
+
+.ascendra-page[data-route="habits"] .danger{
+    border: 2px solid #ef4444;
+    background: #fff7f7;
+}
+
+.ascendra-page[data-route="habits"] .danger h3{
+    color: #dc2626;
+}
+
+.ascendra-page[data-route="habits"] .danger button{
+    background: #dc2626;
+    color: white;
+    border: none;
+    padding: 11px 18px;
+    border-radius: 12px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.ascendra-page[data-route="habits"] .danger button:hover{
+    background: #b91c1c;
+    transform: scale(1.04);
+}
+
+@media (max-width: 750px) {
+    .ascendra-page[data-route="habits"] .page{
+        flex-direction: column;
+    }
+
+    .ascendra-page[data-route="habits"] .content{
+        padding: 25px;
+    }
+
+    .ascendra-page[data-route="habits"] .toggle-row, .ascendra-page[data-route="habits"] .danger-item{
+        flex-direction: column;
+        align-items: flex-start;
+    }
+}
+
+/* ===== BREATHING ===== */
+.ascendra-page[data-route="breathing"] *{
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+.ascendra-page[data-route="breathing"]{
+    --accent: rgb(127, 0, 255);
+    --bg: #f6f3ff;
+    --card: white;
+    --text: #222;
+    --muted: #666;
+}
+
+.ascendra-page[data-route="breathing"]{
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+}
+
+.ascendra-page[data-route="breathing"] .page{
+    display: flex;
+    min-height: 100vh;
+}
+
+.ascendra-page[data-route="breathing"] .sidebar{
+    width: 250px;
+    background: white;
+    padding: 30px 22px;
+    box-shadow: 5px 0 20px rgba(0, 0, 0, 0.07);
+}
+
+.ascendra-page[data-route="breathing"] .sidebar h1{
+    color: var(--accent);
+    margin-bottom: 5px;
+}
+
+.ascendra-page[data-route="breathing"] .sidebar p{
+    color: var(--muted);
+    margin-bottom: 35px;
+}
+
+.ascendra-page[data-route="breathing"] .sidebar nav{
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.ascendra-page[data-route="breathing"] .sidebar a{
+    text-decoration: none;
+    color: #333;
+    padding: 13px 15px;
+    border-radius: 14px;
+    transition: 0.2s;
+}
+
+.ascendra-page[data-route="breathing"] .sidebar a:hover, .ascendra-page[data-route="breathing"] .sidebar a.active{
+    background: var(--accent);
+    color: white;
+    transform: translateX(4px);
+}
+
+.ascendra-page[data-route="breathing"] .content{
+    flex: 1;
+    padding: 40px;
+    max-width: 950px;
+}
+
+.ascendra-page[data-route="breathing"] header{
+    margin-bottom: 25px;
+}
+
+.ascendra-page[data-route="breathing"] header h2{
+    font-size: 36px;
+    margin: 0;
+}
+
+.ascendra-page[data-route="breathing"] header p{
+    color: var(--muted);
+}
+
+.ascendra-page[data-route="breathing"] .card{
+    background: var(--card);
+    padding: 25px;
+    border-radius: 22px;
+    margin-bottom: 25px;
+    box-shadow: 0 8px 22px rgba(0, 0, 0, 0.08);
+}
+
+.ascendra-page[data-route="breathing"] .card h3{
+    margin-top: 0;
+    color: var(--accent);
+}
+
+.ascendra-page[data-route="breathing"] label{
+    display: block;
+    font-weight: bold;
+    margin-bottom: 8px;
+}
+
+.ascendra-page[data-route="breathing"] select{
+    width: 100%;
+    padding: 13px;
+    border-radius: 13px;
+    border: 2px solid #ddd;
+    font-size: 15px;
+    margin-bottom: 15px;
+}
+
+.ascendra-page[data-route="breathing"] select:focus{
+    outline: none;
+    border-color: var(--accent);
+}
+
+.ascendra-page[data-route="breathing"] .toggle-row, .ascendra-page[data-route="breathing"] .danger-item{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 15px;
+    border-top: 1px solid #eee;
+    padding: 18px 0;
+}
+
+.ascendra-page[data-route="breathing"] .toggle-row h4, .ascendra-page[data-route="breathing"] .danger-item h4{
+    margin: 0 0 5px;
+}
+
+.ascendra-page[data-route="breathing"] .toggle-row p, .ascendra-page[data-route="breathing"] .danger-item p{
+    margin: 0;
+    color: var(--muted);
+}
+
+.ascendra-page[data-route="breathing"] input[type="checkbox"]{
+    width: 48px;
+    height: 25px;
+    accent-color: var(--accent);
+    cursor: pointer;
+}
+
+.ascendra-page[data-route="breathing"] .danger{
+    border: 2px solid #ef4444;
+    background: #fff7f7;
+}
+
+.ascendra-page[data-route="breathing"] .danger h3{
+    color: #dc2626;
+}
+
+.ascendra-page[data-route="breathing"] .danger button{
+    background: #dc2626;
+    color: white;
+    border: none;
+    padding: 11px 18px;
+    border-radius: 12px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.ascendra-page[data-route="breathing"] .danger button:hover{
+    background: #b91c1c;
+    transform: scale(1.04);
+}
+
+@media (max-width: 750px) {
+    .ascendra-page[data-route="breathing"] .page{
+        flex-direction: column;
+    }
+
+    .ascendra-page[data-route="breathing"] .content{
+        padding: 25px;
+    }
+
+    .ascendra-page[data-route="breathing"] .toggle-row, .ascendra-page[data-route="breathing"] .danger-item{
+        flex-direction: column;
+        align-items: flex-start;
+    }
+}
+.ascendra-page[data-route="breathing"] *{
+    box-sizing: border-box;
+}
+
+.ascendra-page[data-route="breathing"]{
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #f5f7fa;
+    color: #222;
+    text-align: center;
+    padding-bottom: 120px;
+}
+
+.ascendra-page[data-route="breathing"] main{
+    width: min(1000px, 92%);
+    margin: 40px auto;
+}
+
+.ascendra-page[data-route="breathing"] h1{
+    font-size: 42px;
+    color: rgb(37, 99, 235);
+    margin-bottom: 5px;
+}
+
+.ascendra-page[data-route="breathing"] .subtitle{
+    color: gray;
+    margin-bottom: 30px;
+}
+
+.ascendra-page[data-route="breathing"] .menu{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 18px;
+    margin-bottom: 35px;
+}
+
+.ascendra-page[data-route="breathing"] .menu button{
+    background: white;
+    border: 2px solid transparent;
+    border-radius: 20px;
+    padding: 25px;
+    font-size: 20px;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 0 5px 14px rgba(0,0,0,0.08);
+}
+
+.ascendra-page[data-route="breathing"] .menu button:hover{
+    border-color: rgb(37, 99, 235);
+}
+
+.ascendra-page[data-route="breathing"] .menu span{
+    color: rgb(37, 99, 235);
+    font-size: 15px;
+}
+
+.ascendra-page[data-route="breathing"] .breathing-box{
+    background: white;
+    border-radius: 25px;
+    padding: 35px;
+    box-shadow: 0 5px 14px rgba(0,0,0,0.08);
+}
+
+.ascendra-page[data-route="breathing"] #circle{
+    width: 220px;
+    height: 220px;
+    margin: 35px auto;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgb(96, 165, 250), rgb(37, 99, 235));
+    color: white;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    transform: scale(1);
+    transition: transform 1s linear;
+    box-shadow: 0 0 35px rgba(37, 99, 235, 0.5);
+}
+
+.ascendra-page[data-route="breathing"] #phaseText{
+    margin: 0;
+    font-size: 22px;
+}
+
+.ascendra-page[data-route="breathing"] #countdown{
+    margin: 10px 0 0;
+    font-size: 48px;
+    font-weight: bold;
+}
+
+.ascendra-page[data-route="breathing"] #startBtn, .ascendra-page[data-route="breathing"] #stopBtn{
+    border: none;
+    padding: 12px 24px;
+    margin: 8px;
+    border-radius: 999px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.ascendra-page[data-route="breathing"] #startBtn{
+    background: rgb(37, 99, 235);
+    color: white;
+}
+
+.ascendra-page[data-route="breathing"] #stopBtn{
+    background: #e5e7eb;
+}
+
+.ascendra-page[data-route="breathing"] .navbar{
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+
+    display: flex;
+    width: 600px;
+
+    border-radius: 999px;
+    overflow: hidden;
+    background-color: rgb(240, 240, 240);
+    box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+}
+
+.ascendra-page[data-route="breathing"] .navbar button{
+    flex: 1;
+    border: none;
+    background: transparent;
+    padding: 15px 0;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.ascendra-page[data-route="breathing"] .navbar button:hover{
+    background-color: rgb(215, 215, 215);
+}
+
+.ascendra-page[data-route="breathing"] .navbar .current{
+    background-color: rgb(37, 99, 235);
+    color: white;
+    border-radius: 25px;
+}
+
+/* ===== CALENDAR ===== */
+.ascendra-page[data-route="calendar"] *{
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+.ascendra-page[data-route="calendar"]{
+    --accent: rgb(127, 0, 255);
+    --bg: #f6f3ff;
+    --card: white;
+    --text: #222;
+    --muted: #666;
+}
+
+.ascendra-page[data-route="calendar"]{
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+}
+
+.ascendra-page[data-route="calendar"] .page{
+    display: flex;
+    min-height: 100vh;
+}
+
+.ascendra-page[data-route="calendar"] .sidebar{
+    width: 250px;
+    background: white;
+    padding: 30px 22px;
+    box-shadow: 5px 0 20px rgba(0, 0, 0, 0.07);
+}
+
+.ascendra-page[data-route="calendar"] .sidebar h1{
+    color: var(--accent);
+    margin-bottom: 5px;
+}
+
+.ascendra-page[data-route="calendar"] .sidebar p{
+    color: var(--muted);
+    margin-bottom: 35px;
+}
+
+.ascendra-page[data-route="calendar"] .sidebar nav{
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.ascendra-page[data-route="calendar"] .sidebar a{
+    text-decoration: none;
+    color: #333;
+    padding: 13px 15px;
+    border-radius: 14px;
+    transition: 0.2s;
+}
+
+.ascendra-page[data-route="calendar"] .sidebar a:hover, .ascendra-page[data-route="calendar"] .sidebar a.active{
+    background: var(--accent);
+    color: white;
+    transform: translateX(4px);
+}
+
+.ascendra-page[data-route="calendar"] .content{
+    flex: 1;
+    padding: 40px;
+    max-width: 950px;
+}
+
+.ascendra-page[data-route="calendar"] header{
+    margin-bottom: 25px;
+}
+
+.ascendra-page[data-route="calendar"] header h2{
+    font-size: 36px;
+    margin: 0;
+}
+
+.ascendra-page[data-route="calendar"] header p{
+    color: var(--muted);
+}
+
+.ascendra-page[data-route="calendar"] .card{
+    background: var(--card);
+    padding: 25px;
+    border-radius: 22px;
+    margin-bottom: 25px;
+    box-shadow: 0 8px 22px rgba(0, 0, 0, 0.08);
+}
+
+.ascendra-page[data-route="calendar"] .card h3{
+    margin-top: 0;
+    color: var(--accent);
+}
+
+.ascendra-page[data-route="calendar"] label{
+    display: block;
+    font-weight: bold;
+    margin-bottom: 8px;
+}
+
+.ascendra-page[data-route="calendar"] select{
+    width: 100%;
+    padding: 13px;
+    border-radius: 13px;
+    border: 2px solid #ddd;
+    font-size: 15px;
+    margin-bottom: 15px;
+}
+
+.ascendra-page[data-route="calendar"] select:focus{
+    outline: none;
+    border-color: var(--accent);
+}
+
+.ascendra-page[data-route="calendar"] .toggle-row, .ascendra-page[data-route="calendar"] .danger-item{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 15px;
+    border-top: 1px solid #eee;
+    padding: 18px 0;
+}
+
+.ascendra-page[data-route="calendar"] .toggle-row h4, .ascendra-page[data-route="calendar"] .danger-item h4{
+    margin: 0 0 5px;
+}
+
+.ascendra-page[data-route="calendar"] .toggle-row p, .ascendra-page[data-route="calendar"] .danger-item p{
+    margin: 0;
+    color: var(--muted);
+}
+
+.ascendra-page[data-route="calendar"] input[type="checkbox"]{
+    width: 48px;
+    height: 25px;
+    accent-color: var(--accent);
+    cursor: pointer;
+}
+
+.ascendra-page[data-route="calendar"] .danger{
+    border: 2px solid #ef4444;
+    background: #fff7f7;
+}
+
+.ascendra-page[data-route="calendar"] .danger h3{
+    color: #dc2626;
+}
+
+.ascendra-page[data-route="calendar"] .danger button{
+    background: #dc2626;
+    color: white;
+    border: none;
+    padding: 11px 18px;
+    border-radius: 12px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.ascendra-page[data-route="calendar"] .danger button:hover{
+    background: #b91c1c;
+    transform: scale(1.04);
+}
+
+@media (max-width: 750px) {
+    .ascendra-page[data-route="calendar"] .page{
+        flex-direction: column;
+    }
+
+    .ascendra-page[data-route="calendar"] .content{
+        padding: 25px;
+    }
+
+    .ascendra-page[data-route="calendar"] .toggle-row, .ascendra-page[data-route="calendar"] .danger-item{
+        flex-direction: column;
+        align-items: flex-start;
+    }
+}
+.ascendra-page[data-route="calendar"]{
+    background-color: rgb(240, 242, 246);
+    margin: 0;
+    min-height: 100vh;
+    display: flex;
+    font-family: sans-serif;
+}
+
+/* ===========================
+   Sidebar
+=========================== */
+
+.ascendra-page[data-route="calendar"] .sidebar{
+    width: 250px;
+    padding: 30px 20px;
+    background-color: white;
+    box-shadow: 2px 0 12px rgba(0, 0, 0, 0.05);
+}
+
+.ascendra-page[data-route="calendar"] .sidebar h2{
+    margin-top: 0;
+    color: rgb(127, 0, 255);
+}
+
+.ascendra-page[data-route="calendar"] .task-list{
+    text-align: left;
+    padding-left: 20px;
+    color: rgb(85, 85, 85);
+}
+
+/* ===========================
+   Calendar
+=========================== */
+
+.ascendra-page[data-route="calendar"] .calendar-container{
+    flex-grow: 1;
+    padding: 25px 55px;
+}
+
+.ascendra-page[data-route="calendar"] .top-title{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.ascendra-page[data-route="calendar"] .top-title h1{
+    color: rgb(31, 22, 46);
+}
+
+.ascendra-page[data-route="calendar"] .addEvent{
+    background-color: rgb(143, 63, 216);
+    color: white;
+    border: none;
+    border-radius: 999px;
+    padding: 13px 25px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.ascendra-page[data-route="calendar"] .calendar-card{
+    background-color: white;
+    border-radius: 32px;
+    padding: 30px 40px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.12);
+}
+
+.ascendra-page[data-route="calendar"] .calendar-header{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: rgb(31, 22, 46);
+    margin-bottom: 25px;
+}
+
+.ascendra-page[data-route="calendar"] .calendar-header span{
+    font-size: 35px;
+    cursor: pointer;
+}
+
+.ascendra-page[data-route="calendar"] .calendar-header h2{
+    margin: 0;
+}
+
+.ascendra-page[data-route="calendar"] table{
+    width: 100%;
+    border-collapse: collapse;
+    background-color: white;
+}
+
+.ascendra-page[data-route="calendar"] th{
+    padding: 15px;
+    color: rgb(123, 92, 155);
+    font-weight: bold;
+}
+
+.ascendra-page[data-route="calendar"] td{
+    padding: 18px 10px;
+    text-align: center;
+    font-size: 17px;
+    font-weight: 600;
+    color: rgb(31, 22, 46);
+    cursor: pointer;
+    border: none;
+    width: 14%;
+    height: 90px;
+    vertical-align: top;
+}
+
+.ascendra-page[data-route="calendar"] td:hover{
+    background-color: rgb(215, 215, 215);
+    color: rgb(143, 63, 216);
+    border-radius: 50px;
+}
+
+.ascendra-page[data-route="calendar"] .today{
+    background-color: rgb(143, 63, 216);
+    color: white;
+    border-radius: 999px;
+    box-shadow: 0 5px 12px rgba(143, 63, 216, 0.4);
+}
+
+.ascendra-page[data-route="calendar"] .empty-day{
+    color: transparent;
+}
+
+/* ===========================
+   Branding
+=========================== */
+
+.ascendra-page[data-route="calendar"] .ascendraLogo{
+    font-family: "Brush Script MT", cursive;
+}
+
+/* ===========================
+   Bottom Navigation
+=========================== */
+
+.ascendra-page[data-route="calendar"] .navbar{
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+
+    display: flex;
+    width: 600px;
+
+    overflow: hidden;
+    border-radius: 999px;
+    background-color: rgb(240, 240, 240);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+}
+
+.ascendra-page[data-route="calendar"] .navbar button{
+    flex: 1;
+    padding: 15px 0;
+
+    border: none;
+    background: transparent;
+
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.ascendra-page[data-route="calendar"] .navbar button:hover{
+    background-color: rgb(215, 215, 215);
+}
+
+.ascendra-page[data-route="calendar"] .navbar .current{
+    background-color: rgb(37, 99, 235);
+    color: white;
+    border-radius: 25px;
+}
+
+
+.ascendra-page[data-route="calendar"] .popup{
+    display: none;
+    position: fixed;
+    inset: 0;
+    align-items: center;
+    justify-content: center;
+    padding: 16px;
+    background: rgba(0,0,0,0.45);
+    z-index: 9500;
+}
+
+.ascendra-page[data-route="calendar"] .popup-box{
+    box-sizing: border-box;
+    width: min(100%, 350px);
+    background: white;
+    padding: 25px;
+    border-radius: 20px;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.25);
+}
+
+.ascendra-page[data-route="calendar"] .popup input{
+    display: block;
+    width: 250px;
+    margin: 12px 0;
+    padding: 12px;
+    border-radius: 10px;
+    border: 1px solid #ccc;
+}
+
+.ascendra-page[data-route="calendar"] .today{
+    background-color: rgb(143, 63, 216);
+    color: white;
+    border-radius: 50px;
+}
+.ascendra-page[data-route="calendar"] .calendar-event{
+    margin-top: 5px;
+    padding: 4px 6px;
+    background-color: rgb(143, 63, 216);
+    color: white;
+    border-radius: 8px;
+    font-size: 12px;
+    line-height: 1.2;
+    white-space: normal;
+    overflow-wrap: break-word;
+    word-break: break-word;
+    max-width: 100%;
+    display: block;
+}
+
+/* ===== JOURNAL ===== */
+@import url("https://fonts.googleapis.com/css2?family=Handlee&display=swap");
+.ascendra-page[data-route="journal"]{
+    margin: 0;
+    padding-bottom: 110px;
+    background-color: rgb(240, 242, 246);
+    font-family: Arial, sans-serif;
+}
+
+.ascendra-page[data-route="journal"] .journal-container{
+    padding: 35px;
+}
+
+.ascendra-page[data-route="journal"] .journal-header h1{
+    margin-bottom: 5px;
+    color: rgb(127, 0, 255);
+}
+
+.ascendra-page[data-route="journal"] .journal-header p{
+    color: rgb(90, 90, 90);
+}
+
+.ascendra-page[data-route="journal"] .journal-layout{
+    display: flex;
+    gap: 25px;
+    margin-top: 25px;
+}
+
+.ascendra-page[data-route="journal"] .date-grid-card, .ascendra-page[data-route="journal"] .entry-card{
+    background-color: white;
+    border-radius: 18px;
+    padding: 25px;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
+}
+
+.ascendra-page[data-route="journal"] .date-grid-card{
+    width: 40%;
+}
+
+.ascendra-page[data-route="journal"] .entry-card{
+    flex: 1;
+}
+
+.ascendra-page[data-route="journal"] .date-grid{
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 10px;
+}
+
+.ascendra-page[data-route="journal"] .date-button{
+    padding: 14px;
+    border: none;
+    border-radius: 12px;
+    background-color: rgb(235, 235, 235);
+    cursor: pointer;
+    transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+.ascendra-page[data-route="journal"] .date-button:hover:not(:disabled){
+    background-color: rgb(220, 230, 255);
+    transform: translateY(-2px)
+}
+
+
+.ascendra-page[data-route="journal"] .date-button.today{
+    background-color: rgb(143, 63, 216);
+    box-shadow: 0 5px 12px rgba(143, 63, 216, 0.4);
+    color: white;
+}
+
+.ascendra-page[data-route="journal"] .date-button.future{
+    background-color: rgb(220, 220, 220);
+    color: rgb(150, 150, 150);
+    cursor: not-allowed;
+}
+
+.ascendra-page[data-route="journal"] .date-button.has-entry{
+    border: 3px solid rgb(0, 128, 0);
+}
+
+.ascendra-page[data-route="journal"] label{
+    display: block;
+    margin-top: 15px;
+    font-weight: bold;
+}
+
+.ascendra-page[data-route="journal"] select, .ascendra-page[data-route="journal"] textarea{
+    width: 100%;
+    margin-top: 6px;
+    padding: 10px;
+    border: 1px solid rgb(210, 210, 210);
+    border-radius: 10px;
+    font-size: 15px;
+}
+
+.ascendra-page[data-route="journal"] textarea{
+    height: 70px;
+    resize: vertical;
+    font-family: "Handlee", cursive;
+    font-size: 20px;
+}
+
+.ascendra-page[data-route="journal"] #saveEntry{
+    margin-top: 18px;
+    padding: 12px 18px;
+    border: none;
+    border-radius: 12px;
+    background-color: rgb(37, 99, 235);
+    color: white;
+    cursor: pointer;
+}
+
+.ascendra-page[data-route="journal"] #statusMessage{
+    color: rgb(0, 128, 0);
+    font-weight: bold;
+}
+
+/* Bottom Navigation */
+
+.ascendra-page[data-route="journal"] .navbar{
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+
+    display: flex;
+    width: 600px;
+
+    overflow: hidden;
+    border-radius: 999px;
+    background-color: rgb(240, 240, 240);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+}
+
+.ascendra-page[data-route="journal"] .navbar button{
+    flex: 1;
+    padding: 15px 0;
+
+    border: none;
+    background: transparent;
+
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.ascendra-page[data-route="journal"] .navbar button:hover{
+    background-color: rgb(215, 215, 215);
+}
+
+.ascendra-page[data-route="journal"] .navbar .current{
+    background-color: rgb(37, 99, 235);
+    color: white;
+    border-radius: 25px;
+}
+.ascendra-page[data-route="journal"] .mini-calendar-header{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.ascendra-page[data-route="journal"] .mini-calendar-header button{
+    width: 42px;
+    height: 42px;
+
+    border: none;
+    border-radius: 50%;
+
+    background-color: rgb(143, 63, 216);
+    color: white;
+
+    font-size: 26px;
+    cursor: pointer;
+
+    transition: 0.2s;
+}
+
+.ascendra-page[data-route="journal"] .mini-calendar-header button:hover{
+    background-color: rgb(127, 0, 255);
+    transform: scale(1.05);
+}
+
+.ascendra-page[data-route="journal"] .selected-day{
+    outline: 3px solid rgb(0, 128, 0);
+}
+.ascendra-page[data-route="journal"] *{
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+.ascendra-page[data-route="journal"]{
+    --accent: rgb(127, 0, 255);
+    --bg: #f6f3ff;
+    --card: white;
+    --text: #222;
+    --muted: #666;
+}
+
+.ascendra-page[data-route="journal"]{
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+}
+
+.ascendra-page[data-route="journal"] .page{
+    display: flex;
+    min-height: 100vh;
+}
+
+.ascendra-page[data-route="journal"] .sidebar{
+    width: 250px;
+    background: white;
+    padding: 30px 22px;
+    box-shadow: 5px 0 20px rgba(0, 0, 0, 0.07);
+}
+
+.ascendra-page[data-route="journal"] .sidebar h1{
+    color: var(--accent);
+    margin-bottom: 5px;
+}
+
+.ascendra-page[data-route="journal"] .sidebar p{
+    color: var(--muted);
+    margin-bottom: 35px;
+}
+
+.ascendra-page[data-route="journal"] .sidebar nav{
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.ascendra-page[data-route="journal"] .sidebar a{
+    text-decoration: none;
+    color: #333;
+    padding: 13px 15px;
+    border-radius: 14px;
+    transition: 0.2s;
+}
+
+.ascendra-page[data-route="journal"] .sidebar a:hover, .ascendra-page[data-route="journal"] .sidebar a.active{
+    background: var(--accent);
+    color: white;
+    transform: translateX(4px);
+}
+
+.ascendra-page[data-route="journal"] .content{
+    flex: 1;
+    padding: 40px;
+    max-width: 950px;
+}
+
+.ascendra-page[data-route="journal"] header{
+    margin-bottom: 25px;
+}
+
+.ascendra-page[data-route="journal"] header h2{
+    font-size: 36px;
+    margin: 0;
+}
+
+.ascendra-page[data-route="journal"] header p{
+    color: var(--muted);
+}
+
+.ascendra-page[data-route="journal"] .card{
+    background: var(--card);
+    padding: 25px;
+    border-radius: 22px;
+    margin-bottom: 25px;
+    box-shadow: 0 8px 22px rgba(0, 0, 0, 0.08);
+}
+
+.ascendra-page[data-route="journal"] .card h3{
+    margin-top: 0;
+    color: var(--accent);
+}
+
+.ascendra-page[data-route="journal"] label{
+    display: block;
+    font-weight: bold;
+    margin-bottom: 8px;
+}
+
+.ascendra-page[data-route="journal"] select{
+    width: 100%;
+    padding: 13px;
+    border-radius: 13px;
+    border: 2px solid #ddd;
+    font-size: 15px;
+    margin-bottom: 15px;
+}
+
+.ascendra-page[data-route="journal"] select:focus{
+    outline: none;
+    border-color: var(--accent);
+}
+
+.ascendra-page[data-route="journal"] .toggle-row, .ascendra-page[data-route="journal"] .danger-item{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 15px;
+    border-top: 1px solid #eee;
+    padding: 18px 0;
+}
+
+.ascendra-page[data-route="journal"] .toggle-row h4, .ascendra-page[data-route="journal"] .danger-item h4{
+    margin: 0 0 5px;
+}
+
+.ascendra-page[data-route="journal"] .toggle-row p, .ascendra-page[data-route="journal"] .danger-item p{
+    margin: 0;
+    color: var(--muted);
+}
+
+.ascendra-page[data-route="journal"] input[type="checkbox"]{
+    width: 48px;
+    height: 25px;
+    accent-color: var(--accent);
+    cursor: pointer;
+}
+
+.ascendra-page[data-route="journal"] .danger{
+    border: 2px solid #ef4444;
+    background: #fff7f7;
+}
+
+.ascendra-page[data-route="journal"] .danger h3{
+    color: #dc2626;
+}
+
+.ascendra-page[data-route="journal"] .danger button{
+    background: #dc2626;
+    color: white;
+    border: none;
+    padding: 11px 18px;
+    border-radius: 12px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.ascendra-page[data-route="journal"] .danger button:hover{
+    background: #b91c1c;
+    transform: scale(1.04);
+}
+
+@media (max-width: 750px) {
+    .ascendra-page[data-route="journal"] .page{
+        flex-direction: column;
+    }
+
+    .ascendra-page[data-route="journal"] .content{
+        padding: 25px;
+    }
+
+    .ascendra-page[data-route="journal"] .toggle-row, .ascendra-page[data-route="journal"] .danger-item{
+        flex-direction: column;
+        align-items: flex-start;
+    }
+}
+
+/* ===== MENU ===== */
+.ascendra-page[data-route="menu"] *{
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+.ascendra-page[data-route="menu"]{
+    --accent: rgb(127, 0, 255);
+    --bg: #f6f3ff;
+    --card: white;
+    --text: #222;
+    --muted: #666;
+}
+
+.ascendra-page[data-route="menu"]{
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+}
+
+.ascendra-page[data-route="menu"] .page{
+    display: flex;
+    min-height: 100vh;
+}
+
+.ascendra-page[data-route="menu"] .sidebar{
+    width: 250px;
+    background: white;
+    padding: 30px 22px;
+    box-shadow: 5px 0 20px rgba(0, 0, 0, 0.07);
+}
+
+.ascendra-page[data-route="menu"] .sidebar h1{
+    color: var(--accent);
+    margin-bottom: 5px;
+}
+
+.ascendra-page[data-route="menu"] .sidebar p{
+    color: var(--muted);
+    margin-bottom: 35px;
+}
+
+.ascendra-page[data-route="menu"] .sidebar nav{
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.ascendra-page[data-route="menu"] .sidebar a{
+    text-decoration: none;
+    color: #333;
+    padding: 13px 15px;
+    border-radius: 14px;
+    transition: 0.2s;
+}
+
+.ascendra-page[data-route="menu"] .sidebar a:hover, .ascendra-page[data-route="menu"] .sidebar a.active{
+    background: var(--accent);
+    color: white;
+    transform: translateX(4px);
+}
+
+.ascendra-page[data-route="menu"] .content{
+    flex: 1;
+    padding: 40px;
+    max-width: 950px;
+}
+
+.ascendra-page[data-route="menu"] header{
+    margin-bottom: 25px;
+}
+
+.ascendra-page[data-route="menu"] header h2{
+    font-size: 36px;
+    margin: 0;
+}
+
+.ascendra-page[data-route="menu"] header p{
+    color: var(--muted);
+}
+
+.ascendra-page[data-route="menu"] .card{
+    background: var(--card);
+    padding: 25px;
+    border-radius: 22px;
+    margin-bottom: 25px;
+    box-shadow: 0 8px 22px rgba(0, 0, 0, 0.08);
+}
+
+.ascendra-page[data-route="menu"] .card h3{
+    margin-top: 0;
+    color: var(--accent);
+}
+
+.ascendra-page[data-route="menu"] label{
+    display: block;
+    font-weight: bold;
+    margin-bottom: 8px;
+}
+
+.ascendra-page[data-route="menu"] select{
+    width: 100%;
+    padding: 13px;
+    border-radius: 13px;
+    border: 2px solid #ddd;
+    font-size: 15px;
+    margin-bottom: 15px;
+}
+
+.ascendra-page[data-route="menu"] select:focus{
+    outline: none;
+    border-color: var(--accent);
+}
+
+.ascendra-page[data-route="menu"] .toggle-row, .ascendra-page[data-route="menu"] .danger-item{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 15px;
+    border-top: 1px solid #eee;
+    padding: 18px 0;
+}
+
+.ascendra-page[data-route="menu"] .toggle-row h4, .ascendra-page[data-route="menu"] .danger-item h4{
+    margin: 0 0 5px;
+}
+
+.ascendra-page[data-route="menu"] .toggle-row p, .ascendra-page[data-route="menu"] .danger-item p{
+    margin: 0;
+    color: var(--muted);
+}
+
+.ascendra-page[data-route="menu"] input[type="checkbox"]{
+    width: 48px;
+    height: 25px;
+    accent-color: var(--accent);
+    cursor: pointer;
+}
+
+.ascendra-page[data-route="menu"] .danger{
+    border: 2px solid #ef4444;
+    background: #fff7f7;
+}
+
+.ascendra-page[data-route="menu"] .danger h3{
+    color: #dc2626;
+}
+
+.ascendra-page[data-route="menu"] .danger button{
+    background: #dc2626;
+    color: white;
+    border: none;
+    padding: 11px 18px;
+    border-radius: 12px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.ascendra-page[data-route="menu"] .danger button:hover{
+    background: #b91c1c;
+    transform: scale(1.04);
+}
+
+@media (max-width: 750px) {
+    .ascendra-page[data-route="menu"] .page{
+        flex-direction: column;
+    }
+
+    .ascendra-page[data-route="menu"] .content{
+        padding: 25px;
+    }
+
+    .ascendra-page[data-route="menu"] .toggle-row, .ascendra-page[data-route="menu"] .danger-item{
+        flex-direction: column;
+        align-items: flex-start;
+    }
+}
+.ascendra-page[data-route="menu"] *{
+    box-sizing: border-box;
+}
+
+.ascendra-page[data-route="menu"]{
+    margin: 0;
+    overflow: hidden;
+    height: 100vh;
+
+    font-family: Arial, sans-serif;
+
+    background: #f5f7fa;
+}
+
+/* ==========================
+        MENU TITLE
+========================== */
+
+.ascendra-page[data-route="menu"] #menuTitle{
+    position: absolute;
+
+    top: 50%;
+    left: 50%;
+
+    transform: translate(-50%, -50%);
+
+    margin: 0;
+
+    font-size: 72px;
+    font-weight: bold;
+
+    color: rgb(127, 0, 255);
+
+    letter-spacing: 2px;
+
+    text-shadow:
+        0 4px 18px rgba(127,0,255,.18);
+
+    pointer-events: none;
+    user-select: none;
+}
+
+/* ==========================
+      BUTTON CONTAINER
+========================== */
+
+.ascendra-page[data-route="menu"] #nav{
+    position: absolute;
+
+    left: 50%;
+    top: 50%;
+
+    width: 0;
+    height: 0;
+}
+
+/* ==========================
+          BUTTONS
+========================== */
+
+.ascendra-page[data-route="menu"] #nav button{
+
+    position: absolute;
+
+    width: 170px;
+    height: 170px;
+
+    transform: translate(-50%, -50%);
+
+    border: none;
+    border-radius: 28px;
+
+    background: white;
+    color: #333;
+
+    font-size: 22px;
+    font-weight: bold;
+
+    cursor: pointer;
+
+    box-shadow:
+        0 10px 25px rgba(0,0,0,.10);
+
+    transition:
+        transform .25s ease,
+        background .25s ease,
+        color .25s ease,
+        box-shadow .25s ease;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 12px;
+}
+
+.ascendra-page[data-route="menu"] #nav button:hover{
+
+    transform:
+        translate(-50%, -50%)
+        scale(1.08);
+
+    background: rgb(127,0,255);
+    color: white;
+
+    box-shadow:
+        0 18px 40px rgba(127,0,255,.35);
+
+}
+
+.ascendra-page[data-route="menu"] #nav button:active{
+
+    transform:
+        translate(-50%, -50%)
+        scale(.96);
+
+}
+
+/* ==========================
+            ICONS
+========================== */
+
+.ascendra-page[data-route="menu"] #nav button i{
+
+    font-size: 56px;
+
+    color: rgb(127,0,255);
+
+    transition:
+        color .25s,
+        transform .25s;
+}
+
+.ascendra-page[data-route="menu"] #nav button:hover i{
+
+    color: white;
+
+    transform: scale(1.1);
+
+}
+
+/* ==========================
+      BUTTON SHADOW GLOW
+========================== */
+
+.ascendra-page[data-route="menu"] #nav button::after{
+
+    content: "";
+
+    position: absolute;
+
+    inset: 0;
+
+    border-radius: inherit;
+
+    opacity: 0;
+
+    box-shadow:
+        0 0 40px rgba(127,0,255,.25);
+
+    transition: opacity .25s;
+}
+
+.ascendra-page[data-route="menu"] #nav button:hover::after{
+
+    opacity: 1;
+
+}
+
+.ascendra-page[data-route="menu"] *{
+    box-sizing: border-box;
+}
+
+.ascendra-page[data-route="menu"]{
+    margin: 0;
+    overflow: hidden;
+    height: 100vh;
+
+    font-family: Arial, sans-serif;
+
+    background: #f5f7fa;
+}
+
+/* ==========================
+        MENU TITLE
+========================== */
+
+.ascendra-page[data-route="menu"] #menuTitle{
+    position: absolute;
+
+    top: 50%;
+    left: 50%;
+
+    transform: translate(-50%, -50%);
+
+    margin: 0;
+
+    font-size: 72px;
+    font-weight: bold;
+
+    color: rgb(127, 0, 255);
+
+    letter-spacing: 2px;
+
+    text-shadow:
+        0 4px 18px rgba(127,0,255,.18);
+
+    pointer-events: none;
+    user-select: none;
+}
+
+/* ==========================
+      BUTTON CONTAINER
+========================== */
+
+.ascendra-page[data-route="menu"] #nav{
+    position: absolute;
+
+    left: 50%;
+    top: 50%;
+
+    width: 0;
+    height: 0;
+}
+
+/* ==========================
+          BUTTONS
+========================== */
+
+.ascendra-page[data-route="menu"] #nav button{
+
+    position: absolute;
+
+    width: 170px;
+    height: 170px;
+
+    transform: translate(-50%, -50%);
+
+    border: none;
+    border-radius: 28px;
+
+    background: white;
+    color: #333;
+
+    font-size: 22px;
+    font-weight: bold;
+
+    cursor: pointer;
+
+    box-shadow:
+        0 10px 25px rgba(0,0,0,.10);
+
+    transition:
+        transform .25s ease,
+        background .25s ease,
+        color .25s ease,
+        box-shadow .25s ease;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 12px;
+}
+
+.ascendra-page[data-route="menu"] #nav button:hover{
+
+    transform:
+        translate(-50%, -50%)
+        scale(1.08);
+
+    background: rgb(127,0,255);
+    color: white;
+
+    box-shadow:
+        0 18px 40px rgba(127,0,255,.35);
+
+}
+
+.ascendra-page[data-route="menu"] #nav button:active{
+
+    transform:
+        translate(-50%, -50%)
+        scale(.96);
+
+}
+
+/* ==========================
+            ICONS
+========================== */
+
+.ascendra-page[data-route="menu"] #nav button i{
+
+    font-size: 56px;
+
+    color: rgb(127,0,255);
+
+    transition:
+        color .25s,
+        transform .25s;
+}
+
+.ascendra-page[data-route="menu"] #nav button:hover i{
+
+    color: white;
+
+    transform: scale(1.1);
+
+}
+
+/* ==========================
+      BUTTON SHADOW GLOW
+========================== */
+
+.ascendra-page[data-route="menu"] #nav button::after{
+
+    content: "";
+
+    position: absolute;
+
+    inset: 0;
+
+    border-radius: inherit;
+
+    opacity: 0;
+
+    box-shadow:
+        0 0 40px rgba(127,0,255,.25);
+
+    transition: opacity .25s;
+}
+
+.ascendra-page[data-route="menu"] #nav button:hover::after{
+
+    opacity: 1;
+
+}
+
+/* ==========================
+     NAVIGAATION BAR
+========================== */
+
+.ascendra-page[data-route="menu"] .navbar{
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+
+    display: flex;
+    width: 600px;
+
+    overflow: hidden;
+    border-radius: 999px;
+    background-color: rgb(240, 240, 240);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+}
+
+.ascendra-page[data-route="menu"] .navbar button{
+    flex: 1;
+    padding: 15px 0;
+
+    border: none;
+    background: transparent;
+
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.ascendra-page[data-route="menu"] .navbar button:hover{
+    background-color: rgb(215, 215, 215);
+}
+
+.ascendra-page[data-route="menu"] .navbar .current{
+    background-color: rgb(37, 99, 235);
+    color: white;
+    border-radius: 25px;
+}
+
+/* ===== SETTINGS ===== */
+.ascendra-page[data-route="settings"] *{
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+.ascendra-page[data-route="settings"]{
+    --accent: rgb(127, 0, 255);
+    --bg: #f6f3ff;
+    --card: white;
+    --text: #222;
+    --muted: #666;
+}
+
+.ascendra-page[data-route="settings"]{
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+}
+
+.ascendra-page[data-route="settings"] .page{
+    display: flex;
+    min-height: 100vh;
+}
+
+.ascendra-page[data-route="settings"] .sidebar{
+    width: 250px;
+    background: white;
+    padding: 30px 22px;
+    box-shadow: 5px 0 20px rgba(0, 0, 0, 0.07);
+}
+
+.ascendra-page[data-route="settings"] .sidebar h1{
+    color: var(--accent);
+    margin-bottom: 5px;
+}
+
+.ascendra-page[data-route="settings"] .sidebar p{
+    color: var(--muted);
+    margin-bottom: 35px;
+}
+
+.ascendra-page[data-route="settings"] .sidebar nav{
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.ascendra-page[data-route="settings"] .sidebar a{
+    text-decoration: none;
+    color: #333;
+    padding: 13px 15px;
+    border-radius: 14px;
+    transition: 0.2s;
+}
+
+.ascendra-page[data-route="settings"] .sidebar a:hover, .ascendra-page[data-route="settings"] .sidebar a.active{
+    background: var(--accent);
+    color: white;
+    transform: translateX(4px);
+}
+
+.ascendra-page[data-route="settings"] .content{
+    flex: 1;
+    padding: 40px;
+    max-width: 950px;
+}
+
+.ascendra-page[data-route="settings"] header{
+    margin-bottom: 25px;
+}
+
+.ascendra-page[data-route="settings"] header h2{
+    font-size: 36px;
+    margin: 0;
+}
+
+.ascendra-page[data-route="settings"] header p{
+    color: var(--muted);
+}
+
+.ascendra-page[data-route="settings"] .card{
+    background: var(--card);
+    padding: 25px;
+    border-radius: 22px;
+    margin-bottom: 25px;
+    box-shadow: 0 8px 22px rgba(0, 0, 0, 0.08);
+}
+
+.ascendra-page[data-route="settings"] .card h3{
+    margin-top: 0;
+    color: var(--accent);
+}
+
+.ascendra-page[data-route="settings"] label{
+    display: block;
+    font-weight: bold;
+    margin-bottom: 8px;
+}
+
+.ascendra-page[data-route="settings"] select{
+    width: 100%;
+    padding: 13px;
+    border-radius: 13px;
+    border: 2px solid #ddd;
+    font-size: 15px;
+    margin-bottom: 15px;
+}
+
+.ascendra-page[data-route="settings"] select:focus{
+    outline: none;
+    border-color: var(--accent);
+}
+
+.ascendra-page[data-route="settings"] .toggle-row, .ascendra-page[data-route="settings"] .danger-item{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 15px;
+    border-top: 1px solid #eee;
+    padding: 18px 0;
+}
+
+.ascendra-page[data-route="settings"] .toggle-row h4, .ascendra-page[data-route="settings"] .danger-item h4{
+    margin: 0 0 5px;
+}
+
+.ascendra-page[data-route="settings"] .toggle-row p, .ascendra-page[data-route="settings"] .danger-item p{
+    margin: 0;
+    color: var(--muted);
+}
+
+.ascendra-page[data-route="settings"] input[type="checkbox"]{
+    width: 48px;
+    height: 25px;
+    accent-color: var(--accent);
+    cursor: pointer;
+}
+
+.ascendra-page[data-route="settings"] .danger{
+    border: 2px solid #ef4444;
+    background: #fff7f7;
+}
+
+.ascendra-page[data-route="settings"] .danger h3{
+    color: #dc2626;
+}
+
+.ascendra-page[data-route="settings"] .danger button{
+    background: #dc2626;
+    color: white;
+    border: none;
+    padding: 11px 18px;
+    border-radius: 12px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.ascendra-page[data-route="settings"] .danger button:hover{
+    background: #b91c1c;
+    transform: scale(1.04);
+}
+
+@media (max-width: 750px) {
+    .ascendra-page[data-route="settings"] .page{
+        flex-direction: column;
+    }
+
+    .ascendra-page[data-route="settings"] .content{
+        padding: 25px;
+    }
+
+    .ascendra-page[data-route="settings"] .toggle-row, .ascendra-page[data-route="settings"] .danger-item{
+        flex-direction: column;
+        align-items: flex-start;
+    }
+}
+
+/* ===== STATS ===== */
+
+.ascendra-page[data-route="stats"] *{
+    box-sizing: border-box;
+}
+
+.ascendra-page[data-route="stats"]{
+    margin: 0;
+    min-height: 100vh;
+
+    font-family: Arial, sans-serif;
+    color: rgb(20, 31, 60);
+
+    background: linear-gradient(
+        135deg,
+        rgb(236, 247, 255),
+        rgb(244, 239, 255)
+    );
+}
+
+.ascendra-page[data-route="stats"] a, .ascendra-page[data-route="stats"] button{
+    font: inherit;
+}
+
+.ascendra-page[data-route="stats"] .top-bar{
+    min-height: 75px;
+    padding: 12px 25px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    position: sticky;
+    top: 0;
+    z-index: 20;
+
+    background-color: rgba(255, 255, 255, 0.9);
+    border-bottom: 1px solid rgba(35, 60, 110, 0.1);
+
+    backdrop-filter: blur(12px);
+}
+
+.ascendra-page[data-route="stats"] .top-bar h1{
+    margin: 0;
+    font-size: 1.7rem;
+}
+
+.ascendra-page[data-route="stats"] .icon-button{
+    width: 45px;
+    height: 45px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    color: rgb(31, 57, 115);
+    background-color: rgb(229, 239, 255);
+
+    border-radius: 14px;
+    text-decoration: none;
+
+    transition: 0.2s ease;
+}
+
+.ascendra-page[data-route="stats"] .icon-button:hover{
+    transform: translateY(-2px);
+    background-color: rgb(211, 226, 255);
+}
+
+.ascendra-page[data-route="stats"] main{
+    width: min(1080px, 92%);
+    margin: 35px auto 60px;
+}
+
+.ascendra-page[data-route="stats"] .welcome-section{
+    margin-bottom: 35px;
+}
+
+.ascendra-page[data-route="stats"] .welcome-section h2{
+    margin: 5px 0 8px;
+    font-size: clamp(1.8rem, 4vw, 2.5rem);
+}
+
+.ascendra-page[data-route="stats"] .welcome-section > p:last-child{
+    margin: 0;
+    color: rgb(92, 102, 131);
+}
+
+.ascendra-page[data-route="stats"] .eyebrow{
+    margin: 0;
+
+    color: rgb(84, 100, 216);
+    font-size: 0.78rem;
+    font-weight: bold;
+    letter-spacing: 1.5px;
+}
+
+.ascendra-page[data-route="stats"] .habit-eyebrow{
+    color: rgb(139, 82, 190);
+}
+
+.ascendra-page[data-route="stats"] .category-title{
+    margin: 34px 0 18px;
+
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    font-size: 1.35rem;
+}
+
+.ascendra-page[data-route="stats"] .category-title i{
+    color: rgb(82, 100, 215);
+}
+
+.ascendra-page[data-route="stats"] .stats-grid{
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 18px;
+
+    margin-bottom: 24px;
+}
+
+.ascendra-page[data-route="stats"] .stat-card, .ascendra-page[data-route="stats"] .progress-card, .ascendra-page[data-route="stats"] .details-card, .ascendra-page[data-route="stats"] .recent-card{
+    background-color: rgba(255, 255, 255, 0.95);
+
+    border: 1px solid rgba(30, 55, 110, 0.1);
+    border-radius: 22px;
+
+    box-shadow: 0 12px 32px rgba(30, 55, 110, 0.1);
+}
+
+.ascendra-page[data-route="stats"] .stat-card{
+    padding: 22px;
+
+    display: flex;
+    align-items: center;
+    gap: 16px;
+
+    transition: 0.2s ease;
+}
+
+.ascendra-page[data-route="stats"] .stat-card:hover{
+    transform: translateY(-4px);
+    box-shadow: 0 18px 35px rgba(30, 55, 110, 0.14);
+}
+
+.ascendra-page[data-route="stats"] .stat-icon{
+    width: 52px;
+    height: 52px;
+
+    flex-shrink: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    color: white;
+    background: linear-gradient(
+        135deg,
+        rgb(75, 101, 221),
+        rgb(128, 88, 215)
+    );
+
+    border-radius: 16px;
+    font-size: 1.25rem;
+}
+
+.ascendra-page[data-route="stats"] .habit-icon{
+    background: linear-gradient(
+        135deg,
+        rgb(136, 84, 201),
+        rgb(188, 91, 174)
+    );
+}
+
+.ascendra-page[data-route="stats"] .stat-card h3{
+    margin: 0;
+    font-size: 1.75rem;
+}
+
+.ascendra-page[data-route="stats"] .stat-card p{
+    margin: 4px 0 0;
+
+    color: rgb(100, 109, 137);
+    font-size: 0.9rem;
+}
+
+.ascendra-page[data-route="stats"] .progress-card{
+    padding: 28px;
+    margin-bottom: 25px;
+}
+
+.ascendra-page[data-route="stats"] .section-heading{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 15px;
+}
+
+.ascendra-page[data-route="stats"] .section-heading h2{
+    margin: 5px 0 0;
+    font-size: 1.35rem;
+}
+
+.ascendra-page[data-route="stats"] #task-progress-label, .ascendra-page[data-route="stats"] #habit-progress-label{
+    color: rgb(76, 96, 211);
+    font-size: 1.4rem;
+}
+
+.ascendra-page[data-route="stats"] #habit-progress-label{
+    color: rgb(144, 82, 190);
+}
+
+.ascendra-page[data-route="stats"] .progress-track{
+    width: 100%;
+    height: 17px;
+
+    margin: 24px 0 14px;
+
+    overflow: hidden;
+
+    background-color: rgb(230, 234, 245);
+    border-radius: 999px;
+}
+
+.ascendra-page[data-route="stats"] #task-progress-fill, .ascendra-page[data-route="stats"] #habit-progress-fill{
+    width: 0%;
+    height: 100%;
+
+    border-radius: 999px;
+
+    transition: width 0.7s ease;
+}
+
+.ascendra-page[data-route="stats"] #task-progress-fill{
+    background: linear-gradient(
+        90deg,
+        rgb(77, 103, 222),
+        rgb(133, 88, 215)
+    );
+}
+
+.ascendra-page[data-route="stats"] #habit-progress-fill{
+    background: linear-gradient(
+        90deg,
+        rgb(137, 84, 200),
+        rgb(191, 91, 174)
+    );
+}
+
+.ascendra-page[data-route="stats"] #task-progress-message, .ascendra-page[data-route="stats"] #habit-progress-message{
+    margin: 0;
+    color: rgb(92, 102, 131);
+}
+
+.ascendra-page[data-route="stats"] .details-grid{
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px;
+
+    margin-top: 30px;
+    margin-bottom: 24px;
+}
+
+.ascendra-page[data-route="stats"] .details-card{
+    padding: 26px;
+}
+
+.ascendra-page[data-route="stats"] .section-icon{
+    color: rgb(95, 107, 209);
+    font-size: 1.5rem;
+}
+
+.ascendra-page[data-route="stats"] .detail-row{
+    padding: 17px 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    border-bottom: 1px solid rgb(232, 235, 243);
+}
+
+.ascendra-page[data-route="stats"] .detail-row:last-child{
+    border-bottom: none;
+}
+
+.ascendra-page[data-route="stats"] .detail-row span{
+    color: rgb(90, 100, 130);
+}
+
+.ascendra-page[data-route="stats"] .detail-row strong{
+    font-size: 1.1rem;
+}
+
+.ascendra-page[data-route="stats"] .achievement-card{
+    margin-bottom: 24px;
+}
+
+.ascendra-page[data-route="stats"] .achievement-box{
+    min-height: 130px;
+    padding: 20px;
+    margin-top: 20px;
+
+    display: flex;
+    align-items: center;
+    gap: 18px;
+
+    background: linear-gradient(
+        135deg,
+        rgb(241, 246, 255),
+        rgb(246, 240, 255)
+    );
+
+    border-radius: 18px;
+}
+
+.ascendra-page[data-route="stats"] #achievement-icon{
+    font-size: 2.7rem;
+}
+
+.ascendra-page[data-route="stats"] .achievement-box h3{
+    margin: 0 0 7px;
+}
+
+.ascendra-page[data-route="stats"] .achievement-box p{
+    margin: 0;
+
+    color: rgb(91, 101, 130);
+    line-height: 1.5;
+}
+
+.ascendra-page[data-route="stats"] .recent-card{
+    padding: 28px;
+}
+
+.ascendra-page[data-route="stats"] .view-link{
+    color: rgb(74, 95, 211);
+
+    font-size: 0.92rem;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.ascendra-page[data-route="stats"] .view-link i{
+    margin-left: 5px;
+}
+
+.ascendra-page[data-route="stats"] #recent-tasks{
+    margin-top: 20px;
+}
+
+.ascendra-page[data-route="stats"] .recent-task{
+    padding: 15px 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 15px;
+
+    border-bottom: 1px solid rgb(232, 235, 243);
+}
+
+.ascendra-page[data-route="stats"] .recent-task:last-child{
+    border-bottom: none;
+}
+
+.ascendra-page[data-route="stats"] .recent-task-info{
+    min-width: 0;
+}
+
+.ascendra-page[data-route="stats"] .recent-task-title{
+    margin: 0 0 5px;
+
+    overflow-wrap: anywhere;
+    font-weight: bold;
+}
+
+.ascendra-page[data-route="stats"] .recent-task-date{
+    margin: 0;
+
+    color: rgb(102, 111, 139);
+    font-size: 0.88rem;
+}
+
+.ascendra-page[data-route="stats"] .task-status{
+    flex-shrink: 0;
+
+    padding: 7px 11px;
+
+    border-radius: 999px;
+
+    font-size: 0.78rem;
+    font-weight: bold;
+}
+
+.ascendra-page[data-route="stats"] .task-status.completed{
+    color: rgb(28, 132, 77);
+    background-color: rgb(226, 248, 235);
+}
+
+.ascendra-page[data-route="stats"] .task-status.pending{
+    color: rgb(190, 111, 25);
+    background-color: rgb(255, 241, 220);
+}
+
+.ascendra-page[data-route="stats"] .empty-message{
+    padding: 25px;
+
+    color: rgb(102, 111, 139);
+    background-color: rgb(247, 248, 252);
+
+    border-radius: 16px;
+    text-align: center;
+}
+
+@media screen and (max-width: 900px) {
+    .ascendra-page[data-route="stats"] .stats-grid{
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media screen and (max-width: 650px) {
+    .ascendra-page[data-route="stats"] .top-bar{
+        padding: 10px 14px;
+    }
+
+    .ascendra-page[data-route="stats"] .top-bar h1{
+        font-size: 1.35rem;
+    }
+
+    .ascendra-page[data-route="stats"] main{
+        width: 94%;
+        margin-top: 24px;
+    }
+
+    .ascendra-page[data-route="stats"] .stats-grid, .ascendra-page[data-route="stats"] .details-grid{
+        grid-template-columns: 1fr;
+    }
+
+    .ascendra-page[data-route="stats"] .progress-card, .ascendra-page[data-route="stats"] .details-card, .ascendra-page[data-route="stats"] .recent-card{
+        padding: 22px 18px;
+    }
+
+    .ascendra-page[data-route="stats"] .section-heading{
+        align-items: flex-start;
+    }
+
+    .ascendra-page[data-route="stats"] .recent-task{
+        align-items: flex-start;
+        flex-direction: column;
+    }
+}
+
+
+
+
+/* ===== PROFILE ===== */
+.ascendra-page[data-route="profile"] *{
+    box-sizing: border-box;
+}
+
+.ascendra-page[data-route="profile"]{
+    margin: 0;
+    min-height: 100vh;
+
+    font-family: Arial, sans-serif;
+    color: rgb(18, 30, 60);
+
+    background: linear-gradient(
+        135deg,
+        rgb(235, 246, 255),
+        rgb(242, 238, 255)
+    );
+}
+
+.ascendra-page[data-route="profile"] button, .ascendra-page[data-route="profile"] input, .ascendra-page[data-route="profile"] textarea{
+    font: inherit;
+}
+
+.ascendra-page[data-route="profile"] .top-bar{
+    width: 100%;
+    min-height: 75px;
+    padding: 12px 25px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    position: sticky;
+    top: 0;
+    z-index: 10;
+
+    background-color: rgba(255, 255, 255, 0.9);
+    border-bottom: 1px solid rgba(30, 50, 100, 0.1);
+
+    backdrop-filter: blur(12px);
+}
+
+.ascendra-page[data-route="profile"] .top-bar h1{
+    margin: 0;
+    font-size: 1.7rem;
+}
+
+.ascendra-page[data-route="profile"] .icon-button{
+    width: 45px;
+    height: 45px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    color: rgb(29, 56, 115);
+    background-color: rgb(229, 239, 255);
+
+    border-radius: 14px;
+    text-decoration: none;
+
+    transition: 0.2s ease;
+}
+
+.ascendra-page[data-route="profile"] .icon-button:hover{
+    transform: translateY(-2px);
+    background-color: rgb(211, 226, 255);
+}
+
+.ascendra-page[data-route="profile"] main{
+    width: min(900px, 92%);
+    margin: 35px auto 60px;
+}
+
+.ascendra-page[data-route="profile"] .profile-card, .ascendra-page[data-route="profile"] .edit-profile-card{
+    background-color: rgba(255, 255, 255, 0.94);
+
+    border: 1px solid rgba(30, 55, 110, 0.1);
+    border-radius: 24px;
+
+    box-shadow: 0 15px 40px rgba(30, 55, 110, 0.12);
+}
+
+.ascendra-page[data-route="profile"] .profile-card{
+    padding: 40px 25px;
+    text-align: center;
+}
+
+.ascendra-page[data-route="profile"] .profile-picture-container{
+    width: 160px;
+    height: 160px;
+
+    margin: 0 auto 20px;
+
+    position: relative;
+}
+
+.ascendra-page[data-route="profile"] #profile-picture{
+    width: 100%;
+    height: 100%;
+
+    object-fit: cover;
+
+    border: 5px solid white;
+    border-radius: 50%;
+
+    box-shadow: 0 10px 25px rgba(20, 45, 100, 0.18);
+}
+
+.ascendra-page[data-route="profile"] .camera-button{
+    width: 48px;
+    height: 48px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    position: absolute;
+    right: 0;
+    bottom: 5px;
+
+    color: white;
+    background-color: rgb(73, 99, 220);
+
+    border: 4px solid white;
+    border-radius: 50%;
+
+    cursor: pointer;
+
+    transition: 0.2s ease;
+}
+
+.ascendra-page[data-route="profile"] .camera-button:hover{
+    transform: scale(1.08);
+    background-color: rgb(52, 75, 191);
+}
+
+.ascendra-page[data-route="profile"] .profile-card h2{
+    margin: 8px 0 4px;
+    font-size: 2rem;
+}
+
+.ascendra-page[data-route="profile"] #display-username{
+    margin: 0;
+
+    color: rgb(99, 111, 145);
+    font-weight: bold;
+}
+
+.ascendra-page[data-route="profile"] #display-bio{
+    max-width: 480px;
+    margin: 18px auto 0;
+
+    color: rgb(70, 79, 105);
+    line-height: 1.6;
+}
+
+.ascendra-page[data-route="profile"] .stats-container{
+    margin: 25px 0;
+
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 18px;
+}
+
+.ascendra-page[data-route="profile"] .stat-card{
+    padding: 24px 15px;
+
+    text-align: center;
+
+    background-color: rgba(255, 255, 255, 0.92);
+
+    border: 1px solid rgba(30, 55, 110, 0.1);
+    border-radius: 20px;
+
+    box-shadow: 0 10px 25px rgba(30, 55, 110, 0.08);
+}
+
+.ascendra-page[data-route="profile"] .stat-card i{
+    margin-bottom: 10px;
+
+    color: rgb(78, 98, 220);
+    font-size: 1.7rem;
+}
+
+.ascendra-page[data-route="profile"] .stat-card h3{
+    margin: 0;
+    font-size: 1.7rem;
+}
+
+.ascendra-page[data-route="profile"] .stat-card p{
+    margin: 5px 0 0;
+    color: rgb(95, 104, 130);
+}
+
+.ascendra-page[data-route="profile"] .edit-profile-card{
+    padding: 32px;
+}
+
+.ascendra-page[data-route="profile"] .edit-profile-card h2{
+    margin-top: 0;
+    margin-bottom: 28px;
+}
+
+.ascendra-page[data-route="profile"] .edit-profile-card h2 i{
+    margin-right: 8px;
+    color: rgb(78, 98, 220);
+}
+
+.ascendra-page[data-route="profile"] .input-group{
+    margin-bottom: 22px;
+}
+
+.ascendra-page[data-route="profile"] .input-group label{
+    display: block;
+    margin-bottom: 8px;
+
+    color: rgb(39, 50, 83);
+    font-weight: bold;
+}
+
+.ascendra-page[data-route="profile"] .input-wrapper{
+    display: flex;
+    align-items: center;
+
+    background-color: rgb(246, 248, 253);
+
+    border: 2px solid transparent;
+    border-radius: 14px;
+
+    transition: 0.2s ease;
+}
+
+.ascendra-page[data-route="profile"] .input-wrapper:focus-within{
+    background-color: white;
+    border-color: rgb(102, 119, 225);
+}
+
+.ascendra-page[data-route="profile"] .input-wrapper i{
+    margin-left: 16px;
+    color: rgb(116, 125, 150);
+}
+
+.ascendra-page[data-route="profile"] .input-wrapper input{
+    width: 100%;
+    padding: 14px 16px;
+
+    background: transparent;
+
+    border: none;
+    outline: none;
+}
+
+.ascendra-page[data-route="profile"] textarea{
+    width: 100%;
+    min-height: 130px;
+
+    padding: 15px;
+
+    resize: vertical;
+
+    color: rgb(22, 31, 57);
+    background-color: rgb(246, 248, 253);
+
+    border: 2px solid transparent;
+    border-radius: 14px;
+
+    outline: none;
+
+    transition: 0.2s ease;
+}
+
+.ascendra-page[data-route="profile"] textarea:focus{
+    background-color: white;
+    border-color: rgb(102, 119, 225);
+}
+
+.ascendra-page[data-route="profile"] #character-count{
+    margin: 7px 4px 0;
+
+    color: rgb(111, 120, 145);
+    text-align: right;
+    font-size: 0.9rem;
+}
+
+.ascendra-page[data-route="profile"] #save-button{
+    width: 100%;
+    padding: 15px 20px;
+
+    color: white;
+
+    background: linear-gradient(
+        135deg,
+        rgb(73, 99, 220),
+        rgb(121, 85, 210)
+    );
+
+    border: none;
+    border-radius: 14px;
+
+    font-weight: bold;
+    cursor: pointer;
+
+    box-shadow: 0 8px 20px rgba(73, 99, 220, 0.25);
+
+    transition: 0.2s ease;
+}
+
+.ascendra-page[data-route="profile"] #save-button:hover{
+    transform: translateY(-2px);
+    box-shadow: 0 12px 24px rgba(73, 99, 220, 0.32);
+}
+
+.ascendra-page[data-route="profile"] #save-button:active{
+    transform: translateY(0);
+}
+
+.ascendra-page[data-route="profile"] #save-button i{
+    margin-right: 7px;
+}
+
+.ascendra-page[data-route="profile"] #save-message{
+    min-height: 22px;
+    margin: 15px 0 0;
+
+    text-align: center;
+    font-weight: bold;
+}
+
+.ascendra-page[data-route="profile"] .success-message{
+    color: rgb(31, 145, 87);
+}
+
+.ascendra-page[data-route="profile"] .error-message{
+    color: rgb(208, 63, 63);
+}
+
+@media screen and (max-width: 650px) {
+    .ascendra-page[data-route="profile"] .top-bar{
+        padding: 10px 14px;
+    }
+
+    .ascendra-page[data-route="profile"] .top-bar h1{
+        font-size: 1.35rem;
+    }
+
+    .ascendra-page[data-route="profile"] main{
+        width: 94%;
+        margin-top: 22px;
+    }
+
+    .ascendra-page[data-route="profile"] .profile-card{
+        padding: 30px 18px;
+    }
+
+    .ascendra-page[data-route="profile"] .stats-container{
+        grid-template-columns: 1fr;
+    }
+
+    .ascendra-page[data-route="profile"] .edit-profile-card{
+        padding: 24px 18px;
+    }
+}
+.ascendra-page[data-route="profile"] #logout-button{
+    width: 100%;
+    padding: 15px 20px;
+    margin-top: 12px;
+
+    color: rgb(205, 48, 48);
+    background-color: rgb(255, 238, 238);
+
+    border: 2px solid rgb(255, 205, 205);
+    border-radius: 14px;
+
+    font-weight: bold;
+    cursor: pointer;
+
+    transition: 0.2s ease;
+}
+
+.ascendra-page[data-route="profile"] #logout-button:hover{
+    color: white;
+    background-color: rgb(205, 48, 48);
+    border-color: rgb(205, 48, 48);
+
+    transform: translateY(-2px);
+}
+
+.ascendra-page[data-route="profile"] #logout-button i{
+    margin-right: 7px;
+}
+
+/* ===== EXTRAS ===== */
+/* General Page */
+.ascendra-page[data-route="extras"]{
+    margin: 0;
+    padding: 40px;
+    font-family: Arial, Helvetica, sans-serif;
+    background: #f6f7fb;
+    color: #333;
+}
+
+/* Title */
+.ascendra-page[data-route="extras"] h1{
+    text-align: center;
+    font-size: 42px;
+    margin-bottom: 45px;
+    color: #7b2cff;
+}
+
+/* Grid */
+.ascendra-page[data-route="extras"] #button-container{
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 25px;
+
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+/* Buttons */
+.ascendra-page[data-route="extras"] .options{
+    background: white;
+    border: none;
+    border-radius: 20px;
+    padding: 35px 20px;
+
+    font-size: 22px;
+    font-weight: bold;
+    color: #444;
+
+    cursor: pointer;
+
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+
+    transition:
+        transform 0.25s ease,
+        box-shadow 0.25s ease,
+        background 0.25s ease,
+        color 0.25s ease;
+}
+
+/* Icons */
+.ascendra-page[data-route="extras"] .options i{
+    margin-top: 18px;
+    font-size: 42px;
+    color: #7b2cff;
+
+    transition: transform 0.25s ease;
+}
+
+/* Hover */
+.ascendra-page[data-route="extras"] .options:hover{
+    transform: translateY(-8px);
+    box-shadow: 0 14px 30px rgba(123, 44, 255, 0.2);
+    background: #7b2cff;
+    color: white;
+}
+
+.ascendra-page[data-route="extras"] .options:hover i{
+    color: white;
+    transform: scale(1.15);
+}
+
+/* Click */
+.ascendra-page[data-route="extras"] .options:active{
+    transform: scale(0.97);
+}
+
+/* Navigation Bar */
+.ascendra-page[data-route="extras"] .navbar{
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+
+    display: flex;
+    width: 600px;
+
+    overflow: hidden;
+    border-radius: 999px;
+    background-color: rgb(240, 240, 240);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+}
+
+.ascendra-page[data-route="extras"] .navbar button{
+    flex: 1;
+    padding: 15px 0;
+
+    border: none;
+    background: transparent;
+
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.ascendra-page[data-route="extras"] .navbar button:hover{
+    background-color: rgb(215, 215, 215);
+}
+
+.ascendra-page[data-route="extras"] .navbar .current{
+    background-color: rgb(37, 99, 235);
+    color: white;
+    border-radius: 25px;
+}
+
+    
+
+/* ===== PRIVACY ===== */
+.ascendra-page[data-route="privacy"]{
+    background-color: rgb(240, 248, 255);
+    margin: 3px;
+    text-align: center;
+    font-family: sans-serif;
+}
+
+.ascendra-page[data-route="privacy"] .policy-container{
+    width: 75%;
+    margin: 40px auto;
+    padding: 30px;
+
+    background-color: white;
+    border: none;
+    border-radius: 50px;
+
+    box-shadow: 0 4px 15px rgba(5, 10, 35, 0.15);
+}
+
+.ascendra-page[data-route="privacy"] .policies{
+    color: rgb(5, 10, 35);
+}
+
+
+
+/* ===== TERMS ===== */
+.ascendra-page[data-route="terms"]{
+    background-color: rgb(240, 248, 255);
+    margin: 0;
+    padding: 40px 20px;
+    font-family: sans-serif;
+    color: rgb(5, 10, 35);
+}
+
+.ascendra-page[data-route="terms"] .terms-container{
+    width: 75%;
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 30px;
+
+    background-color: white;
+    border: none;
+    border-radius: 50px;
+
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.12);
+}
+
+.ascendra-page[data-route="terms"] h1{
+    text-align: center;
+}
+
+.ascendra-page[data-route="terms"] p, .ascendra-page[data-route="terms"] li{
+    line-height: 1.6;
+}
+
+/* ===== ABOUT ===== */
+.ascendra-page[data-route="about"]{
+    margin: 0;
+    font-family: Arial, Helvetica, sans-serif;
+    background: rgb(240, 248, 255);
+    color: rgb(5, 10, 35);
+}
+
+.ascendra-page[data-route="about"] .about-header{
+    text-align: center;
+    padding: 50px 20px;
+    background: linear-gradient(135deg, rgb(0, 123, 255), rgb(0, 170, 255));
+    color: white;
+}
+
+.ascendra-page[data-route="about"] .about-header h1{
+    margin: 0;
+    font-size: 3rem;
+}
+
+.ascendra-page[data-route="about"] .header-description{
+    max-width: 700px;
+    margin: 15px auto 0;
+    font-size: 1.1rem;
+    line-height: 1.6;
+}
+
+.ascendra-page[data-route="about"] .back-button{
+    display: inline-block;
+    margin-bottom: 25px;
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 1rem;
+}
+
+.ascendra-page[data-route="about"] .back-button:hover{
+    text-decoration: underline;
+}
+
+.ascendra-page[data-route="about"] .about-container{
+    width: 90%;
+    max-width: 1100px;
+    margin: 40px auto;
+}
+
+.ascendra-page[data-route="about"] .about-section{
+    display: flex;
+    gap: 25px;
+    align-items: flex-start;
+    background: white;
+    padding: 30px;
+    border-radius: 18px;
+    margin-bottom: 30px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+}
+
+.ascendra-page[data-route="about"] .section-icon{
+    font-size: 2.5rem;
+    color: rgb(0, 123, 255);
+    min-width: 60px;
+}
+
+.ascendra-page[data-route="about"] .section-content h2{
+    margin-top: 0;
+}
+
+.ascendra-page[data-route="about"] .section-content p{
+    line-height: 1.7;
+}
+
+.ascendra-page[data-route="about"] .features-section{
+    margin-bottom: 40px;
+}
+
+.ascendra-page[data-route="about"] .features-section h2{
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.ascendra-page[data-route="about"] .features-grid{
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+    gap: 25px;
+}
+
+.ascendra-page[data-route="about"] .feature-card{
+    background: white;
+    padding: 25px;
+    border-radius: 18px;
+    text-align: center;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+    transition: 0.25s;
+}
+
+.ascendra-page[data-route="about"] .feature-card:hover{
+    transform: translateY(-6px);
+}
+
+.ascendra-page[data-route="about"] .feature-card i{
+    font-size: 2.5rem;
+    color: rgb(0, 123, 255);
+    margin-bottom: 15px;
+}
+
+.ascendra-page[data-route="about"] .feature-card h3{
+    margin: 10px 0;
+}
+
+.ascendra-page[data-route="about"] .feature-card p{
+    line-height: 1.5;
+}
+
+.ascendra-page[data-route="about"] .creator-section{
+    background: linear-gradient(135deg, rgb(0,123,255), rgb(0,170,255));
+    color: white;
+    text-align: center;
+    padding: 40px;
+    border-radius: 18px;
+    margin-bottom: 40px;
+}
+
+.ascendra-page[data-route="about"] .creator-section i{
+    font-size: 3rem;
+    margin-bottom: 15px;
+}
+
+.ascendra-page[data-route="about"] .about-footer{
+    background: rgb(5,10,35);
+    color: white;
+    text-align: center;
+    padding: 30px 20px;
+}
+
+.ascendra-page[data-route="about"] .footer-links{
+    margin-top: 15px;
+}
+
+.ascendra-page[data-route="about"] .footer-links a{
+    color: white;
+    margin: 0 15px;
+    text-decoration: none;
+}
+
+.ascendra-page[data-route="about"] .footer-links a:hover{
+    text-decoration: underline;
+}
+
+@media (max-width: 768px) {
+
+    .ascendra-page[data-route="about"] .about-section{
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .ascendra-page[data-route="about"] .section-icon{
+        margin: auto;
+    }
+
+    .ascendra-page[data-route="about"] .about-header h1{
+        font-size: 2.2rem;
+    }
+
+}
+
+/* ===== CREDITS ===== */
+.ascendra-page[data-route="credits"] *{
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+.ascendra-page[data-route="credits"]{
+    --accent: rgb(127, 0, 255);
+    --bg: #f6f3ff;
+    --card: white;
+    --text: #222;
+    --muted: #666;
+}
+
+.ascendra-page[data-route="credits"]{
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+}
+
+.ascendra-page[data-route="credits"] .page{
+    display: flex;
+    min-height: 100vh;
+}
+
+.ascendra-page[data-route="credits"] .sidebar{
+    width: 250px;
+    background: white;
+    padding: 30px 22px;
+    box-shadow: 5px 0 20px rgba(0, 0, 0, 0.07);
+}
+
+.ascendra-page[data-route="credits"] .sidebar h1{
+    color: var(--accent);
+    margin-bottom: 5px;
+}
+
+.ascendra-page[data-route="credits"] .sidebar p{
+    color: var(--muted);
+    margin-bottom: 35px;
+}
+
+.ascendra-page[data-route="credits"] .sidebar nav{
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.ascendra-page[data-route="credits"] .sidebar a{
+    text-decoration: none;
+    color: #333;
+    padding: 13px 15px;
+    border-radius: 14px;
+    transition: 0.2s;
+}
+
+.ascendra-page[data-route="credits"] .sidebar a:hover, .ascendra-page[data-route="credits"] .sidebar a.active{
+    background: var(--accent);
+    color: white;
+    transform: translateX(4px);
+}
+
+.ascendra-page[data-route="credits"] .content{
+    flex: 1;
+    padding: 40px;
+    max-width: 950px;
+}
+
+.ascendra-page[data-route="credits"] header{
+    margin-bottom: 25px;
+}
+
+.ascendra-page[data-route="credits"] header h2{
+    font-size: 36px;
+    margin: 0;
+}
+
+.ascendra-page[data-route="credits"] header p{
+    color: var(--muted);
+}
+
+.ascendra-page[data-route="credits"] .card{
+    background: var(--card);
+    padding: 25px;
+    border-radius: 22px;
+    margin-bottom: 25px;
+    box-shadow: 0 8px 22px rgba(0, 0, 0, 0.08);
+}
+
+.ascendra-page[data-route="credits"] .card h3{
+    margin-top: 0;
+    color: var(--accent);
+}
+
+.ascendra-page[data-route="credits"] label{
+    display: block;
+    font-weight: bold;
+    margin-bottom: 8px;
+}
+
+.ascendra-page[data-route="credits"] select{
+    width: 100%;
+    padding: 13px;
+    border-radius: 13px;
+    border: 2px solid #ddd;
+    font-size: 15px;
+    margin-bottom: 15px;
+}
+
+.ascendra-page[data-route="credits"] select:focus{
+    outline: none;
+    border-color: var(--accent);
+}
+
+.ascendra-page[data-route="credits"] .toggle-row, .ascendra-page[data-route="credits"] .danger-item{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 15px;
+    border-top: 1px solid #eee;
+    padding: 18px 0;
+}
+
+.ascendra-page[data-route="credits"] .toggle-row h4, .ascendra-page[data-route="credits"] .danger-item h4{
+    margin: 0 0 5px;
+}
+
+.ascendra-page[data-route="credits"] .toggle-row p, .ascendra-page[data-route="credits"] .danger-item p{
+    margin: 0;
+    color: var(--muted);
+}
+
+.ascendra-page[data-route="credits"] input[type="checkbox"]{
+    width: 48px;
+    height: 25px;
+    accent-color: var(--accent);
+    cursor: pointer;
+}
+
+.ascendra-page[data-route="credits"] .danger{
+    border: 2px solid #ef4444;
+    background: #fff7f7;
+}
+
+.ascendra-page[data-route="credits"] .danger h3{
+    color: #dc2626;
+}
+
+.ascendra-page[data-route="credits"] .danger button{
+    background: #dc2626;
+    color: white;
+    border: none;
+    padding: 11px 18px;
+    border-radius: 12px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.ascendra-page[data-route="credits"] .danger button:hover{
+    background: #b91c1c;
+    transform: scale(1.04);
+}
+
+@media (max-width: 750px) {
+    .ascendra-page[data-route="credits"] .page{
+        flex-direction: column;
+    }
+
+    .ascendra-page[data-route="credits"] .content{
+        padding: 25px;
+    }
+
+    .ascendra-page[data-route="credits"] .toggle-row, .ascendra-page[data-route="credits"] .danger-item{
+        flex-direction: column;
+        align-items: flex-start;
+    }
+}
+.ascendra-page[data-route="credits"]{
+    margin: 0;
+    background-color: rgb(240, 242, 246);
+    font-family: Arial, sans-serif;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+.ascendra-page[data-route="credits"] .credit-card{
+    width: 500px;
+    background: white;
+    padding: 35px;
+    border-radius: 20px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.ascendra-page[data-route="credits"] h1{
+    color: rgb(127, 0, 255);
+    margin-bottom: 5px;
+}
+
+.ascendra-page[data-route="credits"] .version{
+    color: gray;
+    margin-bottom: 25px;
+}
+
+.ascendra-page[data-route="credits"] h2{
+    margin-top: 25px;
+    color: rgb(37, 99, 235);
+}
+
+.ascendra-page[data-route="credits"] p{
+    color: rgb(70, 70, 70);
+    line-height: 1.6;
+}
+
+.ascendra-page[data-route="credits"] hr{
+    border: none;
+    border-top: 1px solid rgb(225, 225, 225);
+    margin: 25px 0;
+}
+
+.ascendra-page[data-route="credits"] .quote{
+    font-style: italic;
+    color: gray;
+}
+
+.ascendra-page[data-route="credits"] .copyright{
+    margin-top: 20px;
+    color: rgb(140, 140, 140);
+    font-size: 14px;
+}
+
+/* ===== COMINGSOON ===== */
+.ascendra-page[data-route="comingsoon"]{
+    margin: 0;
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: rgb(240, 248, 255);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    height: 100vh;
+    text-align: center;
+}
+
+.ascendra-page[data-route="comingsoon"] h1{
+    color: rgb(5, 10, 35);
+    font-size: 3rem;
+    margin-bottom: 20px;
+}
+
+.ascendra-page[data-route="comingsoon"] h1 i{
+    color: rgb(50, 120, 255);
+    margin-right: 12px;
+}
+
+.ascendra-page[data-route="comingsoon"] p{
+    color: rgb(80, 80, 80);
+    font-size: 1.2rem;
+    line-height: 1.6;
+    max-width: 500px;
+}
+
+/* ===== PROJECTS ===== */
+.ascendra-page[data-route="projects"]{
+    margin: 0;
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: rgb(240, 248, 255);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    height: 100vh;
+    text-align: center;
+}
+
+.ascendra-page[data-route="projects"] h1{
+    color: rgb(5, 10, 35);
+    font-size: 3rem;
+    margin-bottom: 20px;
+}
+
+.ascendra-page[data-route="projects"] h1 i{
+    color: rgb(50, 120, 255);
+    margin-right: 12px;
+}
+
+.ascendra-page[data-route="projects"] p{
+    color: rgb(80, 80, 80);
+    font-size: 1.2rem;
+    line-height: 1.6;
+    max-width: 500px;
+}
+.fa-solid,
+.fa-regular,
+.fa-brands {
+    font-family: "Font Awesome 6 Free" !important;
+}
+
+.fa-solid {
+    font-weight: 900 !important;
+}
+
+.fa-regular {
+    font-weight: 400 !important;
+}
+
+.fa-brands {
+    font-family: "Font Awesome 6 Brands" !important;
+}
+
+/* =========================
+   MOBILE FIXES
+========================= */
+
+@media (max-width: 600px) {
+
+    body {
+        overflow-x: hidden;
+    }
+
+    .ascendra-page {
+        width: 100%;
+        overflow-x: hidden;
+    }
+
+    .welcome-card,
+    .about-card,
+    .hero-card {
+        width: calc(100% - 24px) !important;
+        max-width: 100% !important;
+        margin: 20px auto !important;
+        padding: 28px 18px !important;
+        box-sizing: border-box;
+    }
+
+    .welcome-card p,
+    .about-card p {
+        text-align: left;
+    }
+
+    .welcome-links,
+    .auth-links {
+        display: flex;
+        flex-direction: column;
+        gap: 14px;
+        align-items: center;
+    }
+
+    img {
+        max-width: 100%;
+        height: auto;
+    }
+
+    button,
+    a {
+        max-width: 100%;
+    }
+}
+@media (max-width: 768px) {
+
+    .ascendra-page[data-route="welcome"] h1{
+        font-size: clamp(2.75rem, 14vw, 3.25rem);
+        text-align: center;
+        padding: 0 15px;
+    }
+
+    .ascendra-page[data-route="welcome"] #subtitle1{
+        font-size: 18px;
+        text-align: center;
+        padding: 0 20px;
+    }
+
+    .ascendra-page[data-route="welcome"] #main_paragraph{
+        width: calc(100% - 30px);
+        max-width: none;
+        padding: 22px 18px;
+        font-size: 1rem;
+    }
+
+    .ascendra-page[data-route="welcome"] h2{
+        font-size: 2rem;
+        text-align: center;
+    }
+
+    .ascendra-page[data-route="welcome"] .credits-link{
+        font-size: 1rem;
+    }
+
+}
+@media (max-width: 650px) {
+    .navbar {
+        width: calc(100% - 16px) !important;
+        max-width: none !important;
+        left: 8px !important;
+        transform: none !important;
+        bottom: 8px !important;
+        border-radius: 18px !important;
+        overflow-x: auto !important;
+        justify-content: flex-start;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    .navbar button {
+        flex: 0 0 72px !important;
+        min-width: 72px;
+        padding: 10px 4px !important;
+        font-size: 11px !important;
+        white-space: nowrap;
+    }
+
+    .navbar button i {
+        display: block;
+        margin-bottom: 4px;
+        font-size: 16px;
+    }
+}
+@media (max-width: 650px) {
+    .ascendra-page {
+        padding-bottom: 90px;
+    }
+}
+@media (max-width: 650px) {
+    .ascendra-page[data-route="menu"] #nav button {
+        width: 135px !important;
+        height: 135px !important;
+        min-width: 135px;
+        min-height: 135px;
+
+        padding: 12px !important;
+        font-size: 15px !important;
+        line-height: 1.2;
+
+        white-space: normal;
+        overflow-wrap: normal;
+        word-break: keep-all;
+
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+
+        border-radius: 22px !important;
+    }
+
+    .ascendra-page[data-route="menu"] #nav button i {
+        font-size: 30px !important;
+    }
+}
+
+/* Phone layouts: shared controls and primary productivity screens */
+@media (max-width: 768px) {
+    body {
+        overflow-x: hidden;
+    }
+
+    .ascendra-page {
+        width: 100%;
+        max-width: 100%;
+        overflow-x: clip;
+        padding-bottom: calc(82px + env(safe-area-inset-bottom));
+    }
+
+    .spa-back-button {
+        top: calc(12px + env(safe-area-inset-top));
+        left: calc(12px + env(safe-area-inset-left));
+        width: 42px;
+        height: 42px;
+    }
+
+    img {
+        max-width: 100%;
+        height: auto;
+    }
+
+    input,
+    select,
+    textarea {
+        font-size: 16px !important;
+    }
+
+    .navbar {
+        width: auto !important;
+        max-width: none !important;
+        height: 64px;
+        left: calc(8px + env(safe-area-inset-left)) !important;
+        right: calc(8px + env(safe-area-inset-right)) !important;
+        transform: none !important;
+        bottom: calc(8px + env(safe-area-inset-bottom)) !important;
+        display: grid !important;
+        grid-template-columns: repeat(8, minmax(0, 1fr));
+        align-items: stretch;
+        border-radius: 20px !important;
+        overflow: hidden !important;
+        z-index: 9000;
+    }
+
+    .navbar button {
+        width: auto !important;
+        min-width: 0 !important;
+        max-width: none !important;
+        height: 64px;
+        padding: 7px 1px 5px !important;
+        font-size: clamp(7px, 2.2vw, 9px) !important;
+        line-height: 1.05;
+        white-space: nowrap;
+        overflow: hidden;
+    }
+
+    .navbar button i {
+        display: block !important;
+        width: auto !important;
+        margin: 0 0 5px !important;
+        font-size: 16px !important;
+    }
+
+    .navbar .current {
+        border-radius: 16px !important;
+    }
+
+    .ascendra-page[data-route="login"] form,
+    .ascendra-page[data-route="signup"] form {
+        width: calc(100% - 32px);
+        max-width: 320px;
+    }
+
+    .ascendra-page[data-route="alerts"] #alert {
+        margin-top: calc(35px + env(safe-area-inset-top));
+    }
+
+    .ascendra-page[data-route="home"] .home {
+        width: calc(100% - 24px);
+        margin: 70px auto 20px;
+    }
+
+    .ascendra-page[data-route="home"] .hero {
+        padding: 24px 20px;
+        border-radius: 22px;
+    }
+
+    .ascendra-page[data-route="home"] .hero h1 {
+        font-size: clamp(2rem, 10vw, 2.55rem);
+        line-height: 1.08;
+    }
+
+    .ascendra-page[data-route="home"] .widget-grid {
+        grid-template-columns: 1fr;
+        gap: 14px;
+        margin-top: 16px;
+    }
+
+    .ascendra-page[data-route="home"] .widget {
+        min-width: 0;
+        padding: 20px;
+        border-radius: 20px;
+    }
+
+    .ascendra-page[data-route="home"] .widget h2 {
+        font-size: 1.35rem;
+    }
+
+    .ascendra-page[data-route="todos"] {
+        padding-left: 12px;
+        padding-right: 12px;
+    }
+
+    .ascendra-page[data-route="todos"] #todo_list {
+        margin-top: 52px;
+        font-size: 2.4rem;
+    }
+
+    .ascendra-page[data-route="todos"] .todo-toolbar {
+        flex-wrap: wrap;
+    }
+
+    .ascendra-page[data-route="todos"] .todo-card {
+        width: 100%;
+        margin: 16px auto;
+        padding: 18px;
+        border-radius: 22px;
+        flex-wrap: wrap;
+        gap: 12px;
+    }
+
+    .ascendra-page[data-route="todos"] .todo-info {
+        flex: 1 1 100%;
+    }
+
+    .ascendra-page[data-route="todos"] .popup,
+    .ascendra-page[data-route="habits"] .popup {
+        padding: 16px;
+        overflow-y: auto;
+        z-index: 9500;
+    }
+
+    .ascendra-page[data-route="todos"] .popup-box,
+    .ascendra-page[data-route="habits"] .popup-box {
+        width: 100%;
+        max-width: 330px;
+        max-height: calc(100dvh - 32px);
+        margin: max(72px, 12vh) auto 16px;
+        padding: 22px 18px;
+        overflow-y: auto;
+    }
+
+    .ascendra-page[data-route="todos"] .popup-box input,
+    .ascendra-page[data-route="habits"] .popup-box input,
+    .ascendra-page[data-route="habits"] .popup-box select,
+    .ascendra-page[data-route="todos"] .popup-box button,
+    .ascendra-page[data-route="habits"] .popup-box button {
+        min-height: 44px;
+    }
+
+    .ascendra-page[data-route="habits"] {
+        padding: 70px 12px calc(90px + env(safe-area-inset-bottom));
+    }
+
+    .ascendra-page[data-route="habits"] h1 {
+        margin-top: 0;
+        font-size: 2.4rem;
+    }
+
+    .ascendra-page[data-route="habits"] .habit {
+        width: 100%;
+        margin: 16px auto;
+        padding: 18px;
+        border-radius: 22px;
+        gap: 12px;
+    }
+
+    .ascendra-page[data-route="habits"] .left {
+        min-width: 0;
+        overflow-wrap: anywhere;
+    }
+
+    .ascendra-page[data-route="habits"] .right {
+        flex: 0 0 auto;
+        gap: 6px;
+    }
+
+    .ascendra-page[data-route="habits"] .right button {
+        min-width: 38px;
+        min-height: 38px;
+        padding: 4px;
+        opacity: 1;
+        border-radius: 10px;
+        background: rgb(245, 243, 255);
+        font-size: 18px;
+    }
+
+    .ascendra-page[data-route="breathing"] main {
+        width: calc(100% - 24px);
+        margin: 70px auto 20px;
+    }
+
+    .ascendra-page[data-route="breathing"] h1 {
+        font-size: 2.25rem;
+        line-height: 1.1;
+    }
+
+    .ascendra-page[data-route="breathing"] .menu {
+        grid-template-columns: 1fr;
+        gap: 10px;
+        margin-bottom: 18px;
+    }
+
+    .ascendra-page[data-route="breathing"] .menu button {
+        padding: 14px;
+        font-size: 1rem;
+    }
+
+    .ascendra-page[data-route="breathing"] .breathing-box {
+        padding: 20px 16px;
+        border-radius: 22px;
+    }
+
+    .ascendra-page[data-route="breathing"] .breathing-box h2 {
+        font-size: 1.45rem;
+    }
+
+    .ascendra-page[data-route="breathing"] #circle {
+        width: clamp(160px, 48vw, 190px);
+        height: clamp(160px, 48vw, 190px);
+        margin: 28px auto;
+    }
+
+    .ascendra-page[data-route="calendar"] .calendar-container {
+        width: 100%;
+        padding: 70px 12px calc(90px + env(safe-area-inset-bottom));
+    }
+
+    .ascendra-page[data-route="calendar"] .top-title {
+        gap: 12px;
+        align-items: center;
+    }
+
+    .ascendra-page[data-route="calendar"] .top-title h1 {
+        margin: 0;
+        font-size: 2.2rem;
+    }
+
+    .ascendra-page[data-route="calendar"] .addEvent {
+        padding: 10px 14px;
+        font-size: 13px;
+    }
+
+    .ascendra-page[data-route="calendar"] .calendar-card {
+        margin-top: 16px;
+        padding: 16px 6px;
+        border-radius: 20px;
+    }
+
+    .ascendra-page[data-route="calendar"] .calendar-header {
+        margin: 0 8px 10px;
+    }
+
+    .ascendra-page[data-route="calendar"] .calendar-header h2 {
+        font-size: 1.3rem;
+    }
+
+    .ascendra-page[data-route="calendar"] .calendar-header span {
+        font-size: 28px;
+    }
+
+    .ascendra-page[data-route="calendar"] table {
+        table-layout: fixed;
+    }
+
+    .ascendra-page[data-route="calendar"] th {
+        padding: 6px 1px;
+        font-size: 11px;
+    }
+
+    .ascendra-page[data-route="calendar"] td {
+        width: 14.285%;
+        height: 46px;
+        padding: 8px 1px;
+        font-size: 13px;
+    }
+
+    .ascendra-page[data-route="calendar"] .calendar-event {
+        padding: 3px 2px;
+        font-size: 8px;
+    }
+
+    .ascendra-page[data-route="calendar"] .popup-box {
+        width: 100%;
+        max-width: 340px;
+        max-height: calc(100dvh - 32px);
+        overflow-y: auto;
+    }
+
+    .ascendra-page[data-route="calendar"] .popup input {
+        width: 100%;
+        min-height: 44px;
+        box-sizing: border-box;
+        font-size: 16px;
+    }
+
+    .ascendra-page[data-route="calendar"] .popup button {
+        min-height: 44px;
+        padding: 0 18px;
+        border: 0;
+        border-radius: 12px;
+        background: linear-gradient(135deg, #7c3aed, #2563eb);
+        color: white;
+        font-weight: 700;
+        cursor: pointer;
+    }
+
+    .ascendra-page[data-route="calendar"] .popup #closePopup {
+        background: #e9edf5;
+        color: #20253a;
+    }
+}
+
+/* Phone layouts: journal, menu, and secondary screens */
+@media (max-width: 768px) {
+    .ascendra-page[data-route="journal"] .journal-container {
+        padding: 70px 12px 18px;
+    }
+
+    .ascendra-page[data-route="journal"] .journal-header h1 {
+        margin-top: 0;
+        font-size: 2.35rem;
+    }
+
+    .ascendra-page[data-route="journal"] .journal-layout {
+        flex-direction: column;
+        gap: 14px;
+        margin-top: 16px;
+    }
+
+    .ascendra-page[data-route="journal"] .date-grid-card,
+    .ascendra-page[data-route="journal"] .entry-card {
+        width: 100%;
+        padding: 16px 12px;
+    }
+
+    .ascendra-page[data-route="journal"] .mini-calendar-header {
+        margin-bottom: 12px;
+    }
+
+    .ascendra-page[data-route="journal"] .mini-calendar-header h2 {
+        font-size: 1.15rem;
+        text-align: center;
+    }
+
+    .ascendra-page[data-route="journal"] .date-grid {
+        gap: 4px;
+    }
+
+    .ascendra-page[data-route="journal"] .date-button {
+        min-width: 0;
+        aspect-ratio: 1;
+        padding: 0;
+        border-radius: 9px;
+        font-size: 12px;
+    }
+
+    .ascendra-page[data-route="journal"] .entry-card h2 {
+        font-size: 1.35rem;
+    }
+
+    .ascendra-page[data-route="menu"] {
+        height: auto;
+        min-height: 100dvh;
+        overflow-y: auto;
+        padding: 76px 14px calc(88px + env(safe-area-inset-bottom));
+    }
+
+    .ascendra-page[data-route="menu"] #menuTitle {
+        position: static;
+        transform: none;
+        margin: 0 0 22px;
+        font-size: clamp(2.6rem, 14vw, 3.5rem);
+        line-height: 1;
+        text-align: center;
+    }
+
+    .ascendra-page[data-route="menu"] #nav {
+        position: static;
+        width: 100%;
+        height: auto;
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 12px;
+    }
+
+    .ascendra-page[data-route="menu"] #nav button {
+        position: relative !important;
+        left: auto !important;
+        top: auto !important;
+        transform: none !important;
+        width: 100% !important;
+        height: auto !important;
+        min-width: 0;
+        min-height: 118px;
+        padding: 16px 8px !important;
+        border-radius: 22px !important;
+        font-size: 15px !important;
+        line-height: 1.2;
+        white-space: normal;
+    }
+
+    .ascendra-page[data-route="menu"] #nav button:hover,
+    .ascendra-page[data-route="menu"] #nav button:active {
+        transform: none !important;
+    }
+
+    .ascendra-page[data-route="menu"] #nav button i {
+        margin-top: 6px;
+        font-size: 28px !important;
+    }
+
+    .ascendra-page[data-route="stats"] .top-bar,
+    .ascendra-page[data-route="profile"] .top-bar {
+        padding-left: 68px;
+    }
+
+    .ascendra-page[data-route="extras"] {
+        padding-left: 14px;
+        padding-right: 14px;
+    }
+
+    .ascendra-page[data-route="extras"] #button-container {
+        grid-template-columns: 1fr;
+    }
+
+    .ascendra-page[data-route="privacy"] .policy-container,
+    .ascendra-page[data-route="terms"] .terms-container,
+    .ascendra-page[data-route="about"] .about-container {
+        width: calc(100% - 24px);
+        max-width: none;
+        padding: 24px 18px;
+        border-radius: 24px;
+    }
+
+    .ascendra-page[data-route="privacy"] {
+        margin: 0;
+    }
+
+    .ascendra-page[data-route="credits"] {
+        padding: 70px 12px 28px;
+    }
+
+    .ascendra-page[data-route="credits"] .credit-card {
+        width: 100%;
+        max-width: 500px;
+        padding: 26px 18px;
+    }
+}
+
+@media (max-width: 374px) {
+    .ascendra-page {
+        padding-bottom: calc(122px + env(safe-area-inset-bottom)) !important;
+    }
+
+    .navbar {
+        height: 104px !important;
+        grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+        grid-template-rows: repeat(2, 52px);
+    }
+
+    .navbar button {
+        height: 52px !important;
+        min-height: 44px;
+        padding: 4px 2px !important;
+        font-size: 9px !important;
+    }
+
+    .navbar button i {
+        font-size: 14px !important;
+    }
+
+    .navbar .current {
+        border-radius: 14px !important;
+    }
+
+    .ascendra-page[data-route="menu"] #nav button {
+        min-height: 106px;
+        font-size: 14px !important;
+    }
+}
+
+@media (max-height: 500px) and (orientation: landscape) {
+    .ascendra-page[data-route="menu"] {
+        height: auto;
+        min-height: 100dvh;
+        overflow-y: auto;
+        padding: 58px 14px 88px;
+    }
+
+    .ascendra-page[data-route="menu"] #menuTitle {
+        position: static;
+        transform: none;
+        margin: 0 0 12px;
+        font-size: 2.25rem;
+        line-height: 1;
+        text-align: center;
+    }
+
+    .ascendra-page[data-route="menu"] #nav {
+        position: static;
+        width: 100%;
+        height: auto;
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 10px;
+    }
+
+    .ascendra-page[data-route="menu"] #nav button {
+        position: relative !important;
+        left: auto !important;
+        top: auto !important;
+        transform: none !important;
+        width: 100% !important;
+        height: auto !important;
+        min-width: 0 !important;
+        min-height: 90px;
+        padding: 10px 6px !important;
+        border-radius: 18px !important;
+        font-size: 13px !important;
+        line-height: 1.1;
+    }
+
+    .ascendra-page[data-route="menu"] #nav button i {
+        margin-top: 4px;
+        font-size: 23px !important;
+    }
+}
+
+.ascendra-page :focus-visible {
+    outline: 3px solid var(--accent, #7f00ff);
+    outline-offset: 3px;
+}
+
+.search-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 20000;
+
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+
+    padding-top: 100px;
+    background: rgba(0, 0, 0, 0.4);
+}
+
+.search-overlay[hidden] {
+    display: none;
+}
+
+.search-box {
+    width: min(520px, 90%);
+    padding: 14px;
+
+    background: white;
+    border-radius: 18px;
+    box-shadow: 0 18px 50px rgba(0, 0, 0, 0.25);
+}
+
+#searchInput {
+    width: 100%;
+    padding: 14px;
+
+    border: 1px solid #ccc;
+    border-radius: 12px;
+    font-size: 17px;
+}
+
+.search-result {
+    width: 100%;
+    margin-top: 8px;
+    padding: 12px;
+
+    border: none;
+    border-radius: 10px;
+    background: transparent;
+
+    text-align: left;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.search-result:hover {
+    background: #f0ebff;
+}
+
+.no-results {
+    padding: 14px;
+    color: gray;
+    text-align: center;
+}
