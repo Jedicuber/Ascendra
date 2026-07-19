@@ -1628,13 +1628,13 @@ return () => clearInterval(starInterval);
         modal.close();
     };
 
-    updateReminderFields();
-    showHabits();
-
-    return () => modal.destroy();
-},
+updateReminderFields();
+showHabits();
 
 window.getHabitResultText = getHabitResultText;
+
+return () => modal.destroy();
+},
 window.getToday = getToday;
 window.saveHabitResult = saveHabitResult;
 window.saveHabits = saveHabits;
