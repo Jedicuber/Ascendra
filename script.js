@@ -1297,6 +1297,7 @@ return () => clearInterval(starInterval);
     const habitList = document.getElementById("habitList");
 
     const modal = createModalController(habitPopup, habitInput, {
+        display: "flex",
         onClose: () => {
             habitForm.reset();
             habitType.value = "good";
