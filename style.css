@@ -922,47 +922,72 @@ body{min-height:100vh;background:#f4f1ff;color:#222;font-family:Arial,sans-serif
 }
 
 /* ===== TODOS ===== */
+
 .ascendra-page[data-route="todos"]{
+    --accent: rgb(127, 0, 255);
+    --bg: #f6f3ff;
+    --card: white;
+    --text: #222;
+    --muted: #666;
+
+    min-height: 100vh;
+    margin: 0;
+    padding: 35px 20px 120px;
+    background: var(--bg);
+    color: var(--text);
     font-family: Arial, sans-serif;
-    background:rgb(246,242,255);
     text-align: center;
-    margin-top: 0px;
-    padding-bottom: 30pxpx
+}
+
+.ascendra-page[data-route="todos"] *{
+    box-sizing: border-box;
 }
 
 .ascendra-page[data-route="todos"] #todo_list{
+    margin: 0;
     font-size: 42px;
 }
 
 .ascendra-page[data-route="todos"] #subtitle3{
-    color: gray;
+    margin-top: 8px;
+    color: var(--muted);
 }
 
 .ascendra-page[data-route="todos"] #add-btn{
     padding: 12px 22px;
-    border-radius: 999px;
     border: none;
-    background-color: rgb(143, 63, 216);
-    color:white;
+    border-radius: 999px;
+    background: var(--accent);
+    color: white;
     box-shadow: 0 5px 15px rgba(0,0,0,0.15);
     cursor: pointer;
     font-size: 16px;
+    transition: transform 0.2s, box-shadow 0.2s;
 }
+
+.ascendra-page[data-route="todos"] #add-btn:hover{
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.18);
+}
+
+/* ---------- Filters ---------- */
 
 .ascendra-page[data-route="todos"] .todo-toolbar{
     display: flex;
     justify-content: center;
+    flex-wrap: wrap;
     gap: 8px;
     margin: 22px auto 8px;
 }
 
 .ascendra-page[data-route="todos"] .todo-filter{
-    border: 1px solid rgba(127, 0, 255, .25);
+    padding: 8px 16px;
+    border: 1px solid rgba(127, 0, 255, 0.25);
     border-radius: 999px;
     background: var(--card);
     color: var(--text);
     cursor: pointer;
-    padding: 8px 16px;
+    transition: 0.2s;
 }
 
 .ascendra-page[data-route="todos"] .todo-filter.active,
@@ -972,315 +997,314 @@ body{min-height:100vh;background:#f4f1ff;color:#222;font-family:Arial,sans-serif
 }
 
 .ascendra-page[data-route="todos"] #todo-summary{
+    margin: 10px 0 0;
     color: var(--muted);
-    margin: 8px 0 0;
 }
+
+/* ---------- Task Cards ---------- */
 
 .ascendra-page[data-route="todos"] .todo-card{
-    width: 70%;
-    max-width: 700px;
-    min-height: 80px;
-    margin: 25px auto;
-    padding: 20px 30px;
-    background: white;
-    border-radius: 999px;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.15);
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    gap: 12px;
+
+    width: min(760px, 92%);
+    min-height: 95px;
+    margin: 22px auto;
+    padding: 20px 24px;
+
+    background: var(--card);
+    border-radius: 24px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.12);
+
+    text-align: left;
+    transition: transform 0.2s, box-shadow 0.2s;
 }
 
-.ascendra-page[data-route="todos"] .completed .todo-title{
-    text-decoration: line-through;
-    opacity: 0.6;
-}
-
-.ascendra-page[data-route="todos"] .complete-btn{
-    border: none;
-    padding: 8px 12px;
-    border-radius: 10px;
-    cursor: pointer;
+.ascendra-page[data-route="todos"] .todo-card:hover{
+    transform: translateY(-2px);
+    box-shadow: 0 9px 22px rgba(0,0,0,0.14);
 }
 
 .ascendra-page[data-route="todos"] .todo-info{
-    text-align: left;
+    flex: 1;
+    min-width: 0;
 }
 
 .ascendra-page[data-route="todos"] .todo-title{
     font-size: 20px;
     font-weight: bold;
+    overflow-wrap: anywhere;
 }
 
-.ascendra-page[data-route="todos"] .todo-date{
-    font-size: 14px;
-    color: gray;
+.ascendra-page[data-route="todos"] .completed{
+    opacity: 0.75;
+}
+
+.ascendra-page[data-route="todos"] .completed .todo-title{
+    text-decoration: line-through;
+}
+
+.ascendra-page[data-route="todos"] .todo-date,
+.ascendra-page[data-route="todos"] .todo-estimate,
+.ascendra-page[data-route="todos"] .todo-priority{
     margin-top: 6px;
+    color: var(--muted);
+    font-size: 14px;
+}
+
+.ascendra-page[data-route="todos"] .todo-notes{
+    margin: 10px 0 0;
+    padding: 10px 12px;
+    background: rgba(127, 0, 255, 0.06);
+    border-radius: 12px;
+    color: var(--text);
+    line-height: 1.5;
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+}
+
+.ascendra-page[data-route="todos"] .priority-high{
+    color: #dc2626;
+    font-weight: bold;
+}
+
+.ascendra-page[data-route="todos"] .priority-medium{
+    color: #ca8a04;
+    font-weight: bold;
+}
+
+.ascendra-page[data-route="todos"] .priority-low{
+    color: #16a34a;
+    font-weight: bold;
+}
+
+.ascendra-page[data-route="todos"] .complete-btn,
+.ascendra-page[data-route="todos"] .delete-btn{
+    flex-shrink: 0;
+    padding: 9px 14px;
+    border-radius: 11px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: 0.2s;
+}
+
+.ascendra-page[data-route="todos"] .complete-btn{
+    border: none;
+    background: #ede9fe;
+    color: #6d28d9;
+}
+
+.ascendra-page[data-route="todos"] .complete-btn:hover{
+    background: #ddd6fe;
+    transform: translateY(-1px);
 }
 
 .ascendra-page[data-route="todos"] .delete-btn{
     border: 1px solid #fecaca;
-    border-radius: 10px;
     background: #fff1f2;
     color: #be123c;
-    padding: 8px 12px;
-    cursor: pointer;
 }
+
+.ascendra-page[data-route="todos"] .delete-btn:hover{
+    background: #ffe4e6;
+    transform: translateY(-1px);
+}
+
+.ascendra-page[data-route="todos"] .todo-empty{
+    margin-top: 40px;
+    color: var(--muted);
+}
+
+/* ---------- Popup ---------- */
 
 .ascendra-page[data-route="todos"] .popup{
     display: none;
     position: fixed;
     inset: 0;
-    background: rgba(0,0,0,0.45);
+    z-index: 10001;
+
+    padding: 30px 16px;
+    background: rgba(0,0,0,0.48);
+    overflow-y: auto;
 }
 
 .ascendra-page[data-route="todos"] .popup-box{
-    background: white;
-    width: 320px;
-    margin: 160px auto;
-    padding: 25px;
-    border-radius: 20px;
+    width: min(430px, 100%);
+    max-height: calc(100vh - 60px);
+    margin: auto;
+    padding: 26px;
+
+    background: var(--card);
+    color: var(--text);
+    border-radius: 22px;
+    box-shadow: 0 18px 45px rgba(0,0,0,0.22);
+
+    text-align: left;
+    overflow-y: auto;
+}
+
+.ascendra-page[data-route="todos"] .popup-box h2{
+    margin: 0 0 20px;
     text-align: center;
+    color: var(--accent);
 }
 
 .ascendra-page[data-route="todos"] .popup-box label{
     display: block;
-    margin: 12px 0 6px;
-    text-align: left;
+    margin: 14px 0 6px;
+    font-weight: bold;
 }
 
-.ascendra-page[data-route="todos"] .popup-box input{
-    box-sizing: border-box;
+.ascendra-page[data-route="todos"] .popup-box input:not([type="checkbox"]),
+.ascendra-page[data-route="todos"] .popup-box select,
+.ascendra-page[data-route="todos"] .popup-box textarea{
     width: 100%;
-    padding: 10px 12px;
+    padding: 11px 12px;
+
+    border: 2px solid #ddd;
+    border-radius: 12px;
+    background: var(--card);
+    color: var(--text);
+
+    font: inherit;
 }
 
-@media (max-width: 600px) {
-    .ascendra-page[data-route="todos"] .todo-card{
-        width: auto;
-        margin: 18px 8px;
-        padding: 18px;
-        border-radius: 22px;
-        flex-wrap: wrap;
-        gap: 12px;
-    }
-
-    .ascendra-page[data-route="todos"] .todo-info{
-        flex-basis: 100%;
-    }
+.ascendra-page[data-route="todos"] .popup-box textarea{
+    min-height: 95px;
+    resize: vertical;
 }
+
+.ascendra-page[data-route="todos"] .popup-box input:focus,
+.ascendra-page[data-route="todos"] .popup-box select:focus,
+.ascendra-page[data-route="todos"] .popup-box textarea:focus{
+    outline: none;
+    border-color: var(--accent);
+}
+
+.ascendra-page[data-route="todos"] .no-date-label{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 18px;
+    cursor: pointer;
+}
+
+.ascendra-page[data-route="todos"] #no-date-input{
+    width: 18px;
+    height: 18px;
+    margin: 0;
+    accent-color: var(--accent);
+    cursor: pointer;
+}
+
+.ascendra-page[data-route="todos"] #due-date-fields{
+    padding: 2px 0;
+    transition: opacity 0.2s;
+}
+
+.ascendra-page[data-route="todos"] #due-date-fields.disabled{
+    opacity: 0.45;
+}
+
+.ascendra-page[data-route="todos"] #save-btn,
+.ascendra-page[data-route="todos"] #cancel-btn{
+    padding: 10px 18px;
+    border: none;
+    border-radius: 11px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.ascendra-page[data-route="todos"] #save-btn{
+    background: var(--accent);
+    color: white;
+}
+
+.ascendra-page[data-route="todos"] #cancel-btn{
+    margin-left: 8px;
+    background: #e5e7eb;
+    color: #333;
+}
+
+/* ---------- Navbar ---------- */
+
 .ascendra-page[data-route="todos"] .navbar{
     position: fixed;
     bottom: 20px;
     left: 50%;
-    transform: translateX(-50%);
+    z-index: 1000;
 
     display: flex;
-    width: 600px;
+    width: min(900px, calc(100% - 30px));
 
     overflow: hidden;
     border-radius: 999px;
-    background-color: rgb(240, 240, 240);
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+    background: rgb(240,240,240);
+    box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+
+    transform: translateX(-50%);
 }
 
 .ascendra-page[data-route="todos"] .navbar button{
     flex: 1;
-    padding: 15px 0;
+    min-width: 0;
+    padding: 13px 5px;
 
     border: none;
     background: transparent;
 
-    font-size: 16px;
+    font-size: 14px;
     cursor: pointer;
     transition: background-color 0.2s;
 }
 
 .ascendra-page[data-route="todos"] .navbar button:hover{
-    background-color: rgb(215, 215, 215);
+    background: rgb(215,215,215);
 }
 
 .ascendra-page[data-route="todos"] .navbar .current{
-    background-color: rgb(37, 99, 235);
+    background: var(--accent);
     color: white;
     border-radius: 25px;
 }
-.ascendra-page[data-route="todos"] *{
-    box-sizing: border-box;
-    font-family: Arial, sans-serif;
-}
 
-.ascendra-page[data-route="todos"]{
-    --accent: rgb(127, 0, 255);
-    --bg: #f6f3ff;
-    --card: white;
-    --text: #222;
-    --muted: #666;
-}
+/* ---------- Mobile ---------- */
 
-.ascendra-page[data-route="todos"]{
-    margin: 0;
-    background: var(--bg);
-    color: var(--text);
-}
-
-.ascendra-page[data-route="todos"] .page{
-    display: flex;
-    min-height: 100vh;
-}
-
-.ascendra-page[data-route="todos"] .sidebar{
-    width: 250px;
-    background: white;
-    padding: 30px 22px;
-    box-shadow: 5px 0 20px rgba(0, 0, 0, 0.07);
-}
-
-.ascendra-page[data-route="todos"] .sidebar h1{
-    color: var(--accent);
-    margin-bottom: 5px;
-}
-
-.ascendra-page[data-route="todos"] .sidebar p{
-    color: var(--muted);
-    margin-bottom: 35px;
-}
-
-.ascendra-page[data-route="todos"] .sidebar nav{
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-}
-
-.ascendra-page[data-route="todos"] .sidebar a{
-    text-decoration: none;
-    color: #333;
-    padding: 13px 15px;
-    border-radius: 14px;
-    transition: 0.2s;
-}
-
-.ascendra-page[data-route="todos"] .sidebar a:hover, .ascendra-page[data-route="todos"] .sidebar a.active{
-    background: var(--accent);
-    color: white;
-    transform: translateX(4px);
-}
-
-.ascendra-page[data-route="todos"] .content{
-    flex: 1;
-    padding: 40px;
-    max-width: 950px;
-}
-
-.ascendra-page[data-route="todos"] header{
-    margin-bottom: 25px;
-}
-
-.ascendra-page[data-route="todos"] header h2{
-    font-size: 36px;
-    margin: 0;
-}
-
-.ascendra-page[data-route="todos"] header p{
-    color: var(--muted);
-}
-
-.ascendra-page[data-route="todos"] .card{
-    background: var(--card);
-    padding: 25px;
-    border-radius: 22px;
-    margin-bottom: 25px;
-    box-shadow: 0 8px 22px rgba(0, 0, 0, 0.08);
-}
-
-.ascendra-page[data-route="todos"] .card h3{
-    margin-top: 0;
-    color: var(--accent);
-}
-
-.ascendra-page[data-route="todos"] label{
-    display: block;
-    font-weight: bold;
-    margin-bottom: 8px;
-}
-
-.ascendra-page[data-route="todos"] select{
-    width: 100%;
-    padding: 13px;
-    border-radius: 13px;
-    border: 2px solid #ddd;
-    font-size: 15px;
-    margin-bottom: 15px;
-}
-
-.ascendra-page[data-route="todos"] select:focus{
-    outline: none;
-    border-color: var(--accent);
-}
-
-.ascendra-page[data-route="todos"] .toggle-row, .ascendra-page[data-route="todos"] .danger-item{
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 15px;
-    border-top: 1px solid #eee;
-    padding: 18px 0;
-}
-
-.ascendra-page[data-route="todos"] .toggle-row h4, .ascendra-page[data-route="todos"] .danger-item h4{
-    margin: 0 0 5px;
-}
-
-.ascendra-page[data-route="todos"] .toggle-row p, .ascendra-page[data-route="todos"] .danger-item p{
-    margin: 0;
-    color: var(--muted);
-}
-
-.ascendra-page[data-route="todos"] input[type="checkbox"]{
-    width: 48px;
-    height: 25px;
-    accent-color: var(--accent);
-    cursor: pointer;
-}
-
-.ascendra-page[data-route="todos"] .danger{
-    border: 2px solid #ef4444;
-    background: #fff7f7;
-}
-
-.ascendra-page[data-route="todos"] .danger h3{
-    color: #dc2626;
-}
-
-.ascendra-page[data-route="todos"] .danger button{
-    background: #dc2626;
-    color: white;
-    border: none;
-    padding: 11px 18px;
-    border-radius: 12px;
-    cursor: pointer;
-    font-weight: bold;
-}
-
-.ascendra-page[data-route="todos"] .danger button:hover{
-    background: #b91c1c;
-    transform: scale(1.04);
-}
-
-@media (max-width: 750px) {
-    .ascendra-page[data-route="todos"] .page{
-        flex-direction: column;
+@media (max-width: 650px){
+    .ascendra-page[data-route="todos"]{
+        padding-inline: 10px;
     }
 
-    .ascendra-page[data-route="todos"] .content{
-        padding: 25px;
+    .ascendra-page[data-route="todos"] #todo_list{
+        font-size: 36px;
     }
 
-    .ascendra-page[data-route="todos"] .toggle-row, .ascendra-page[data-route="todos"] .danger-item{
-        flex-direction: column;
-        align-items: flex-start;
+    .ascendra-page[data-route="todos"] .todo-card{
+        width: 100%;
+        padding: 18px;
+        border-radius: 20px;
+        flex-wrap: wrap;
+    }
+
+    .ascendra-page[data-route="todos"] .todo-info{
+        flex-basis: 100%;
+    }
+
+    .ascendra-page[data-route="todos"] .complete-btn,
+    .ascendra-page[data-route="todos"] .delete-btn{
+        flex: 1;
+    }
+
+    .ascendra-page[data-route="todos"] .navbar button{
+        padding: 11px 2px;
+        font-size: 11px;
+    }
+
+    .ascendra-page[data-route="todos"] .navbar i{
+        font-size: 15px;
     }
 }
-
 /* ===== HABITS ===== */
 .ascendra-page[data-route="habits"]{
     font-family:Arial, sans-serif;
