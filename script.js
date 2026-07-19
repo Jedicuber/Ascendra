@@ -1625,23 +1625,22 @@ return () => clearInterval(starInterval);
 
         saveHabits();
         showHabits();
-        modal.close();
-    };
+modal.close();
+};
 
 updateReminderFields();
 showHabits();
 
 window.getHabitResultText = getHabitResultText;
-
-return () => modal.destroy();
-},
 window.getToday = getToday;
 window.saveHabitResult = saveHabitResult;
 window.saveHabits = saveHabits;
 window.showHabits = showHabits;
+
 return () => modal.destroy();
 },
-"breathing": function init_breathing(){
+
+"breathing": function init_breathing() {
 const exercises = {
     box: {
         title: "Box Breathing",
