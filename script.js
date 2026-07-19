@@ -1572,72 +1572,76 @@ return () => clearInterval(starInterval);
         }
     };
 
-habitForm.onsubmit = event => {
-    event.preventDefault();
+    habitForm.onsubmit = event => {
+        event.preventDefault();
 
-    const name = habitInput.value.trim();
-    const emoji = habitEmoji.value.trim();
-    const unit = habitUnit.value.trim();
-    const notes = habitNotes.value.trim();
+        const name = habitInput.value.trim();
+        const emoji = habitEmoji.value.trim();
+        const unit = habitUnit.value.trim();
+        const notes = habitNotes.value.trim();
 
-    const goal =
-        habitGoal.value === ""
-            ? null
-            : Number(habitGoal.value);
+        const goal =
+            habitGoal.value === ""
+                ? null
+                : Number(habitGoal.value);
 
-    const reminder =
-        noReminderInput.checked
-            ? null
-            : habitReminder.value || null;
+        const reminder =
+            noReminderInput.checked
+                ? null
+                : habitReminder.value || null;
 
-    if (name === "") {
-        alert("Add a habit name first!");
-        return;
-    }
+        if (name === "") {
+            alert("Add a habit name first!");
+            return;
+        }
 
-    if (
-        goal !== null &&
-        (!Number.isFinite(goal) || goal < 1)
-    ) {
-        alert("The habit goal must be at least 1.");
-        return;
-    }
+        if (
+            goal !== null &&
+            (!Number.isFinite(goal) || goal < 1)
+        ) {
+            alert("The habit goal must be at least 1.");
+            return;
+        }
 
-    if (goal !== null && unit === "") {
-        alert("Add a unit for your goal.");
-        return;
-    }
+        if (goal !== null && unit === "") {
+            alert("Add a unit for your goal.");
+            return;
+        }
 
-    const newHabit = {
-        id: Date.now(),
-        name: name,
-        emoji: emoji,
-        type: habitType.value,
-        frequency: habitFrequency.value,
-        goal: goal,
-        unit: unit,
-        reminder: reminder,
-        notes: notes,
-        history: {}
+        const newHabit = {
+            id: Date.now(),
+            name: name,
+            emoji: emoji,
+            type: habitType.value,
+            frequency: habitFrequency.value,
+            goal: goal,
+            unit: unit,
+            reminder: reminder,
+            notes: notes,
+            history: {}
+        };
+
+        habits.push(newHabit);
+
+        saveHabits();
+        showHabits();
+        modal.close();
     };
 
-    habits.push(newHabit);
-
-    saveHabits();
+    updateReminderFields();
     showHabits();
-    modal.close();
-};
 
-updateReminderFields();
-showHabits();
+    window.getHabitResultText = getHabitResultText;
+    window.getToday = getToday;
+    window.saveHabitResult = saveHabitResult;
+    window.saveHabits = saveHabits;
+    window.showHabits = showHabits;
 
-window.getHabitResultText = getHabitResultText;
-window.getToday = getToday;
-window.saveHabitResult = saveHabitResult;
-window.saveHabits = saveHabits;
-window.showHabits = showHabits;
+    function cleanupHabits() {
+        modal.destroy();
+    }
 
-return () => modal.destroy();
+    return cleanupHabits;
 },
 
 "breathing": function init_breathing() {
