@@ -945,7 +945,7 @@ return () => clearInterval(starInterval);
     const todayDayNumber = dateKeyDayNumber(new Date());
     console.log(todos);
 
-    unfinishedTodos.forEach(todo => {
+        unfinishedTodos.forEach(todo => {
         const card = document.createElement("div");
         card.classList.add("alert-card");
 
@@ -977,6 +977,7 @@ return () => clearInterval(starInterval);
         card.append(title, date, statusText);
         alertList.appendChild(card);
     });
+
 },
 
 
