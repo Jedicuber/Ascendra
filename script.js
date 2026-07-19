@@ -761,26 +761,26 @@ const progressText = document.getElementById("progressText");
 // ===========================
 
 if (todoList) {
-
     todoList.innerHTML = "";
 
-    if (todos.length === 0) {
-        todoList.innerHTML = "<li>No to-dos yet</li>";
+    const activeTodos = todos
+        .filter(todo => !todo.completed)
+        .slice(0, 5);
+
+    if (activeTodos.length === 0) {
+        todoList.innerHTML = "<li>No active to-dos 🎉</li>";
     } else {
-
-        todos.slice(0, 5).forEach(todo => {
-
+        activeTodos.forEach(todo => {
             const li = document.createElement("li");
-            li.textContent = todo.task;
+
+            li.textContent = todo.date
+                ? `${todo.task} — ${todo.date}`
+                : `${todo.task} — No due date`;
 
             todoList.appendChild(li);
-
         });
-
     }
-
 }
-
 // ===========================
 // Calendar
 // ===========================
