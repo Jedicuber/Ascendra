@@ -1233,38 +1233,33 @@ body{min-height:100vh;background:#f4f1ff;color:#222;font-family:Arial,sans-serif
     position: fixed;
     bottom: 20px;
     left: 50%;
-    z-index: 1000;
+    transform: translateX(-50%);
 
     display: flex;
-    width: min(900px, calc(100% - 30px));
+    width: 600px;
 
     overflow: hidden;
     border-radius: 999px;
-    background: rgb(240,240,240);
+    background-color: rgb(240, 240, 240);
     box-shadow: 0 2px 10px rgba(0,0,0,0.2);
-
-    transform: translateX(-50%);
 }
 
 .ascendra-page[data-route="todos"] .navbar button{
     flex: 1;
-    min-width: 0;
-    padding: 13px 5px;
-
     border: none;
     background: transparent;
-
-    font-size: 14px;
+    padding: 15px 0;
+    font-size: 16px;
     cursor: pointer;
     transition: background-color 0.2s;
 }
 
 .ascendra-page[data-route="todos"] .navbar button:hover{
-    background: rgb(215,215,215);
+    background-color: rgb(215, 215, 215);
 }
 
 .ascendra-page[data-route="todos"] .navbar .current{
-    background: var(--accent);
+    background-color: var(--accent);
     color: white;
     border-radius: 25px;
 }
