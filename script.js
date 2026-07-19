@@ -1276,210 +1276,361 @@ return () => clearInterval(starInterval);
 
     return () => modal.destroy();
 },
-"habits": function init_habits(){
+"habits": function init_habits() {
 
-const addHabitBtn = document.getElementById("addHabitBtn");
-const habitPopup = document.getElementById("habitPopup");
-const saveHabitBtn = document.getElementById("saveHabitBtn");
-const cancelHabitBtn = document.getElementById("cancelHabitBtn");
+    const addHabitBtn = document.getElementById("addHabitBtn");
+    const habitPopup = document.getElementById("habitPopup");
+    const habitForm = document.getElementById("habitForm");
+    const cancelHabitBtn = document.getElementById("cancelHabitBtn");
 
-const habitInput = document.getElementById("habitInput");
-const habitType = document.getElementById("habitType");
-const habitList = document.getElementById("habitList");
-const modal = createModalController(habitPopup, habitInput, {
-    onClose: () => { habitInput.value = ""; }
-});
+    const habitInput = document.getElementById("habitInput");
+    const habitEmoji = document.getElementById("habitEmoji");
+    const habitType = document.getElementById("habitType");
+    const habitFrequency = document.getElementById("habitFrequency");
+    const habitGoal = document.getElementById("habitGoal");
+    const habitUnit = document.getElementById("habitUnit");
+    const habitReminder = document.getElementById("habitReminder");
+    const noReminderInput = document.getElementById("noReminderInput");
+    const reminderFields = document.getElementById("reminderFields");
+    const habitNotes = document.getElementById("habitNotes");
 
-let habits = JSON.parse(getUserItem("habits")) || [];
+    const habitList = document.getElementById("habitList");
 
-function saveHabits() {
-    setUserItem("habits", JSON.stringify(habits));
-}
+    const modal = createModalController(habitPopup, habitInput, {
+        onClose: () => {
+            habitForm.reset();
+            habitType.value = "good";
+            habitFrequency.value = "daily";
+            updateReminderFields();
+        }
+    });
 
-function getToday() {
-    return formatLocalDate();
-}
+    let habits = JSON.parse(getUserItem("habits")) || [];
 
-function saveHabitResult(habit, result) {
-    const today = getToday();
-
-    if (!habit.history) {
-        habit.history = {};
+    function saveHabits() {
+        setUserItem("habits", JSON.stringify(habits));
     }
 
-    habit.history[today] = result;
+    function getToday() {
+        return formatLocalDate();
+    }
 
-    saveHabits();
-}
+    function updateReminderFields() {
+        const noReminder = noReminderInput.checked;
 
-function getHabitResultText(habit) {
-    const today = getToday();
+        habitReminder.disabled = noReminder;
+        reminderFields.classList.toggle("disabled", noReminder);
 
-    if (!habit.history) {
+        if (noReminder) {
+            habitReminder.value = "";
+        }
+    }
+
+    function saveHabitResult(habit, result) {
+        const today = getToday();
+
+        if (!habit.history) {
+            habit.history = {};
+        }
+
+        habit.history[today] = result;
+
+        saveHabits();
+    }
+
+    function getHabitResultText(habit) {
+        const today = getToday();
+        const result = habit.history?.[today];
+
+        if (result === true) {
+            return habit.type === "bad"
+                ? "Avoided today ✅"
+                : "Completed today ✅";
+        }
+
+        if (result === false) {
+            return habit.type === "bad"
+                ? "Habit happened today ❌"
+                : "Missed today ❌";
+        }
+
         return "Not checked today";
     }
 
-    const result = habit.history[today];
-
-    if (result === true) {
-        if (habit.type === "bad") {
-            return "Avoided today ✅";
+    function getFrequencyText(frequency) {
+        if (frequency === "weekdays") {
+            return "Weekdays";
         }
 
-        return "Completed today ✅";
-    }
-
-    if (result === false) {
-        if (habit.type === "bad") {
-            return "Habit happened today ❌";
+        if (frequency === "weekends") {
+            return "Weekends";
         }
 
-        return "Missed today ❌";
+        return "Every day";
     }
 
-    return "Not checked today";
-}
+    function getPreviousDateKey(dateKey) {
+        const date = parseLocalDateTime(dateKey);
 
-function showHabits() {
-    habitList.innerHTML = "";
-
-    if (habits.length === 0) {
-        const emptyMessage = document.createElement("p");
-        emptyMessage.textContent = "No habits yet";
-        habitList.appendChild(emptyMessage);
-        return;
-    }
-
-    habits.forEach(function (habit) {
-        const habitCard = document.createElement("div");
-        habitCard.classList.add("habit");
-
-        const leftSide = document.createElement("div");
-        leftSide.classList.add("left");
-
-        const habitTitle = document.createElement("div");
-        habitTitle.classList.add("habit-title");
-        habitTitle.textContent = habit.name;
-
-        const habitTypeText = document.createElement("div");
-        habitTypeText.classList.add("habit-type");
-
-        if (habit.type === "bad") {
-            habitTypeText.textContent = "Bad habit";
-        } else {
-            habitTypeText.textContent = "Good habit";
+        if (!date) {
+            return null;
         }
 
-        const habitResult = document.createElement("div");
-        habitResult.classList.add("habit-result");
-        habitResult.textContent = getHabitResultText(habit);
+        date.setDate(date.getDate() - 1);
+        return formatLocalDate(date);
+    }
 
-        leftSide.appendChild(habitTitle);
-        leftSide.appendChild(habitTypeText);
-        leftSide.appendChild(habitResult);
+    function getCurrentStreak(habit) {
+        const history = habit.history || {};
+        let dateKey = getToday();
+        let streak = 0;
 
-        const rightSide = document.createElement("div");
-        rightSide.classList.add("right");
+        while (history[dateKey] === true) {
+            streak++;
 
-        const checkButton = document.createElement("button");
-        checkButton.classList.add("check-btn");
-        checkButton.type = "button";
-        checkButton.textContent = "✅";
-        checkButton.setAttribute("aria-label", `Mark ${habit.name} successful today`);
+            dateKey = getPreviousDateKey(dateKey);
 
-        const xButton = document.createElement("button");
-        xButton.classList.add("x-btn");
-        xButton.type = "button";
-        xButton.textContent = "❌";
-        xButton.setAttribute("aria-label", `Mark ${habit.name} missed today`);
+            if (!dateKey) {
+                break;
+            }
+        }
 
-        const deleteButton = document.createElement("button");
-        deleteButton.classList.add("delete-btn");
-        deleteButton.type = "button";
-        deleteButton.textContent = "🗑️";
-        deleteButton.setAttribute("aria-label", `Delete habit: ${habit.name}`);
+        return streak;
+    }
 
-        checkButton.onclick = function () {
-            saveHabitResult(habit, true);
+    function showHabits() {
+        habitList.innerHTML = "";
 
-            if (habit.type === "bad") {
-                alert("Nice! You avoided the bad habit ✅");
-            } else {
-                alert("Nice! You did the good habit ✅");
+        if (habits.length === 0) {
+            const emptyMessage = document.createElement("p");
+            emptyMessage.className = "habit-empty";
+            emptyMessage.textContent = "No habits yet";
+            habitList.appendChild(emptyMessage);
+            return;
+        }
+
+        habits.forEach(habit => {
+            const habitCard = document.createElement("div");
+            habitCard.classList.add("habit");
+
+            const leftSide = document.createElement("div");
+            leftSide.classList.add("left");
+
+            const habitTitle = document.createElement("div");
+            habitTitle.classList.add("habit-title");
+
+            const emoji = habit.emoji ? `${habit.emoji} ` : "";
+            habitTitle.textContent = `${emoji}${habit.name}`;
+
+            const habitTypeText = document.createElement("div");
+            habitTypeText.classList.add("habit-type");
+
+            habitTypeText.textContent =
+                habit.type === "bad"
+                    ? "Bad habit"
+                    : "Good habit";
+
+            const habitFrequencyText = document.createElement("div");
+            habitFrequencyText.classList.add("habit-frequency");
+            habitFrequencyText.textContent =
+                `Frequency: ${getFrequencyText(habit.frequency)}`;
+
+            const habitResult = document.createElement("div");
+            habitResult.classList.add("habit-result");
+            habitResult.textContent = getHabitResultText(habit);
+
+            const habitStreak = document.createElement("div");
+            habitStreak.classList.add("habit-streak");
+
+            const streak = getCurrentStreak(habit);
+            habitStreak.textContent =
+                `🔥 ${streak} day${streak === 1 ? "" : "s"} streak`;
+
+            leftSide.append(
+                habitTitle,
+                habitTypeText,
+                habitFrequencyText,
+                habitResult,
+                habitStreak
+            );
+
+            if (habit.goal && habit.unit) {
+                const goalText = document.createElement("div");
+                goalText.classList.add("habit-goal");
+                goalText.textContent =
+                    `Goal: ${habit.goal} ${habit.unit}`;
+
+                leftSide.appendChild(goalText);
             }
 
-            showHabits();
-        };
+            if (habit.reminder) {
+                const reminderText = document.createElement("div");
+                reminderText.classList.add("habit-reminder");
+                reminderText.textContent =
+                    `Reminder: ${habit.reminder}`;
 
-        xButton.onclick = function () {
-            saveHabitResult(habit, false);
-
-            if (habit.type === "bad") {
-                alert("You did the bad habit today ❌");
-            } else {
-                alert("You missed the good habit today ❌");
+                leftSide.appendChild(reminderText);
             }
 
-            showHabits();
-        };
+            if (habit.notes) {
+                const notesText = document.createElement("p");
+                notesText.classList.add("habit-notes");
+                notesText.textContent = habit.notes;
 
-        deleteButton.onclick = function () {
-            habits = habits.filter(function (savedHabit) {
-                return savedHabit.id !== habit.id;
-            });
+                leftSide.appendChild(notesText);
+            }
 
-            saveHabits();
-            showHabits();
-        };
+            const rightSide = document.createElement("div");
+            rightSide.classList.add("right");
 
-        rightSide.appendChild(checkButton);
-        rightSide.appendChild(xButton);
-        rightSide.appendChild(deleteButton);
+            const checkButton = document.createElement("button");
+            checkButton.classList.add("check-btn");
+            checkButton.type = "button";
+            checkButton.textContent = "✅";
 
-        habitCard.appendChild(leftSide);
-        habitCard.appendChild(rightSide);
+            checkButton.setAttribute(
+                "aria-label",
+                `Mark ${habit.name} successful today`
+            );
 
-        habitList.appendChild(habitCard);
-    });
-}
+            const xButton = document.createElement("button");
+            xButton.classList.add("x-btn");
+            xButton.type = "button";
+            xButton.textContent = "❌";
 
-addHabitBtn.onclick = function () {
-    modal.open();
-};
+            xButton.setAttribute(
+                "aria-label",
+                `Mark ${habit.name} missed today`
+            );
 
-cancelHabitBtn.onclick = function () {
-    modal.close();
-};
+            const deleteButton = document.createElement("button");
+            deleteButton.classList.add("delete-btn");
+            deleteButton.type = "button";
+            deleteButton.textContent = "🗑️";
 
-habitPopup.onclick = function (event) {
-    if (event.target === habitPopup) modal.close();
-};
+            deleteButton.setAttribute(
+                "aria-label",
+                `Delete habit: ${habit.name}`
+            );
 
-saveHabitBtn.onclick = function () {
-    const name = habitInput.value.trim();
+            checkButton.onclick = () => {
+                saveHabitResult(habit, true);
+                showHabits();
+            };
 
-    if (name === "") {
-        alert("Add a habit name first!");
-        return;
+            xButton.onclick = () => {
+                saveHabitResult(habit, false);
+                showHabits();
+            };
+
+            deleteButton.onclick = () => {
+                habits = habits.filter(savedHabit => {
+                    return savedHabit.id !== habit.id;
+                });
+
+                saveHabits();
+                showHabits();
+            };
+
+            rightSide.append(
+                checkButton,
+                xButton,
+                deleteButton
+            );
+
+            habitCard.append(
+                leftSide,
+                rightSide
+            );
+
+            habitList.appendChild(habitCard);
+        });
     }
 
-    const newHabit = {
-        id: Date.now(),
-        name: name,
-        type: habitType.value,
-        history: {}
+    addHabitBtn.onclick = () => {
+        habitType.value = "good";
+        habitFrequency.value = "daily";
+        noReminderInput.checked = false;
+
+        updateReminderFields();
+        modal.open();
     };
 
-    habits.push(newHabit);
+    cancelHabitBtn.onclick = () => {
+        modal.close();
+    };
 
-    saveHabits();
+    noReminderInput.onchange = () => {
+        updateReminderFields();
+    };
+
+    habitPopup.onclick = event => {
+        if (event.target === habitPopup) {
+            modal.close();
+        }
+    };
+
+    habitForm.onsubmit = event => {
+        event.preventDefault();
+
+        const name = habitInput.value.trim();
+        const emoji = habitEmoji.value.trim();
+        const unit = habitUnit.value.trim();
+        const notes = habitNotes.value.trim();
+
+        const goal =
+            habitGoal.value === ""
+                ? null
+                : Number(habitGoal.value);
+
+        const reminder =
+            noReminderInput.checked
+                ? null
+                : habitReminder.value || null;
+
+        if (name === "") {
+            alert("Add a habit name first!");
+            return;
+        }
+
+        if (
+            goal !== null &&
+            (!Number.isFinite(goal) || goal < 1)
+        ) {
+            alert("The habit goal must be at least 1.");
+            return;
+        }
+
+        if (goal !== null && unit === "") {
+            alert("Add a unit for your goal.");
+            return;
+        }
+
+        const newHabit = {
+            id: Date.now(),
+            name: name,
+            emoji: emoji,
+            type: habitType.value,
+            frequency: habitFrequency.value,
+            goal: goal,
+            unit: unit,
+            reminder: reminder,
+            notes: notes,
+            history: {}
+        };
+
+        habits.push(newHabit);
+
+        saveHabits();
+        showHabits();
+        modal.close();
+    };
+
+    updateReminderFields();
     showHabits();
 
-    modal.close();
-};
-
-showHabits();
-
+    return () => modal.destroy();
+},
 
 window.getHabitResultText = getHabitResultText;
 window.getToday = getToday;
