@@ -918,7 +918,7 @@ return () => clearInterval(starInterval);
 "alerts": function init_alerts() {
     const alertList = document.getElementById("alertList");
 
-    const todos = JSON.parse(getUserItem("todos")) || [];
+    let todos = JSON.parse(getUserItem("todos")) || [];
 
     function isCompleted(todo) {
         return (
@@ -929,57 +929,192 @@ return () => clearInterval(starInterval);
         );
     }
 
-    const unfinishedTodos = todos.filter(todo => !isCompleted(todo));
-
-    alertList.innerHTML = "";
-
-    if (unfinishedTodos.length === 0) {
-        alertList.innerHTML = "<p>No alerts 🎉</p>";
-        return;
+    function saveTodos() {
+        setUserItem("todos", JSON.stringify(todos));
     }
 
-    unfinishedTodos.sort(
-        (a, b) => dateKeyDayNumber(a.date) - dateKeyDayNumber(b.date)
-    );
+    function formatPriority(priority) {
+        if (priority === "high") return "🔴 High";
+        if (priority === "low") return "🟢 Low";
+        return "🟡 Medium";
+    }
 
-    const todayDayNumber = dateKeyDayNumber(new Date());
-    console.log(todos);
-
-        unfinishedTodos.forEach(todo => {
-        const card = document.createElement("div");
-        card.classList.add("alert-card");
-
+    function getStatus(todo) {
         const dueDayNumber = dateKeyDayNumber(todo.date);
+        const todayDayNumber = dateKeyDayNumber(new Date());
         const daysLeft = dueDayNumber - todayDayNumber;
 
-        let status = "";
-
         if (!Number.isFinite(daysLeft)) {
-            status = "Date unavailable";
-        } else if (daysLeft < 0) {
-            status = "🔴 Overdue";
-        } else if (daysLeft === 0) {
-            status = "🟠 Due Today";
-        } else if (daysLeft === 1) {
-            status = "🟡 Due Tomorrow";
-        } else {
-            status = `🟢 Due in ${daysLeft} days`;
+            return {
+                text: "Date unavailable",
+                className: "status-unavailable"
+            };
         }
 
-        const title = document.createElement("h3");
-        const date = document.createElement("p");
-        const statusText = document.createElement("p");
+        if (daysLeft < 0) {
+            const overdueDays = Math.abs(daysLeft);
 
-        title.textContent = todo.task;
-        date.textContent = `📅 ${todo.date}`;
-        statusText.textContent = status;
+            return {
+                text: `🔴 Overdue by ${overdueDays} ${
+                    overdueDays === 1 ? "day" : "days"
+                }`,
+                className: "status-overdue"
+            };
+        }
 
-        card.append(title, date, statusText);
-        alertList.appendChild(card);
-    });
+        if (daysLeft === 0) {
+            return {
+                text: "🟠 Due Today",
+                className: "status-today"
+            };
+        }
 
+        if (daysLeft === 1) {
+            return {
+                text: "🟡 Due Tomorrow",
+                className: "status-tomorrow"
+            };
+        }
+
+        return {
+            text: `🟢 Due in ${daysLeft} days`,
+            className: "status-upcoming"
+        };
+    }
+
+    function sortAlerts(a, b) {
+        const dateDifference =
+            dateKeyDayNumber(a.date) - dateKeyDayNumber(b.date);
+
+        if (dateDifference !== 0) {
+            return dateDifference;
+        }
+
+        return String(a.time || "").localeCompare(
+            String(b.time || "")
+        );
+    }
+
+    function showAlerts() {
+        alertList.innerHTML = "";
+
+        // Ignore completed tasks and tasks with no due date.
+        const activeAlerts = todos
+            .filter(todo => !isCompleted(todo) && todo.date)
+            .sort(sortAlerts);
+
+        if (activeAlerts.length === 0) {
+            const emptyMessage = document.createElement("p");
+            emptyMessage.className = "alert-empty";
+            emptyMessage.textContent = "No alerts 🎉";
+
+            alertList.appendChild(emptyMessage);
+            return;
+        }
+
+        activeAlerts.forEach(todo => {
+            const card = document.createElement("article");
+            card.classList.add("alert-card");
+
+            const details = document.createElement("div");
+            details.classList.add("alert-details");
+
+            const title = document.createElement("h3");
+            title.classList.add("alert-title");
+            title.textContent = todo.task;
+
+            const dueDate = document.createElement("p");
+            dueDate.classList.add("alert-date");
+
+            dueDate.textContent = todo.time
+                ? `📅 ${todo.date} at ${todo.time}`
+                : `📅 ${todo.date}`;
+
+            const status = getStatus(todo);
+
+            const statusText = document.createElement("p");
+            statusText.classList.add(
+                "alert-status",
+                status.className
+            );
+            statusText.textContent = status.text;
+
+            const priorityText = document.createElement("p");
+            priorityText.classList.add(
+                "alert-priority",
+                `priority-${todo.priority || "medium"}`
+            );
+            priorityText.textContent =
+                `Priority: ${formatPriority(todo.priority)}`;
+
+            details.append(
+                title,
+                dueDate,
+                statusText,
+                priorityText
+            );
+
+            if (todo.estimatedMinutes) {
+                const estimate = document.createElement("p");
+                estimate.classList.add("alert-estimate");
+                estimate.textContent =
+                    `⏱ Estimated time: ${todo.estimatedMinutes} min`;
+
+                details.appendChild(estimate);
+            }
+
+            if (todo.notes) {
+                const notes = document.createElement("p");
+                notes.classList.add("alert-notes");
+                notes.textContent = todo.notes;
+
+                details.appendChild(notes);
+            }
+
+            const actions = document.createElement("div");
+            actions.classList.add("alert-actions");
+
+            const completeButton = document.createElement("button");
+            completeButton.classList.add("alert-complete-btn");
+            completeButton.type = "button";
+            completeButton.textContent = "Mark Done";
+
+            completeButton.setAttribute(
+                "aria-label",
+                `Mark task complete: ${todo.task}`
+            );
+
+            completeButton.onclick = () => {
+                todo.completed = true;
+                saveTodos();
+                showAlerts();
+            };
+
+            const viewButton = document.createElement("button");
+            viewButton.classList.add("alert-view-btn");
+            viewButton.type = "button";
+            viewButton.textContent = "View To-Do";
+
+            viewButton.onclick = () => {
+                navigate("todos");
+            };
+
+            actions.append(
+                completeButton,
+                viewButton
+            );
+
+            card.append(
+                details,
+                actions
+            );
+
+            alertList.appendChild(card);
+        });
+    }
+
+    showAlerts();
 },
-
 "todos": function init_todos() {
 
     const addBtn = document.getElementById("add-btn");
