@@ -178,42 +178,120 @@
 </template>
 <template id="page-todos">
 
-
 <h1 id="todo_list">To-Dos</h1>
 <h5 id="subtitle3">For better task management</h5>
+
 <button id="add-btn"><strong>+ Add Task</strong></button>
+
 <div class="todo-toolbar" aria-label="Filter tasks">
-<button class="todo-filter active" data-filter="all" type="button">All</button>
-<button class="todo-filter" data-filter="active" type="button">Active</button>
-<button class="todo-filter" data-filter="completed" type="button">Completed</button>
+    <button class="todo-filter active" data-filter="all" type="button">All</button>
+    <button class="todo-filter" data-filter="active" type="button">Active</button>
+    <button class="todo-filter" data-filter="completed" type="button">Completed</button>
 </div>
+
 <p id="todo-summary" aria-live="polite"></p>
 <div id="todo-list" aria-live="polite"></div>
-<div aria-hidden="true" aria-labelledby="todo-dialog-title" aria-modal="true" class="popup" id="popup" role="dialog" tabindex="-1">
-<form class="popup-box" id="todo-form">
-<h2 id="todo-dialog-title">Add Task</h2>
-<label for="task-input">Task name</label>
-<input id="task-input" maxlength="120" placeholder="Task name" required="" type="text"/>
-<label for="date-input">Due date</label>
-<input id="date-input" required="" type="date"/>
-<br/><br/>
-<button id="save-btn" type="submit">Save</button>
-<button id="cancel-btn" type="button">Cancel</button>
-</form>
+
+<div
+    aria-hidden="true"
+    aria-labelledby="todo-dialog-title"
+    aria-modal="true"
+    class="popup"
+    id="popup"
+    role="dialog"
+    tabindex="-1"
+>
+    <form class="popup-box" id="todo-form">
+
+        <h2 id="todo-dialog-title">Add Task</h2>
+
+        <label for="task-input">Task name</label>
+        <input
+            id="task-input"
+            maxlength="120"
+            placeholder="Task name"
+            required
+            type="text"
+        >
+
+        <label for="priority-input">Priority</label>
+        <select id="priority-input">
+            <option value="low">Low</option>
+            <option value="medium" selected>Medium</option>
+            <option value="high">High</option>
+        </select>
+
+        <label for="estimated-input">Estimated minutes</label>
+        <input
+            id="estimated-input"
+            min="1"
+            max="1440"
+            placeholder="Example: 30"
+            type="number"
+        >
+
+        <label class="no-date-label">
+            <input id="no-date-input" type="checkbox">
+            No due date
+        </label>
+
+        <div id="due-date-fields">
+            <label for="date-input">Due date</label>
+            <input id="date-input" type="date">
+
+            <label for="time-input">Due time</label>
+            <input id="time-input" type="time">
+        </div>
+
+        <label for="notes-input">Notes</label>
+        <textarea
+            id="notes-input"
+            maxlength="500"
+            placeholder="Extra details about this task"
+            rows="4"
+        ></textarea>
+
+        <br><br>
+
+        <button id="save-btn" type="submit">Save</button>
+        <button id="cancel-btn" type="button">Cancel</button>
+
+    </form>
 </div>
+
 <div class="navbar">
-<button onclick="navigate('home')"><i class="fa-solid fa-mug-saucer"></i><br/>Home</button>
-<button onclick="navigate('alerts')"><i class="fa-regular fa-bell"></i><br/>Alerts</button>
-<button class="current"><i class="fa-solid fa-list-check"></i><br/>To-Dos</button>
-<button onclick="navigate('habits')"><i class="fa-regular fa-thumbs-up"></i><br/>Habits</button>
-<button onclick="navigate('breathing')"><i class="fa-solid fa-wind"></i><br/>Breathing</button>
-<button onclick="navigate('calendar')"><i class="fa-regular fa-calendar"></i><br/>Calendar</button>
-<button onclick="navigate('journal')"><i class="fa-solid fa-book-open"></i><br/>Journal</button>
-<button onclick="navigate('menu')"><i class="fa-solid fa-bars-staggered"></i><br/>Menu</button>
+    <button onclick="navigate('home')">
+        <i class="fa-solid fa-mug-saucer"></i><br>Home
+    </button>
+
+    <button onclick="navigate('alerts')">
+        <i class="fa-regular fa-bell"></i><br>Alerts
+    </button>
+
+    <button class="current">
+        <i class="fa-solid fa-list-check"></i><br>To-Dos
+    </button>
+
+    <button onclick="navigate('habits')">
+        <i class="fa-regular fa-thumbs-up"></i><br>Habits
+    </button>
+
+    <button onclick="navigate('breathing')">
+        <i class="fa-solid fa-wind"></i><br>Breathing
+    </button>
+
+    <button onclick="navigate('calendar')">
+        <i class="fa-regular fa-calendar"></i><br>Calendar
+    </button>
+
+    <button onclick="navigate('journal')">
+        <i class="fa-solid fa-book-open"></i><br>Journal
+    </button>
+
+    <button onclick="navigate('menu')">
+        <i class="fa-solid fa-bars-staggered"></i><br>Menu
+    </button>
 </div>
-
-
-
 
 </template>
 <template id="page-habits">
