@@ -980,7 +980,7 @@ return () => clearInterval(starInterval);
 
 },
 
-"todos": function init_todos(){
+"todos": function init_todos() {
 
     const addBtn = document.getElementById("add-btn");
     const popup = document.getElementById("popup");
@@ -988,12 +988,24 @@ return () => clearInterval(starInterval);
     const todoForm = document.getElementById("todo-form");
 
     const taskInput = document.getElementById("task-input");
+    const priorityInput = document.getElementById("priority-input");
+    const estimatedInput = document.getElementById("estimated-input");
+    const noDateInput = document.getElementById("no-date-input");
+    const dueDateFields = document.getElementById("due-date-fields");
     const dateInput = document.getElementById("date-input");
+    const timeInput = document.getElementById("time-input");
+    const notesInput = document.getElementById("notes-input");
+
     const todoList = document.getElementById("todo-list");
     const todoSummary = document.getElementById("todo-summary");
     const filterButtons = [...document.querySelectorAll(".todo-filter")];
+
     const modal = createModalController(popup, taskInput, {
-        onClose: () => todoForm.reset()
+        onClose: () => {
+            todoForm.reset();
+            priorityInput.value = "medium";
+            updateDueDateFields();
+        }
     });
 
     let todos = JSON.parse(getUserItem("todos")) || [];
@@ -1003,19 +1015,85 @@ return () => clearInterval(starInterval);
         setUserItem("todos", JSON.stringify(todos));
     }
 
+    function updateDueDateFields() {
+        const hasNoDueDate = noDateInput.checked;
+
+        dateInput.disabled = hasNoDueDate;
+        timeInput.disabled = hasNoDueDate;
+        dueDateFields.classList.toggle("disabled", hasNoDueDate);
+
+        if (hasNoDueDate) {
+            dateInput.value = "";
+            timeInput.value = "";
+        }
+    }
+
+    function formatPriority(priority) {
+        if (priority === "high") return "🔴 High";
+        if (priority === "low") return "🟢 Low";
+        return "🟡 Medium";
+    }
+
+    function formatDueDate(todo) {
+        if (!todo.date) {
+            return "No due date";
+        }
+
+        if (todo.time) {
+            return `Due: ${todo.date} at ${todo.time}`;
+        }
+
+        return `Due: ${todo.date}`;
+    }
+
+    function sortTodos(a, b) {
+        if (!a.date && !b.date) {
+            return Number(a.id) - Number(b.id);
+        }
+
+        if (!a.date) return 1;
+        if (!b.date) return -1;
+
+        const dateComparison = String(a.date).localeCompare(String(b.date));
+
+        if (dateComparison !== 0) {
+            return dateComparison;
+        }
+
+        return String(a.time || "").localeCompare(String(b.time || ""));
+    }
+
     function showTodos() {
         todoList.innerHTML = "";
+
         const remaining = todos.filter(todo => !todo.completed).length;
-        todoSummary.textContent = `${remaining} ${remaining === 1 ? "task" : "tasks"} remaining`;
+
+        todoSummary.textContent =
+            `${remaining} ${remaining === 1 ? "task" : "tasks"} remaining`;
 
         const visibleTodos = todos
-            .filter(todo => activeFilter === "all" || (activeFilter === "completed" ? todo.completed : !todo.completed))
-            .sort((a, b) => String(a.date).localeCompare(String(b.date)) || Number(a.id) - Number(b.id));
+            .filter(todo => {
+                if (activeFilter === "completed") {
+                    return todo.completed;
+                }
+
+                if (activeFilter === "active") {
+                    return !todo.completed;
+                }
+
+                return true;
+            })
+            .sort(sortTodos);
 
         if (visibleTodos.length === 0) {
             const emptyMessage = document.createElement("p");
             emptyMessage.className = "todo-empty";
-            emptyMessage.textContent = todos.length === 0 ? "No tasks yet" : `No ${activeFilter} tasks`;
+
+            emptyMessage.textContent =
+                todos.length === 0
+                    ? "No tasks yet"
+                    : `No ${activeFilter} tasks`;
+
             todoList.appendChild(emptyMessage);
             return;
         }
@@ -1030,25 +1108,57 @@ return () => clearInterval(starInterval);
 
             const info = document.createElement("div");
             info.className = "todo-info";
+
             const title = document.createElement("div");
             title.className = "todo-title";
             title.textContent = todo.task;
+
             const dueDate = document.createElement("div");
             dueDate.className = "todo-date";
-            dueDate.textContent = `Due: ${todo.date}`;
-            info.append(title, dueDate);
+            dueDate.textContent = formatDueDate(todo);
+
+            const priority = document.createElement("div");
+            priority.className = `todo-priority priority-${todo.priority || "medium"}`;
+            priority.textContent = `Priority: ${formatPriority(todo.priority)}`;
+
+            info.append(title, dueDate, priority);
+
+            if (todo.estimatedMinutes) {
+                const estimate = document.createElement("div");
+                estimate.className = "todo-estimate";
+                estimate.textContent =
+                    `Estimated time: ${todo.estimatedMinutes} min`;
+
+                info.appendChild(estimate);
+            }
+
+            if (todo.notes) {
+                const notes = document.createElement("p");
+                notes.className = "todo-notes";
+                notes.textContent = todo.notes;
+
+                info.appendChild(notes);
+            }
 
             const completeBtn = document.createElement("button");
             completeBtn.className = "complete-btn";
             completeBtn.type = "button";
             completeBtn.textContent = todo.completed ? "Undo" : "Done";
-            completeBtn.setAttribute("aria-label", `${todo.completed ? "Mark incomplete" : "Mark complete"}: ${todo.task}`);
+
+            completeBtn.setAttribute(
+                "aria-label",
+                `${todo.completed ? "Mark incomplete" : "Mark complete"}: ${todo.task}`
+            );
 
             const deleteBtn = document.createElement("button");
             deleteBtn.className = "delete-btn";
             deleteBtn.type = "button";
             deleteBtn.textContent = "Delete";
-            deleteBtn.setAttribute("aria-label", `Delete task: ${todo.task}`);
+
+            deleteBtn.setAttribute(
+                "aria-label",
+                `Delete task: ${todo.task}`
+            );
 
             completeBtn.onclick = () => {
                 todo.completed = !todo.completed;
@@ -1057,7 +1167,7 @@ return () => clearInterval(starInterval);
             };
 
             deleteBtn.onclick = () => {
-                todos = todos.filter(t => t.id !== todo.id);
+                todos = todos.filter(savedTodo => savedTodo.id !== todo.id);
                 saveTodos();
                 showTodos();
             };
@@ -1069,31 +1179,70 @@ return () => clearInterval(starInterval);
 
     addBtn.onclick = () => {
         dateInput.min = formatLocalDate();
+        priorityInput.value = "medium";
+        noDateInput.checked = false;
+        updateDueDateFields();
         modal.open();
     };
 
-    cancelBtn.onclick = () => modal.close();
+    cancelBtn.onclick = () => {
+        modal.close();
+    };
+
+    noDateInput.onchange = () => {
+        updateDueDateFields();
+    };
 
     filterButtons.forEach(button => {
         button.onclick = () => {
             activeFilter = button.dataset.filter;
+
             filterButtons.forEach(item => {
                 const selected = item === button;
+
                 item.classList.toggle("active", selected);
                 item.setAttribute("aria-pressed", String(selected));
             });
+
             showTodos();
         };
-        button.setAttribute("aria-pressed", String(button.dataset.filter === activeFilter));
+
+        button.setAttribute(
+            "aria-pressed",
+            String(button.dataset.filter === activeFilter)
+        );
     });
 
     todoForm.onsubmit = event => {
         event.preventDefault();
-        const task = taskInput.value.trim();
-        const date = dateInput.value;
 
-        if (task === "" || date === "") {
-            alert("Add a task and due date first!");
+        const task = taskInput.value.trim();
+        const noDueDate = noDateInput.checked;
+        const date = noDueDate ? null : dateInput.value;
+        const time = noDueDate ? null : timeInput.value;
+        const priority = priorityInput.value;
+        const notes = notesInput.value.trim();
+
+        const estimatedMinutes =
+            estimatedInput.value === ""
+                ? null
+                : Number(estimatedInput.value);
+
+        if (task === "") {
+            alert("Add a task name first!");
+            return;
+        }
+
+        if (!noDueDate && date === "") {
+            alert("Choose a due date or select No due date.");
+            return;
+        }
+
+        if (
+            estimatedMinutes !== null &&
+            (!Number.isFinite(estimatedMinutes) || estimatedMinutes < 1)
+        ) {
+            alert("Estimated minutes must be at least 1.");
             return;
         }
 
@@ -1101,6 +1250,10 @@ return () => clearInterval(starInterval);
             id: Date.now(),
             task: task,
             date: date,
+            time: time,
+            priority: priority,
+            notes: notes,
+            estimatedMinutes: estimatedMinutes,
             completed: false
         });
 
@@ -1110,14 +1263,18 @@ return () => clearInterval(starInterval);
     };
 
     popup.onclick = event => {
-        if (event.target === popup) modal.close();
+        if (event.target === popup) {
+            modal.close();
+        }
     };
 
+    updateDueDateFields();
     showTodos();
 
-window.saveTodos = saveTodos;
-window.showTodos = showTodos;
-return () => modal.destroy();
+    window.saveTodos = saveTodos;
+    window.showTodos = showTodos;
+
+    return () => modal.destroy();
 },
 "habits": function init_habits(){
 
