@@ -980,8 +980,6 @@ return () => clearInterval(starInterval);
 
 },
 
-
-},
 "todos": function init_todos(){
 
     const addBtn = document.getElementById("add-btn");
