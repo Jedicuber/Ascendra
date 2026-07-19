@@ -297,53 +297,131 @@
 </template>
 <template id="page-habits">
 
-
 <h1>Habit Tracker</h1>
 <h5>Build better routines</h5>
+
 <button id="addHabitBtn">+ Add Habit</button>
-<div id="habitList"></div>
-<div aria-hidden="true" aria-labelledby="habit-dialog-title" aria-modal="true" class="popup" id="habitPopup" role="dialog" tabindex="-1">
-<div class="popup-box">
-<h2 id="habit-dialog-title">Add Habit</h2>
-<input aria-label="Habit name" id="habitInput" maxlength="120" placeholder="Habit name" type="text"/>
-<select aria-label="Habit type" id="habitType">
-<option value="good">Good habit</option>
-<option value="bad">Bad habit</option>
-</select>
-<br/><br/>
-<button id="saveHabitBtn" type="button">Save</button>
-<button id="cancelHabitBtn" type="button">Cancel</button>
+
+<div id="habitList" aria-live="polite"></div>
+
+<div
+    aria-hidden="true"
+    aria-labelledby="habit-dialog-title"
+    aria-modal="true"
+    class="popup"
+    id="habitPopup"
+    role="dialog"
+    tabindex="-1"
+>
+    <form class="popup-box" id="habitForm">
+
+        <h2 id="habit-dialog-title">Add Habit</h2>
+
+        <label for="habitInput">Habit name</label>
+        <input
+            id="habitInput"
+            maxlength="120"
+            placeholder="Example: Practice piano"
+            required
+            type="text"
+        >
+
+        <label for="habitEmoji">Emoji</label>
+        <input
+            id="habitEmoji"
+            maxlength="4"
+            placeholder="🎹"
+            type="text"
+        >
+
+        <label for="habitType">Habit type</label>
+        <select id="habitType">
+            <option value="good">Good habit</option>
+            <option value="bad">Bad habit</option>
+        </select>
+
+        <label for="habitFrequency">Frequency</label>
+        <select id="habitFrequency">
+            <option value="daily">Every day</option>
+            <option value="weekdays">Weekdays</option>
+            <option value="weekends">Weekends</option>
+        </select>
+
+        <label for="habitGoal">Goal amount</label>
+        <input
+            id="habitGoal"
+            min="1"
+            placeholder="Example: 20"
+            type="number"
+        >
+
+        <label for="habitUnit">Goal unit</label>
+        <input
+            id="habitUnit"
+            maxlength="30"
+            placeholder="minutes, glasses, pages..."
+            type="text"
+        >
+
+        <label class="no-reminder-label">
+            <input id="noReminderInput" type="checkbox">
+            No reminder
+        </label>
+
+        <div id="reminderFields">
+            <label for="habitReminder">Reminder time</label>
+            <input id="habitReminder" type="time">
+        </div>
+
+        <label for="habitNotes">Notes</label>
+        <textarea
+            id="habitNotes"
+            maxlength="500"
+            placeholder="Why are you building this habit?"
+            rows="4"
+        ></textarea>
+
+        <br><br>
+
+        <button id="saveHabitBtn" type="submit">Save</button>
+        <button id="cancelHabitBtn" type="button">Cancel</button>
+
+    </form>
 </div>
-</div>
+
 <div class="navbar">
-<button onclick="navigate('home')">
-<i class="fa-solid fa-mug-saucer"></i><br/>Home
+    <button onclick="navigate('home')">
+        <i class="fa-solid fa-mug-saucer"></i><br>Home
     </button>
-<button onclick="navigate('alerts')">
-<i class="fa-regular fa-bell"></i><br/>Alerts
+
+    <button onclick="navigate('alerts')">
+        <i class="fa-regular fa-bell"></i><br>Alerts
     </button>
-<button onclick="navigate('todos')">
-<i class="fa-solid fa-list-check"></i><br/>To-Dos
+
+    <button onclick="navigate('todos')">
+        <i class="fa-solid fa-list-check"></i><br>To-Dos
     </button>
-<button class="current">
-<i class="fa-regular fa-thumbs-up"></i><br/>Habits
+
+    <button class="current">
+        <i class="fa-regular fa-thumbs-up"></i><br>Habits
     </button>
-<button onclick="navigate('breathing')">
-<i class="fa-solid fa-wind"></i><br/>Breathing
+
+    <button onclick="navigate('breathing')">
+        <i class="fa-solid fa-wind"></i><br>Breathing
     </button>
-<button onclick="navigate('calendar')">
-<i class="fa-regular fa-calendar"></i><br/>Calendar
+
+    <button onclick="navigate('calendar')">
+        <i class="fa-regular fa-calendar"></i><br>Calendar
     </button>
-<button onclick="navigate('journal')">
-<i class="fa-solid fa-book-open"></i><br/>Journal
+
+    <button onclick="navigate('journal')">
+        <i class="fa-solid fa-book-open"></i><br>Journal
     </button>
-<button onclick="navigate('menu')">
-<i class="fa-solid fa-bars-staggered"></i><br/>Menu
+
+    <button onclick="navigate('menu')">
+        <i class="fa-solid fa-bars-staggered"></i><br>Menu
     </button>
 </div>
-
-
-
 
 </template>
 <template id="page-breathing">
