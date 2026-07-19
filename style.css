@@ -1498,11 +1498,26 @@ body{min-height:100vh;background:#f4f1ff;color:#222;font-family:Arial,sans-serif
     overflow-y: auto;
 }
 
+.ascendra-page[data-route="habits"] .popup{
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 10001;
+
+    padding: 20px 16px;
+
+    background: rgba(0,0,0,0.48);
+    overflow-y: auto;
+
+    align-items: flex-start;
+    justify-content: center;
+}
+
 .ascendra-page[data-route="habits"] .popup-box{
     width: min(430px, 100%);
-    max-height: calc(100vh - 60px);
+    max-height: calc(100vh - 40px);
 
-    margin: auto;
+    margin: 0 auto;
     padding: 26px;
 
     background: var(--card);
