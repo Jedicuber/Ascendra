@@ -1301,178 +1301,6 @@ body{min-height:100vh;background:#f4f1ff;color:#222;font-family:Arial,sans-serif
     }
 }
 /* ===== HABITS ===== */
-.ascendra-page[data-route="habits"]{
-    font-family:Arial, sans-serif;
-    background:rgb(246,242,255);
-    text-align:center;
-    margin:0;
-    padding:30px;
-}
-
-.ascendra-page[data-route="habits"] h5{
-    color:rgb(120,120,120);
-    margin-bottom:25px;
-}
-
-.ascendra-page[data-route="habits"] #addHabitBtn{
-    padding:12px 24px;
-    border:none;
-    border-radius:999px;
-    background:rgb(127,0,255);
-    color:white;
-    font-size:16px;
-    cursor:pointer;
-    box-shadow:0 5px 15px rgba(127,0,255,.35);
-    transition:.2s;
-}
-
-.ascendra-page[data-route="habits"] #addHabitBtn:hover{
-    background:rgb(143,63,216);
-}
-
-.ascendra-page[data-route="habits"] .habit{
-    width:70%;
-    max-width:700px;
-    min-height:80px;
-
-    margin:25px auto;
-    padding:20px 30px;
-
-    background:white;
-
-    border-radius:999px;
-
-    box-shadow:0 5px 15px rgba(127,0,255,.18);
-
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-
-    transition:.25s;
-}
-
-.ascendra-page[data-route="habits"] .habit:hover{
-    transform:translateY(-3px);
-    box-shadow:0 8px 20px rgba(127,0,255,.25);
-}
-
-.ascendra-page[data-route="habits"] .left{
-    text-align:left;
-}
-
-.ascendra-page[data-route="habits"] .habit-title{
-    font-size:22px;
-    font-weight:bold;
-}
-
-.ascendra-page[data-route="habits"] .habit-type{
-    color:gray;
-    margin-top:6px;
-}
-
-.ascendra-page[data-route="habits"] .right{
-    display:flex;
-    gap:12px;
-}
-
-.ascendra-page[data-route="habits"] .right button{
-    opacity:0;
-    background:none;
-    border:none;
-    cursor:pointer;
-    font-size:24px;
-    transition:.2s;
-}
-
-.ascendra-page[data-route="habits"] .habit:hover .right button{
-    opacity:1;
-}
-
-.ascendra-page[data-route="habits"] .popup{
-    display:none;
-    position:fixed;
-    inset:0;
-    background:rgba(0,0,0,.45);
-}
-
-.ascendra-page[data-route="habits"] .popup-box{
-    width:330px;
-    margin:170px auto;
-    padding:25px;
-
-    background:white;
-
-    border-radius:20px;
-
-    text-align:center;
-}
-
-.ascendra-page[data-route="habits"] .popup-box h2{
-    color:rgb(127,0,255);
-}
-
-.ascendra-page[data-route="habits"] .popup-box input, .ascendra-page[data-route="habits"] .popup-box select{
-    width:90%;
-    padding:10px;
-    margin:8px 0;
-    border-radius:10px;
-    border:1px solid #ccc;
-}
-
-.ascendra-page[data-route="habits"] .popup-box button{
-    margin-top:10px;
-    padding:10px 18px;
-    border:none;
-    border-radius:10px;
-    background:rgb(127,0,255);
-    color:white;
-    cursor:pointer;
-}
-
-.ascendra-page[data-route="habits"] .popup-box button:hover{
-    background:rgb(143,63,216);
-}
-
-/* Navbar */
-
-.ascendra-page[data-route="habits"] .navbar{
-    position: fixed;
-    bottom: 20px;
-    left: 50%;
-    transform: translateX(-50%);
-
-    display: flex;
-    width: 600px;
-
-    border-radius: 999px;
-    overflow: hidden;
-    background-color: rgb(240, 240, 240);
-    box-shadow: 0 2px 10px rgba(0,0,0,0.2);
-}
-
-.ascendra-page[data-route="habits"] .navbar button{
-    flex: 1;
-    border: none;
-    background: transparent;
-    padding: 15px 0;
-    font-size: 16px;
-    cursor: pointer;
-    transition: background-color 0.2s;
-}
-
-.ascendra-page[data-route="habits"] .navbar button:hover{
-    background-color: rgb(215, 215, 215);
-}
-
-.ascendra-page[data-route="habits"] .navbar .current{
-    background-color: rgb(37, 99, 235);
-    color: white;
-    border-radius: 25px;
-}
-.ascendra-page[data-route="habits"] *{
-    box-sizing: border-box;
-    font-family: Arial, sans-serif;
-}
 
 .ascendra-page[data-route="habits"]{
     --accent: rgb(127, 0, 255);
@@ -1480,169 +1308,395 @@ body{min-height:100vh;background:#f4f1ff;color:#222;font-family:Arial,sans-serif
     --card: white;
     --text: #222;
     --muted: #666;
-}
 
-.ascendra-page[data-route="habits"]{
+    min-height: 100vh;
     margin: 0;
+    padding: 35px 20px 120px;
+
     background: var(--bg);
     color: var(--text);
+
+    font-family: Arial, sans-serif;
+    text-align: center;
 }
 
-.ascendra-page[data-route="habits"] .page{
-    display: flex;
-    min-height: 100vh;
+.ascendra-page[data-route="habits"] *{
+    box-sizing: border-box;
 }
 
-.ascendra-page[data-route="habits"] .sidebar{
-    width: 250px;
-    background: white;
-    padding: 30px 22px;
-    box-shadow: 5px 0 20px rgba(0, 0, 0, 0.07);
+.ascendra-page[data-route="habits"] h1{
+    margin: 0;
+    font-size: 42px;
 }
 
-.ascendra-page[data-route="habits"] .sidebar h1{
-    color: var(--accent);
-    margin-bottom: 5px;
-}
-
-.ascendra-page[data-route="habits"] .sidebar p{
+.ascendra-page[data-route="habits"] h5{
+    margin-top: 8px;
     color: var(--muted);
-    margin-bottom: 35px;
 }
 
-.ascendra-page[data-route="habits"] .sidebar nav{
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-}
+/* ---------- Add Button ---------- */
 
-.ascendra-page[data-route="habits"] .sidebar a{
-    text-decoration: none;
-    color: #333;
-    padding: 13px 15px;
-    border-radius: 14px;
-    transition: 0.2s;
-}
+.ascendra-page[data-route="habits"] #addHabitBtn{
+    padding: 12px 22px;
 
-.ascendra-page[data-route="habits"] .sidebar a:hover, .ascendra-page[data-route="habits"] .sidebar a.active{
+    border: none;
+    border-radius: 999px;
+
     background: var(--accent);
     color: white;
-    transform: translateX(4px);
+
+    box-shadow: 0 5px 15px rgba(0,0,0,0.15);
+
+    cursor: pointer;
+    font-size: 16px;
+
+    transition: transform 0.2s, box-shadow 0.2s;
 }
 
-.ascendra-page[data-route="habits"] .content{
+.ascendra-page[data-route="habits"] #addHabitBtn:hover{
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.18);
+}
+
+/* ---------- Habit List ---------- */
+
+.ascendra-page[data-route="habits"] #habitList{
+    width: 100%;
+    margin-top: 25px;
+}
+
+.ascendra-page[data-route="habits"] .habit{
+    display: flex;
+    align-items: center;
+    gap: 16px;
+
+    width: min(760px, 92%);
+    min-height: 100px;
+
+    margin: 22px auto;
+    padding: 22px 24px;
+
+    background: var(--card);
+    border-radius: 24px;
+
+    box-shadow: 0 5px 15px rgba(0,0,0,0.12);
+
+    text-align: left;
+
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.ascendra-page[data-route="habits"] .habit:hover{
+    transform: translateY(-2px);
+    box-shadow: 0 9px 22px rgba(0,0,0,0.14);
+}
+
+.ascendra-page[data-route="habits"] .left{
     flex: 1;
-    padding: 40px;
-    max-width: 950px;
+    min-width: 0;
 }
 
-.ascendra-page[data-route="habits"] header{
-    margin-bottom: 25px;
+.ascendra-page[data-route="habits"] .right{
+    display: flex;
+    gap: 8px;
+    flex-shrink: 0;
 }
 
-.ascendra-page[data-route="habits"] header h2{
-    font-size: 36px;
-    margin: 0;
+/* ---------- Habit Details ---------- */
+
+.ascendra-page[data-route="habits"] .habit-title{
+    font-size: 20px;
+    font-weight: bold;
+    overflow-wrap: anywhere;
 }
 
-.ascendra-page[data-route="habits"] header p{
+.ascendra-page[data-route="habits"] .habit-type,
+.ascendra-page[data-route="habits"] .habit-frequency,
+.ascendra-page[data-route="habits"] .habit-result,
+.ascendra-page[data-route="habits"] .habit-streak,
+.ascendra-page[data-route="habits"] .habit-goal,
+.ascendra-page[data-route="habits"] .habit-reminder{
+    margin-top: 6px;
+    font-size: 14px;
     color: var(--muted);
 }
 
-.ascendra-page[data-route="habits"] .card{
-    background: var(--card);
-    padding: 25px;
-    border-radius: 22px;
-    margin-bottom: 25px;
-    box-shadow: 0 8px 22px rgba(0, 0, 0, 0.08);
+.ascendra-page[data-route="habits"] .habit-streak{
+    font-weight: bold;
+    color: #ea580c;
 }
 
-.ascendra-page[data-route="habits"] .card h3{
-    margin-top: 0;
+.ascendra-page[data-route="habits"] .habit-result{
+    font-weight: bold;
+}
+
+.ascendra-page[data-route="habits"] .habit-notes{
+    margin: 10px 0 0;
+    padding: 10px 12px;
+
+    background: rgba(127, 0, 255, 0.06);
+    border-radius: 12px;
+
+    color: var(--text);
+    line-height: 1.5;
+
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+}
+
+.ascendra-page[data-route="habits"] .habit-empty{
+    margin-top: 40px;
+    color: var(--muted);
+}
+
+/* ---------- Habit Buttons ---------- */
+
+.ascendra-page[data-route="habits"] .check-btn,
+.ascendra-page[data-route="habits"] .x-btn,
+.ascendra-page[data-route="habits"] .delete-btn{
+    width: 42px;
+    height: 42px;
+
+    border: none;
+    border-radius: 12px;
+
+    cursor: pointer;
+    font-size: 18px;
+
+    transition: transform 0.2s, background 0.2s;
+}
+
+.ascendra-page[data-route="habits"] .check-btn{
+    background: #dcfce7;
+}
+
+.ascendra-page[data-route="habits"] .x-btn{
+    background: #fef3c7;
+}
+
+.ascendra-page[data-route="habits"] .delete-btn{
+    background: #ffe4e6;
+}
+
+.ascendra-page[data-route="habits"] .check-btn:hover,
+.ascendra-page[data-route="habits"] .x-btn:hover,
+.ascendra-page[data-route="habits"] .delete-btn:hover{
+    transform: translateY(-2px);
+}
+
+/* ---------- Popup ---------- */
+
+.ascendra-page[data-route="habits"] .popup{
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 10001;
+
+    padding: 30px 16px;
+
+    background: rgba(0,0,0,0.48);
+    overflow-y: auto;
+}
+
+.ascendra-page[data-route="habits"] .popup-box{
+    width: min(430px, 100%);
+    max-height: calc(100vh - 60px);
+
+    margin: auto;
+    padding: 26px;
+
+    background: var(--card);
+    color: var(--text);
+
+    border-radius: 22px;
+    box-shadow: 0 18px 45px rgba(0,0,0,0.22);
+
+    text-align: left;
+    overflow-y: auto;
+}
+
+.ascendra-page[data-route="habits"] .popup-box h2{
+    margin: 0 0 20px;
+    text-align: center;
     color: var(--accent);
 }
 
-.ascendra-page[data-route="habits"] label{
+.ascendra-page[data-route="habits"] .popup-box label{
     display: block;
+    margin: 14px 0 6px;
     font-weight: bold;
-    margin-bottom: 8px;
 }
 
-.ascendra-page[data-route="habits"] select{
+.ascendra-page[data-route="habits"] .popup-box input:not([type="checkbox"]),
+.ascendra-page[data-route="habits"] .popup-box select,
+.ascendra-page[data-route="habits"] .popup-box textarea{
     width: 100%;
-    padding: 13px;
-    border-radius: 13px;
+    padding: 11px 12px;
+
     border: 2px solid #ddd;
-    font-size: 15px;
-    margin-bottom: 15px;
+    border-radius: 12px;
+
+    background: var(--card);
+    color: var(--text);
+
+    font: inherit;
 }
 
-.ascendra-page[data-route="habits"] select:focus{
+.ascendra-page[data-route="habits"] .popup-box textarea{
+    min-height: 95px;
+    resize: vertical;
+}
+
+.ascendra-page[data-route="habits"] .popup-box input:focus,
+.ascendra-page[data-route="habits"] .popup-box select:focus,
+.ascendra-page[data-route="habits"] .popup-box textarea:focus{
     outline: none;
     border-color: var(--accent);
 }
 
-.ascendra-page[data-route="habits"] .toggle-row, .ascendra-page[data-route="habits"] .danger-item{
+/* ---------- Reminder Option ---------- */
+
+.ascendra-page[data-route="habits"] .no-reminder-label{
     display: flex;
-    justify-content: space-between;
     align-items: center;
-    gap: 15px;
-    border-top: 1px solid #eee;
-    padding: 18px 0;
-}
+    gap: 10px;
 
-.ascendra-page[data-route="habits"] .toggle-row h4, .ascendra-page[data-route="habits"] .danger-item h4{
-    margin: 0 0 5px;
-}
-
-.ascendra-page[data-route="habits"] .toggle-row p, .ascendra-page[data-route="habits"] .danger-item p{
-    margin: 0;
-    color: var(--muted);
-}
-
-.ascendra-page[data-route="habits"] input[type="checkbox"]{
-    width: 48px;
-    height: 25px;
-    accent-color: var(--accent);
+    margin-top: 18px;
     cursor: pointer;
 }
 
-.ascendra-page[data-route="habits"] .danger{
-    border: 2px solid #ef4444;
-    background: #fff7f7;
+.ascendra-page[data-route="habits"] #noReminderInput{
+    width: 18px;
+    height: 18px;
+
+    margin: 0;
+    accent-color: var(--accent);
+
+    cursor: pointer;
 }
 
-.ascendra-page[data-route="habits"] .danger h3{
-    color: #dc2626;
+.ascendra-page[data-route="habits"] #reminderFields{
+    transition: opacity 0.2s;
 }
 
-.ascendra-page[data-route="habits"] .danger button{
-    background: #dc2626;
-    color: white;
+.ascendra-page[data-route="habits"] #reminderFields.disabled{
+    opacity: 0.45;
+}
+
+/* ---------- Popup Buttons ---------- */
+
+.ascendra-page[data-route="habits"] #saveHabitBtn,
+.ascendra-page[data-route="habits"] #cancelHabitBtn{
+    padding: 10px 18px;
+
     border: none;
-    padding: 11px 18px;
-    border-radius: 12px;
+    border-radius: 11px;
+
     cursor: pointer;
     font-weight: bold;
 }
 
-.ascendra-page[data-route="habits"] .danger button:hover{
-    background: #b91c1c;
-    transform: scale(1.04);
+.ascendra-page[data-route="habits"] #saveHabitBtn{
+    background: var(--accent);
+    color: white;
 }
 
-@media (max-width: 750px) {
-    .ascendra-page[data-route="habits"] .page{
-        flex-direction: column;
+.ascendra-page[data-route="habits"] #cancelHabitBtn{
+    margin-left: 8px;
+    background: #e5e7eb;
+    color: #333;
+}
+
+/* ---------- Navbar ---------- */
+
+.ascendra-page[data-route="habits"] .navbar{
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    z-index: 1000;
+
+    display: flex;
+    width: 600px;
+
+    overflow: hidden;
+    border-radius: 999px;
+
+    background-color: rgb(240,240,240);
+    box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+
+    transform: translateX(-50%);
+}
+
+.ascendra-page[data-route="habits"] .navbar button{
+    flex: 1;
+
+    padding: 15px 0;
+
+    border: none;
+    background: transparent;
+
+    font-size: 16px;
+    cursor: pointer;
+
+    transition: background-color 0.2s;
+}
+
+.ascendra-page[data-route="habits"] .navbar button:hover{
+    background-color: rgb(215,215,215);
+}
+
+.ascendra-page[data-route="habits"] .navbar .current{
+    background: var(--accent);
+    color: white;
+    border-radius: 25px;
+}
+
+/* ---------- Mobile ---------- */
+
+@media (max-width: 650px){
+
+    .ascendra-page[data-route="habits"]{
+        padding-inline: 10px;
     }
 
-    .ascendra-page[data-route="habits"] .content{
-        padding: 25px;
+    .ascendra-page[data-route="habits"] h1{
+        font-size: 36px;
     }
 
-    .ascendra-page[data-route="habits"] .toggle-row, .ascendra-page[data-route="habits"] .danger-item{
-        flex-direction: column;
-        align-items: flex-start;
+    .ascendra-page[data-route="habits"] .habit{
+        width: 100%;
+        padding: 18px;
+
+        border-radius: 20px;
+        flex-wrap: wrap;
+    }
+
+    .ascendra-page[data-route="habits"] .left{
+        flex-basis: 100%;
+    }
+
+    .ascendra-page[data-route="habits"] .right{
+        width: 100%;
+    }
+
+    .ascendra-page[data-route="habits"] .check-btn,
+    .ascendra-page[data-route="habits"] .x-btn,
+    .ascendra-page[data-route="habits"] .delete-btn{
+        flex: 1;
+        width: auto;
+    }
+
+    .ascendra-page[data-route="habits"] .navbar{
+        width: calc(100% - 20px);
+    }
+
+    .ascendra-page[data-route="habits"] .navbar button{
+        padding: 11px 2px;
+        font-size: 11px;
+    }
+
+    .ascendra-page[data-route="habits"] .navbar i{
+        font-size: 15px;
     }
 }
 
