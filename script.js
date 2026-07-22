@@ -1697,10 +1697,11 @@ return () => clearInterval(starInterval);
         modal.close();
     };
 
-    noReminderInput.onchange = () => {
-        updateReminderFields();
-    };
-
+    if (noReminderInput) {
+        noReminderInput.onchange = () => {
+            updateReminderFields();
+        }
+    }
     habitPopup.onclick = event => {
         if (event.target === habitPopup) {
             modal.close();
