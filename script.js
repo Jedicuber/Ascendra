@@ -1453,6 +1453,12 @@ return () => clearInterval(starInterval);
     }
 
     function updateReminderFields() {
+        // Some versions of the Habits HTML do not include every reminder field.
+        // Do not crash the whole route when an optional element is missing.
+        if (!noReminderInput || !habitReminder || !reminderFields) {
+            return;
+        }
+
         const noReminder = noReminderInput.checked;
 
         habitReminder.disabled = noReminder;
@@ -3208,44 +3214,56 @@ document.addEventListener("keydown", function(event) {
     // keyboard shortcuts
 });
 
-const searchOverlay = document.getElementById("searchOverlay");
-const searchInput = document.getElementById("searchInput");
-const searchResults = document.getElementById("searchResults");
-
 const searchablePages = [
     { name: "Home", route: "home" },
     { name: "Calendar", route: "calendar" },
     { name: "Journal", route: "journal" },
     { name: "Habits", route: "habits" },
-    { name: "Tasks", route: "tasks" },
+    { name: "To-Dos", route: "todos" },
     { name: "Profile", route: "profile" },
-    { name: "Statistics", route: "statistics" },
+    { name: "Statistics", route: "stats" },
     { name: "Settings", route: "settings" }
 ];
 
+function getSearchElements() {
+    return {
+        overlay: document.getElementById("searchOverlay"),
+        input: document.getElementById("searchInput"),
+        results: document.getElementById("searchResults")
+    };
+}
+
 function openSearch() {
-    searchOverlay.hidden = false;
-    searchInput.value = "";
+    const { overlay, input } = getSearchElements();
+    if (!overlay || !input) {
+        console.warn("Search UI is not available on this page.");
+        return;
+    }
+
+    overlay.hidden = false;
+    input.value = "";
     showSearchResults(searchablePages);
-    searchInput.focus();
+    input.focus();
 }
 
 function closeSearch() {
-    searchOverlay.hidden = true;
+    const { overlay } = getSearchElements();
+    if (overlay) overlay.hidden = true;
 }
 
 function showSearchResults(pages) {
-    searchResults.innerHTML = "";
+    const { results } = getSearchElements();
+    if (!results) return;
+
+    results.innerHTML = "";
 
     if (pages.length === 0) {
-        searchResults.innerHTML =
-            '<p class="no-results">No results found</p>';
+        results.innerHTML = '<p class="no-results">No results found</p>';
         return;
     }
 
     pages.forEach(function(page) {
         const button = document.createElement("button");
-
         button.className = "search-result";
         button.textContent = page.name;
 
@@ -3254,28 +3272,37 @@ function showSearchResults(pages) {
             closeSearch();
         });
 
-        searchResults.appendChild(button);
+        results.appendChild(button);
     });
 }
 
-searchInput.addEventListener("input", function() {
-    const searchText = searchInput.value.toLowerCase().trim();
+// Event delegation works even if the search UI is inserted later by a route/template.
+document.addEventListener("input", function(event) {
+    if (event.target.id !== "searchInput") return;
 
+    const searchText = event.target.value.toLowerCase().trim();
     const matches = searchablePages.filter(function(page) {
         return page.name.toLowerCase().includes(searchText);
     });
 
     showSearchResults(matches);
 });
-document.addEventListener("keydown", function(event) {
-    console.log(event.key, event.ctrlKey, event.shiftKey);
 
-    if (event.ctrlKey && event.shiftKey && event.key.toLowerCase() === "k") {
-        console.log("Shortcut works!");
+document.addEventListener("keydown", function(event) {
+    if ((event.ctrlKey || event.metaKey) &&
+        event.shiftKey &&
+        event.key.toLowerCase() === "k") {
+        event.preventDefault();
+        openSearch();
     }
 });
-searchOverlay.addEventListener("click", function(event) {
-    if (event.target === searchOverlay) {
+
+document.addEventListener("click", function(event) {
+    const { overlay } = getSearchElements();
+    if (overlay && event.target === overlay) {
         closeSearch();
     }
 });
+
+window.openSearch = openSearch;
+window.closeSearch = closeSearch;
