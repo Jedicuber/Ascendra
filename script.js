@@ -1693,7 +1693,6 @@ return () => clearInterval(starInterval);
     addHabitBtn.onclick = () => {
         habitType.value = "good";
         habitFrequency.value = "daily";
-        noReminderInput.checked = false;
 
         updateReminderFields();
         modal.open();
