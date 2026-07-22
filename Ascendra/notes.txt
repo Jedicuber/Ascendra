@@ -6,6 +6,7 @@
 - Fix alert/todos issue ✅
 - Alerts, Todos and habits should be added with more detail ✅
 - Make sure the calendar counts leap years ✅
+- Fix habits page bug
 ────────────────────────────────────────
 
 💬 Messeges
