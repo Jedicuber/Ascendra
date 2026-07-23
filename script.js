@@ -15,11 +15,13 @@ function formatLocalDate(date = new Date()) {
 
 function parseLocalDateTime(value, fallbackTime = "") {
     const match = String(value || "").trim().match(
-        /^(\d{4})-(\d{2})-(\d{2})(?:[ T](\d{1,2}):(\d{2}))?/
+        /^(\d{4})-(\d{2})-(\d{2})(?:[ T](\d{1,2}):(\d{2})(?::\d{2})?)?$/
     );
     if (!match) return null;
 
-    const fallbackMatch = String(fallbackTime || "").match(/^(\d{1,2}):(\d{2})/);
+    const fallbackMatch = String(fallbackTime || "").match(
+        /^(\d{1,2}):(\d{2})(?::\d{2})?$/
+    );
     const year = Number(match[1]);
     const month = Number(match[2]);
     const day = Number(match[3]);
@@ -48,6 +50,16 @@ function dateKeyDayNumber(value) {
 
 function eventDateTime(event) {
     return parseLocalDateTime(event?.date, event?.time);
+}
+
+function formatEventDateTime(event) {
+    const date = eventDateTime(event);
+    if (!date) return "Date unavailable";
+
+    return new Intl.DateTimeFormat(undefined, {
+        dateStyle: "medium",
+        timeStyle: "short"
+    }).format(date);
 }
 
 function bytesToBase64(bytes) {
@@ -201,6 +213,87 @@ function setUserItem(key, value) {
 
 function removeUserItem(key) {
     localStorage.removeItem(userStorageKey(key));
+}
+
+function readUserJson(key, fallback = null) {
+    const storedValue = getUserItem(key);
+    if (storedValue === null) return fallback;
+
+    try {
+        const parsedValue = JSON.parse(storedValue);
+        return parsedValue === null ? fallback : parsedValue;
+    } catch (error) {
+        console.warn(`Could not read saved ${key}; using a safe default.`);
+        return fallback;
+    }
+}
+
+function getUserArray(key) {
+    const value = readUserJson(key, []);
+    return Array.isArray(value)
+        ? value.filter(item => item && typeof item === "object" && !Array.isArray(item))
+        : [];
+}
+
+function isTodoCompleted(todo) {
+    return (
+        todo?.completed === true ||
+        todo?.completed === "true" ||
+        todo?.done === true ||
+        todo?.done === "true"
+    );
+}
+
+function getHabitHistory(habit) {
+    const history = habit?.history;
+    return history && typeof history === "object" && !Array.isArray(history)
+        ? history
+        : {};
+}
+
+function isHabitScheduledForDate(habit, date = new Date()) {
+    const dayOfWeek = date.getDay();
+
+    if (habit?.frequency === "weekdays") {
+        return dayOfWeek >= 1 && dayOfWeek <= 5;
+    }
+
+    if (habit?.frequency === "weekends") {
+        return dayOfWeek === 0 || dayOfWeek === 6;
+    }
+
+    return true;
+}
+
+function getScheduledHabitHistoryEntries(habit) {
+    return Object.entries(getHabitHistory(habit)).filter(([dateKey]) => {
+        if (!/^\d{4}-\d{2}-\d{2}$/.test(dateKey)) return false;
+        const date = parseLocalDateTime(dateKey);
+        return date && isHabitScheduledForDate(habit, date);
+    });
+}
+
+function getHabitCurrentStreak(habit, fromDate = new Date()) {
+    const history = getHabitHistory(habit);
+    const date = new Date(
+        fromDate.getFullYear(),
+        fromDate.getMonth(),
+        fromDate.getDate()
+    );
+    let streak = 0;
+    let inspectedDays = 0;
+
+    while (inspectedDays < 3660) {
+        if (isHabitScheduledForDate(habit, date)) {
+            if (history[formatLocalDate(date)] !== true) break;
+            streak++;
+        }
+
+        date.setDate(date.getDate() - 1);
+        inspectedDays++;
+    }
+
+    return streak;
 }
 
 function moveUserDataNamespace(oldUsername, newUsername) {
@@ -402,8 +495,7 @@ window.goBack=goBack;
 
 function getSavedSettings(){
     const defaults={accentColor:"purple",lightMode:true};
-    let saved=null;
-    try{saved=JSON.parse(getUserItem("ascendraSettings"));}catch(e){}
+    const saved=readUserJson("ascendraSettings",null);
     return saved && typeof saved==="object" && !Array.isArray(saved)
         ? {...defaults,...saved}
         : defaults;
@@ -427,7 +519,7 @@ function applySavedSettings(){
 function renderRoute(route){
     route=normalizeRoute(route);
     const template=document.getElementById("page-"+route);
-    if(!template){ app.innerHTML='<div class="spa-error"><h1>Page not found</h1></div>'; return; }
+    if(!template){ app.innerHTML='<div class="spa-error" role="main"><h1>Page not found</h1></div>'; return; }
     // stop route-owned intervals/animations when possible by replacing the DOM and calling cleanup
     const old=app.dataset.route;
     if(old && initializedCleanups.has(old)){
@@ -439,9 +531,10 @@ function renderRoute(route){
     page.className='ascendra-page';
     page.dataset.route=route;
     page.appendChild(template.content.cloneNode(true));
+    if(!page.querySelector('main')) page.setAttribute('role','main');
     app.appendChild(page);
     app.dataset.route=route;
-    document.title='Ascendra - '+route.replace(/-/g,' ').replace(/\w/g,c=>c.toUpperCase());
+    document.title='Ascendra - '+route.replace(/-/g,' ').replace(/\b\w/g,c=>c.toUpperCase());
     backButton.hidden=(route==='welcome');
     applySavedSettings();
     try{
@@ -455,8 +548,12 @@ function renderRoute(route){
     }
     window.scrollTo(0,0);
 }
-window.addEventListener('popstate',()=>renderRoute(getRoute()));
-window.addEventListener('hashchange',()=>renderRoute(getRoute()));
+function handleLocationChange(){
+    const route=getRoute();
+    if(app.dataset.route!==route) renderRoute(route);
+}
+window.addEventListener('popstate',handleLocationChange);
+window.addEventListener('hashchange',handleLocationChange);
 document.addEventListener('click',function(e){
     const a=e.target.closest('a[href^="#/"]');
     if(a){e.preventDefault();navigate(a.getAttribute('href'));}
@@ -659,6 +756,11 @@ const surname = document.getElementById("surname").value.trim();
 const username = document.getElementById("username").value.trim();
 const password = document.getElementById("password").value;
 
+    if (!name || !surname || !username) {
+        alert("Enter your first name, last name, and username.");
+        return;
+    }
+
     if (password.length < 8) {
         alert("Use a password with at least 8 characters.");
         return;
@@ -754,9 +856,14 @@ if (dateText) {
 
 const todayDayNumber = dateKeyDayNumber(now);
 
-const todos = JSON.parse(getUserItem("todos")) || [];
-const events = JSON.parse(getUserItem("events")) || [];
-const habits = JSON.parse(getUserItem("habits")) || [];
+const todos = getUserArray("todos");
+const events = getUserArray("events");
+const habits = getUserArray("habits");
+const todayDateKey = formatLocalDate(now);
+const todayTodos = todos.filter(todo => todo.date === todayDateKey);
+const scheduledHabits = habits.filter(habit => {
+    return isHabitScheduledForDate(habit, now);
+});
 
 // ===========================
 // Elements
@@ -776,12 +883,12 @@ const progressText = document.getElementById("progressText");
 if (todoList) {
     todoList.innerHTML = "";
 
-    const activeTodos = todos
-        .filter(todo => !todo.completed)
+    const activeTodos = todayTodos
+        .filter(todo => !isTodoCompleted(todo))
         .slice(0, 5);
 
     if (activeTodos.length === 0) {
-        todoList.innerHTML = "<li>No active to-dos 🎉</li>";
+        todoList.innerHTML = "<li>No to-dos due today 🎉</li>";
     } else {
         activeTodos.forEach(todo => {
             const li = document.createElement("li");
@@ -826,7 +933,7 @@ if (calendarList) {
             const li = document.createElement("li");
 
             li.textContent =
-                `${event.date} ${event.time || ""} - ${event.title || event.name || "Event"}`;
+                `${formatEventDateTime(event)} — ${event.title || event.name || "Event"}`;
 
             calendarList.appendChild(li);
 
@@ -869,15 +976,17 @@ if (habitList) {
 // Progress
 // ===========================
 
-let totalItems = todos.length + habits.length;
+let totalItems = todayTodos.length + scheduledHabits.length;
 let completedItems = 0;
 
-todos.forEach(todo => {
-    if (todo.completed) completedItems++;
+todayTodos.forEach(todo => {
+    if (isTodoCompleted(todo)) completedItems++;
 });
 
-habits.forEach(habit => {
-    if (habit.completed) completedItems++;
+scheduledHabits.forEach(habit => {
+    if (getHabitHistory(habit)[todayDateKey] === true) {
+        completedItems++;
+    }
 });
 
 const progress = totalItems > 0
@@ -931,16 +1040,7 @@ return () => clearInterval(starInterval);
 "alerts": function init_alerts() {
     const alertList = document.getElementById("alertList");
 
-    let todos = JSON.parse(getUserItem("todos")) || [];
-
-    function isCompleted(todo) {
-        return (
-            todo.completed === true ||
-            todo.completed === "true" ||
-            todo.done === true ||
-            todo.done === "true"
-        );
-    }
+    let todos = getUserArray("todos");
 
     function saveTodos() {
         setUserItem("todos", JSON.stringify(todos));
@@ -1013,7 +1113,7 @@ return () => clearInterval(starInterval);
 
         // Ignore completed tasks and tasks with no due date.
         const activeAlerts = todos
-            .filter(todo => !isCompleted(todo) && todo.date)
+            .filter(todo => !isTodoCompleted(todo) && todo.date)
             .sort(sortAlerts);
 
         if (activeAlerts.length === 0) {
@@ -1156,7 +1256,7 @@ return () => clearInterval(starInterval);
         }
     });
 
-    let todos = JSON.parse(getUserItem("todos")) || [];
+    let todos = getUserArray("todos");
     let activeFilter = "all";
 
     function saveTodos() {
@@ -1214,7 +1314,7 @@ return () => clearInterval(starInterval);
     function showTodos() {
         todoList.innerHTML = "";
 
-        const remaining = todos.filter(todo => !todo.completed).length;
+        const remaining = todos.filter(todo => !isTodoCompleted(todo)).length;
 
         todoSummary.textContent =
             `${remaining} ${remaining === 1 ? "task" : "tasks"} remaining`;
@@ -1222,11 +1322,11 @@ return () => clearInterval(starInterval);
         const visibleTodos = todos
             .filter(todo => {
                 if (activeFilter === "completed") {
-                    return todo.completed;
+                    return isTodoCompleted(todo);
                 }
 
                 if (activeFilter === "active") {
-                    return !todo.completed;
+                    return !isTodoCompleted(todo);
                 }
 
                 return true;
@@ -1250,7 +1350,7 @@ return () => clearInterval(starInterval);
             const card = document.createElement("div");
             card.classList.add("todo-card");
 
-            if (todo.completed) {
+            if (isTodoCompleted(todo)) {
                 card.classList.add("completed");
             }
 
@@ -1291,11 +1391,11 @@ return () => clearInterval(starInterval);
             const completeBtn = document.createElement("button");
             completeBtn.className = "complete-btn";
             completeBtn.type = "button";
-            completeBtn.textContent = todo.completed ? "Undo" : "Done";
+            completeBtn.textContent = isTodoCompleted(todo) ? "Undo" : "Done";
 
             completeBtn.setAttribute(
                 "aria-label",
-                `${todo.completed ? "Mark incomplete" : "Mark complete"}: ${todo.task}`
+                `${isTodoCompleted(todo) ? "Mark incomplete" : "Mark complete"}: ${todo.task}`
             );
 
             const deleteBtn = document.createElement("button");
@@ -1309,7 +1409,7 @@ return () => clearInterval(starInterval);
             );
 
             completeBtn.onclick = () => {
-                todo.completed = !todo.completed;
+                todo.completed = !isTodoCompleted(todo);
                 saveTodos();
                 showTodos();
             };
@@ -1455,7 +1555,7 @@ return () => clearInterval(starInterval);
         }
     });
 
-    let habits = JSON.parse(getUserItem("habits")) || [];
+    let habits = getUserArray("habits");
 
     function saveHabits() {
         setUserItem("habits", JSON.stringify(habits));
@@ -1483,20 +1583,26 @@ return () => clearInterval(starInterval);
     }
 
     function saveHabitResult(habit, result) {
-        const today = getToday();
-
-        if (!habit.history) {
-            habit.history = {};
+        if (!isHabitScheduledForDate(habit)) {
+            return false;
         }
+
+        const today = getToday();
+        habit.history = getHabitHistory(habit);
 
         habit.history[today] = result;
 
         saveHabits();
+        return true;
     }
 
     function getHabitResultText(habit) {
+        if (!isHabitScheduledForDate(habit)) {
+            return "Not scheduled today";
+        }
+
         const today = getToday();
-        const result = habit.history?.[today];
+        const result = getHabitHistory(habit)[today];
 
         if (result === true) {
             return habit.type === "bad"
@@ -1525,33 +1631,8 @@ return () => clearInterval(starInterval);
         return "Every day";
     }
 
-    function getPreviousDateKey(dateKey) {
-        const date = parseLocalDateTime(dateKey);
-
-        if (!date) {
-            return null;
-        }
-
-        date.setDate(date.getDate() - 1);
-        return formatLocalDate(date);
-    }
-
     function getCurrentStreak(habit) {
-        const history = habit.history || {};
-        let dateKey = getToday();
-        let streak = 0;
-
-        while (history[dateKey] === true) {
-            streak++;
-
-            dateKey = getPreviousDateKey(dateKey);
-
-            if (!dateKey) {
-                break;
-            }
-        }
-
-        return streak;
+        return getHabitCurrentStreak(habit);
     }
 
     function showHabits() {
@@ -1568,6 +1649,7 @@ return () => clearInterval(starInterval);
         habits.forEach(habit => {
             const habitCard = document.createElement("div");
             habitCard.classList.add("habit");
+            const isScheduledToday = isHabitScheduledForDate(habit);
 
             const leftSide = document.createElement("div");
             leftSide.classList.add("left");
@@ -1648,6 +1730,7 @@ return () => clearInterval(starInterval);
                 "aria-label",
                 `Mark ${habit.name} successful today`
             );
+            checkButton.disabled = !isScheduledToday;
 
             const xButton = document.createElement("button");
             xButton.classList.add("x-btn");
@@ -1658,6 +1741,13 @@ return () => clearInterval(starInterval);
                 "aria-label",
                 `Mark ${habit.name} missed today`
             );
+            xButton.disabled = !isScheduledToday;
+
+            if (!isScheduledToday) {
+                const scheduleMessage = `${habit.name} is not scheduled today`;
+                checkButton.title = scheduleMessage;
+                xButton.title = scheduleMessage;
+            }
 
             const deleteButton = document.createElement("button");
             deleteButton.classList.add("delete-btn");
@@ -1740,9 +1830,9 @@ return () => clearInterval(starInterval);
                 : Number(habitGoal.value);
 
         const reminder =
-            noReminderInput.checked
-                ? null
-                : habitReminder.value || null;
+            noReminderInput && habitReminder && !noReminderInput.checked
+                ? habitReminder.value || null
+                : null;
 
         if (name === "") {
             alert("Add a habit name first!");
@@ -1927,15 +2017,28 @@ const saveEvent = document.getElementById("saveEvent");
 const eventTitleInput = document.getElementById("eventTitle");
 const eventDateInput = document.getElementById("eventDate");
 
-let events = JSON.parse(getUserItem("events")) || [];
+let events = getUserArray("events");
 
-const eventPicker = flatpickr(eventDateInput, {
-    enableTime: true,
-    dateFormat: "Y-m-d H:i",
-    altInput: true,
-    altFormat: "F j, Y h:i K",
-    minDate: "today"
-});
+const eventPicker = typeof window.flatpickr === "function"
+    ? window.flatpickr(eventDateInput, {
+        enableTime: true,
+        dateFormat: "Y-m-d H:i",
+        altInput: true,
+        altFormat: "F j, Y h:i K",
+        minDate: "today"
+    })
+    : {
+        altInput: null,
+        clear() {
+            eventDateInput.value = "";
+        },
+        destroy() {}
+    };
+
+if (typeof window.flatpickr !== "function") {
+    eventDateInput.type = "datetime-local";
+    eventDateInput.min = `${formatLocalDate()}T00:00`;
+}
 eventPicker.altInput?.setAttribute("aria-label", "Event date and time");
 
 const modal = createModalController(popup, eventTitleInput, {
@@ -1997,9 +2100,11 @@ function showEventsForDay(dayCell, dayNumber) {
             eventDate.getMonth() === currentMonth &&
             eventDate.getFullYear() === currentYear
         ) {
-            const eventText = document.createElement("div");
+            const eventText = document.createElement("button");
             eventText.classList.add("calendar-event");
+            eventText.type = "button";
             eventText.textContent = event.title;
+            eventText.setAttribute("aria-label", `Delete event: ${event.title}`);
 
             eventText.onclick = () => {
                 if (confirm(`Delete "${event.title}"?`)) {
@@ -2054,6 +2159,17 @@ saveEvent.onclick = () => {
 
     if (title === "" || dateValue === "") {
         alert("Add an event name and date first!");
+        return;
+    }
+
+    const parsedDate = eventDateTime({ date: dateValue });
+    if (!parsedDate) {
+        alert("Choose a valid event date and time.");
+        return;
+    }
+
+    if (dateKeyDayNumber(parsedDate) < dateKeyDayNumber(new Date())) {
+        alert("Events must be scheduled for today or a future date.");
         return;
     }
 
@@ -2126,11 +2242,15 @@ function isFutureDate(day) {
 function loadEntry(day) {
     selectedDay = day;
 
-    const entry = JSON.parse(getUserItem(getEntryKey(day)));
+    const savedEntry = readUserJson(getEntryKey(day), null);
+    const entry =
+        savedEntry && typeof savedEntry === "object" && !Array.isArray(savedEntry)
+            ? savedEntry
+            : null;
 
     entryTitle.textContent = `Entry for ${monthNames[currentMonth]} ${day}, ${currentYear}`;
 
-    mood.value = entry?.mood || "😄 Happy";
+    mood.value = entry?.mood || "Happy";
     dayText.value = entry?.day || "";
     gratefulText.value = entry?.grateful || "";
     learnText.value = entry?.learn || "";
@@ -2145,7 +2265,11 @@ function loadEntry(day) {
     goalText.disabled = !canEdit;
 
     saveEntry.style.display = canEdit ? "block" : "none";
-    statusMessage.textContent = canEdit ? "" : "Past entries are read-only.";
+    statusMessage.textContent = canEdit
+        ? ""
+        : isFutureDate(day)
+            ? "Future entries cannot be edited."
+            : "Past entries are read-only.";
 }
 
 function buildDateGrid() {
@@ -2208,13 +2332,17 @@ nextMonth.onclick = () => {
 
     selectedDay = 1;
     buildDateGrid();
-
-    if (!isFutureDate(selectedDay)) {
-        loadEntry(selectedDay);
-    }
+    loadEntry(selectedDay);
 };
 
 saveEntry.onclick = () => {
+    if (!isTodayDate(selectedDay)) {
+        statusMessage.textContent = isFutureDate(selectedDay)
+            ? "Future entries cannot be edited."
+            : "Past entries are read-only.";
+        return;
+    }
+
     const entry = {
         mood: mood.value,
         day: dayText.value,
@@ -2444,28 +2572,7 @@ return () => {
         document.getElementById("welcome-message");
 
     function getStoredArray(key) {
-        const savedData = getUserItem(key);
-
-        if (!savedData) {
-            return [];
-        }
-
-        try {
-            const parsedData = JSON.parse(savedData);
-
-            if (Array.isArray(parsedData)) {
-                return parsedData;
-            }
-
-            return [];
-        } catch (error) {
-            console.error(
-                "Could not read " + key + ":",
-                error
-            );
-
-            return [];
-        }
+        return getUserArray(key);
     }
 
     function getTodayString() {
@@ -2498,7 +2605,7 @@ return () => {
         let completedTasks = 0;
 
         todos.forEach(function (todo) {
-            if (todo.completed === true) {
+            if (isTodoCompleted(todo)) {
                 completedTasks++;
             }
         });
@@ -2575,7 +2682,7 @@ return () => {
         let futureTasks = 0;
 
         todos.forEach(function (todo) {
-            if (todo.completed === true) {
+            if (isTodoCompleted(todo)) {
                 return;
             }
 
@@ -2603,15 +2710,7 @@ return () => {
         let missedHabitDays = 0;
 
         habits.forEach(function (habit) {
-            if (!habit.history) {
-                return;
-            }
-
-            const historyDates =
-                Object.keys(habit.history);
-
-            historyDates.forEach(function (date) {
-                const result = habit.history[date];
+            getScheduledHabitHistoryEntries(habit).forEach(function ([, result]) {
 
                 if (result === true) {
                     successfulHabitDays++;
@@ -2695,14 +2794,15 @@ return () => {
         let uncheckedToday = 0;
 
         habits.forEach(function (habit) {
-            if (
-                !habit.history ||
-                habit.history[today] === undefined
-            ) {
+            if (!isHabitScheduledForDate(habit)) {
+                return;
+            }
+
+            const history = getHabitHistory(habit);
+
+            if (history[today] === undefined) {
                 uncheckedToday++;
-            } else if (
-                habit.history[today] === true
-            ) {
+            } else if (history[today] === true) {
                 successfulToday++;
             } else {
                 missedToday++;
@@ -2845,7 +2945,7 @@ return () => {
                 "recent-task-title"
             );
 
-            if (todo.completed === true) {
+            if (isTodoCompleted(todo)) {
                 taskTitle.textContent =
                     "✅ " + todo.task;
             } else {
@@ -2870,7 +2970,7 @@ return () => {
                 "task-status"
             );
 
-            if (todo.completed === true) {
+            if (isTodoCompleted(todo)) {
                 taskStatus.classList.add(
                     "completed"
                 );
@@ -2957,8 +3057,10 @@ window.updateWelcomeMessage = updateWelcomeMessage;
 
     const profileUpload = document.getElementById("profile-upload");
     const profilePicture = document.getElementById("profile-picture");
+    const cameraButton = document.querySelector(".camera-button");
 
     const characterCount = document.getElementById("character-count");
+    const logoutButton = document.getElementById("logout-button");
 
     const streakNumber = document.getElementById("streak-number");
     const tasksNumber = document.getElementById("tasks-number");
@@ -2999,14 +3101,25 @@ window.updateWelcomeMessage = updateWelcomeMessage;
         characterCount.textContent =
             savedBio.length + " / 120";
 
-        streakNumber.textContent =
-            getUserItem("ascendra-streak") || "0";
+        const todos = getUserArray("todos");
+        const habits = getUserArray("habits");
+        const completedTasks = todos.filter(isTodoCompleted).length;
+        const successfulHabitDays = habits.reduce((total, habit) => {
+            const successfulDays = getScheduledHabitHistoryEntries(habit)
+                .map(([, result]) => result)
+                .filter(result => result === true).length;
+            return total + successfulDays;
+        }, 0);
+        const longestCurrentStreak = habits.reduce((longest, habit) => {
+            return Math.max(longest, getHabitCurrentStreak(habit));
+        }, 0);
+        const totalWins = completedTasks + successfulHabitDays;
+        const unlockedAchievements = [1, 10, 25, 50, 100]
+            .filter(threshold => totalWins >= threshold).length;
 
-        tasksNumber.textContent =
-            getUserItem("ascendra-tasks-completed") || "0";
-
-        achievementsNumber.textContent =
-            getUserItem("ascendra-achievements") || "0";
+        streakNumber.textContent = String(longestCurrentStreak);
+        tasksNumber.textContent = String(completedTasks);
+        achievementsNumber.textContent = String(unlockedAchievements);
 
         if (savedPicture) {
             profilePicture.src = savedPicture;
@@ -3145,6 +3258,23 @@ window.updateWelcomeMessage = updateWelcomeMessage;
             bioInput.value.length + " / 120";
     });
 
+    function handleLogout() {
+        ["loggedInUser", "name", "surname", "username"].forEach(key => {
+            localStorage.removeItem(key);
+        });
+        navigate("login");
+    }
+
+    logoutButton.addEventListener("click", handleLogout);
+
+    function handleCameraKeydown(event) {
+        if (event.key !== "Enter" && event.key !== " ") return;
+        event.preventDefault();
+        profileUpload.click();
+    }
+
+    cameraButton.addEventListener("keydown", handleCameraKeydown);
+
     profileUpload.addEventListener(
         "change",
         function (event) {
@@ -3203,7 +3333,11 @@ window.updateWelcomeMessage = updateWelcomeMessage;
 window.cleanUsername = cleanUsername;
 window.loadProfile = loadProfile;
 window.showMessage = showMessage;
-return () => clearTimeout(messageTimeout);
+return () => {
+    clearTimeout(messageTimeout);
+    logoutButton.removeEventListener("click", handleLogout);
+    cameraButton.removeEventListener("keydown", handleCameraKeydown);
+};
 },
 "extras": function init_extras(){
 
@@ -3238,11 +3372,6 @@ return () => clearTimeout(messageTimeout);
 if(!location.hash){history.replaceState({route:"welcome"},"","#/welcome");}
 renderRoute(getRoute());
 
-document.addEventListener("keydown", function(event) {
-
-    // keyboard shortcuts
-});
-
 const searchablePages = [
     { name: "Home", route: "home" },
     { name: "Calendar", route: "calendar" },
@@ -3253,6 +3382,7 @@ const searchablePages = [
     { name: "Statistics", route: "stats" },
     { name: "Settings", route: "settings" }
 ];
+let searchPreviousFocus = null;
 
 function getSearchElements() {
     return {
@@ -3269,15 +3399,26 @@ function openSearch() {
         return;
     }
 
+    if (!overlay.hidden) {
+        input.focus();
+        return;
+    }
+
+    searchPreviousFocus = document.activeElement;
     overlay.hidden = false;
     input.value = "";
     showSearchResults(searchablePages);
     input.focus();
 }
 
-function closeSearch() {
+function closeSearch({ restoreFocus = true } = {}) {
     const { overlay } = getSearchElements();
     if (overlay) overlay.hidden = true;
+
+    if (restoreFocus && searchPreviousFocus?.isConnected) {
+        searchPreviousFocus.focus();
+    }
+    searchPreviousFocus = null;
 }
 
 function showSearchResults(pages) {
@@ -3323,12 +3464,44 @@ document.addEventListener("keydown", function(event) {
         event.key.toLowerCase() === "k") {
         event.preventDefault();
         openSearch();
+        return;
+    }
+
+    const { overlay } = getSearchElements();
+    if (!overlay || overlay.hidden) return;
+
+    if (event.key === "Tab") {
+        const focusableElements = [...overlay.querySelectorAll(
+            'button:not([disabled]), input:not([disabled]), [href], [tabindex]:not([tabindex="-1"])'
+        )].filter(element => !element.hidden);
+        const firstElement = focusableElements[0];
+        const lastElement = focusableElements.at(-1);
+        const focusIsOutside = !overlay.contains(document.activeElement);
+
+        if (
+            firstElement &&
+            (focusIsOutside ||
+                (event.shiftKey && document.activeElement === firstElement) ||
+                (!event.shiftKey && document.activeElement === lastElement))
+        ) {
+            event.preventDefault();
+            (event.shiftKey && !focusIsOutside ? lastElement : firstElement).focus();
+        }
+        return;
+    }
+
+    if (event.key === "Escape") {
+        event.preventDefault();
+        closeSearch();
     }
 });
 
 document.addEventListener("click", function(event) {
     const { overlay } = getSearchElements();
-    if (overlay && event.target === overlay) {
+    if (
+        overlay &&
+        (event.target === overlay || event.target.closest("#searchClose"))
+    ) {
         closeSearch();
     }
 });
