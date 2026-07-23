@@ -11,10 +11,10 @@ body{min-height:100vh;background:#f4f1ff;color:#222;font-family:Arial,sans-serif
 
 /* ===== BACKGROUND ===== */
 body {
-    background-image: url("background.png");
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
+  background-image: url("background.png");
+  background-size: 100% auto;
+  background-position: top center;
+  background-repeat: repeat-y;
 }
 
 /* ===== WELCOME ===== */
