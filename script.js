@@ -2306,12 +2306,11 @@ return () => {
 },
 "settings": function init_settings() {
 
-  document.addEventListener("change", function(event){
+document.addEventListener("change", function(event){
     if (event.target.id === "mode") {
-        document.body.classList.toggle("dark", event.target.checked);
+        document.body.classList.toggle("dark-mode", event.target.checked);
     }
 });
-
     function resetSettings() {
         const confirmReset = confirm(
             "Reset Ascendra settings back to default?"
