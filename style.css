@@ -5782,3 +5782,20 @@ body::before{content:"";position:fixed;inset:0;background-image:url("background.
     color: gray;
     text-align: center;
 }
+
+body.dark{
+  background-color:#17131f!important;
+  color:#f5f5f5!important;
+}
+
+body.dark .card,
+body.dark .content,
+body.dark .page{
+  background-color:#241d30!important;
+  color:#f5f5f5!important;
+}
+
+body.dark::before{
+  filter:invert(1) brightness(.7);
+  opacity:.12;
+}
