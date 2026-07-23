@@ -1337,7 +1337,7 @@ body{min-height:100vh;background:#f4f1ff;color:#222;font-family:Arial,sans-serif
 /* ---------- Add Button ---------- */
 
 .ascendra-page[data-route="habits"] #addHabitBtn{
-    padding: 18px 33px;
+    padding: 12px 22px;
 
     border: none;
     border-radius: 999px;
@@ -1348,7 +1348,7 @@ body{min-height:100vh;background:#f4f1ff;color:#222;font-family:Arial,sans-serif
     box-shadow: 0 5px 15px rgba(0,0,0,0.15);
 
     cursor: pointer;
-    font-size: 24px;
+    font-size: 16px;
 
     transition: transform 0.2s, box-shadow 0.2s;
 }
