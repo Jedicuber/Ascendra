@@ -1,21 +1,12 @@
-
 *{box-sizing:border-box}
 html,body{margin:0;min-height:100%;}
-body{min-height:100vh;background:#f4f1ff;color:#222;font-family:Arial,sans-serif;}
+body{min-height:100vh;background-color:#f4f1ff;background-image:url("background.png");background-position:top center;background-size:100% auto;background-repeat:repeat-y;color:#222;font-family:Arial,sans-serif;}
 #app{min-height:100vh;}
 .ascendra-page{display:block;min-height:100vh;position:relative;}
 .spa-back-button{position:fixed;left:18px;top:18px;z-index:10000;width:44px;height:44px;border:0;border-radius:14px;background:rgba(255,255,255,.92);box-shadow:0 8px 24px rgba(0,0,0,.15);cursor:pointer;font-size:20px;color:#301060;display:flex;align-items:center;justify-content:center;}
 .spa-back-button:hover{transform:translateY(-2px)}
 .spa-back-button[hidden]{display:none}
 .spa-error{max-width:720px;margin:80px auto;padding:24px;background:white;border-radius:20px;box-shadow:0 12px 35px rgba(0,0,0,.12)}
-
-/* ===== BACKGROUND ===== */
-body {
-  background-image: url("background.png");
-  background-size: 100% auto;
-  background-position: center;
-  background-repeat: repeat-y;
-}
 
 /* ===== WELCOME ===== */
 .ascendra-page[data-route="welcome"]{
