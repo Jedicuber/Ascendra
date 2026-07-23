@@ -2306,6 +2306,8 @@ return () => {
 },
 "settings": function init_settings() {
 
+    const darkMode = document.getElementById
+
     function resetSettings() {
         const confirmReset = confirm(
             "Reset Ascendra settings back to default?"
