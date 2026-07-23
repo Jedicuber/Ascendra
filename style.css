@@ -5833,3 +5833,33 @@ body.dark-mode .page-title{
   -webkit-text-fill-color:#ffffff!important;
   background:none!important;
 }
+
+body.dark-mode .navbar,
+body.dark-mode nav,
+body.dark-mode .bottom-nav,
+body.dark-mode .welcome,
+body.dark-mode .welcome-card,
+body.dark-mode .menu,
+body.dark-mode .menu-card{
+  background:#241d30!important;
+  color:#f5f5f5!important;
+}
+
+body.dark-mode .navbar a,
+body.dark-mode nav a,
+body.dark-mode .bottom-nav a,
+body.dark-mode .welcome h1,
+body.dark-mode .welcome h2,
+body.dark-mode .welcome p,
+body.dark-mode .menu h1,
+body.dark-mode .menu h2,
+body.dark-mode .menu p{
+  color:#f5f5f5!important;
+  -webkit-text-fill-color:#f5f5f5!important;
+}
+
+body.dark-mode .navbar i,
+body.dark-mode nav i,
+body.dark-mode .bottom-nav i{
+  color:#f5f5f5!important;
+}
