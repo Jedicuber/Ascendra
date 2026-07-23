@@ -9,6 +9,14 @@ body{min-height:100vh;background:#f4f1ff;color:#222;font-family:Arial,sans-serif
 .spa-back-button[hidden]{display:none}
 .spa-error{max-width:720px;margin:80px auto;padding:24px;background:white;border-radius:20px;box-shadow:0 12px 35px rgba(0,0,0,.12)}
 
+/* ===== BACKGROUND ===== */
+body {
+    background-image: url("background.png");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
 /* ===== WELCOME ===== */
 .ascendra-page[data-route="welcome"]{
     margin: 0;
