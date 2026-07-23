@@ -400,15 +400,28 @@ window.navigate=navigate;
 window.goTo=function(page){ navigate(page); };
 window.goBack=goBack;
 
+function getSavedSettings(){
+    const defaults={accentColor:"purple",lightMode:true};
+    let saved=null;
+    try{saved=JSON.parse(getUserItem("ascendraSettings"));}catch(e){}
+    return saved && typeof saved==="object" && !Array.isArray(saved)
+        ? {...defaults,...saved}
+        : defaults;
+}
+
 function applySavedSettings(){
     const colors={purple:"rgb(127, 0, 255)",blue:"rgb(37, 99, 235)",green:"rgb(22, 163, 74)",pink:"rgb(219, 39, 119)"};
-    let s=null; try{s=JSON.parse(getUserItem("ascendraSettings"));}catch(e){}
-    s=s||{accentColor:"purple",lightMode:true};
-    document.documentElement.style.setProperty("--accent",colors[s.accentColor]||colors.purple);
-    document.documentElement.style.setProperty("--bg",s.lightMode===false?"#111827":"#f6f3ff");
-    document.documentElement.style.setProperty("--card",s.lightMode===false?"#1f2937":"white");
-    document.documentElement.style.setProperty("--text",s.lightMode===false?"#f9fafb":"#222");
-    document.documentElement.style.setProperty("--muted",s.lightMode===false?"#cbd5e1":"#666");
+    const settings=getSavedSettings();
+    const darkModeEnabled=settings.lightMode===false;
+    document.documentElement.style.setProperty("--accent",colors[settings.accentColor]||colors.purple);
+    document.documentElement.style.setProperty("--bg",darkModeEnabled?"#17131f":"#f6f3ff");
+    document.documentElement.style.setProperty("--card",darkModeEnabled?"#241d30":"white");
+    document.documentElement.style.setProperty("--text",darkModeEnabled?"#f5f5f5":"#222");
+    document.documentElement.style.setProperty("--muted",darkModeEnabled?"#cbd5e1":"#666");
+    document.body.classList.toggle("dark-mode",darkModeEnabled);
+
+    const modeToggle=document.getElementById("mode");
+    if(modeToggle) modeToggle.checked=darkModeEnabled;
 }
 
 function renderRoute(route){
@@ -2305,12 +2318,20 @@ return () => {
 };
 },
 "settings": function init_settings() {
+    const modeToggle=document.getElementById("mode");
 
-document.addEventListener("change", function(event){
-    if (event.target.id === "mode") {
-        document.body.classList.toggle("dark-mode", event.target.checked);
+    function handleModeChange(){
+        const settings=getSavedSettings();
+        settings.lightMode=!modeToggle.checked;
+        setUserItem("ascendraSettings",JSON.stringify(settings));
+        applySavedSettings();
     }
-});
+
+    if(modeToggle){
+        modeToggle.checked=getSavedSettings().lightMode===false;
+        modeToggle.addEventListener("change",handleModeChange);
+    }
+
     function resetSettings() {
         const confirmReset = confirm(
             "Reset Ascendra settings back to default?"
@@ -2339,6 +2360,10 @@ document.addEventListener("change", function(event){
 
     window.resetSettings = resetSettings;
     window.deleteAllData = deleteAllData;
+
+    return () => {
+        if(modeToggle) modeToggle.removeEventListener("change",handleModeChange);
+    };
 },
 
 "stats": function init_stats(){

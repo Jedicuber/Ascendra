@@ -5805,6 +5805,15 @@ body.dark-mode{
   color:#f5f5f5!important;
 }
 
+body.dark-mode .ascendra-page{
+  --bg:#17131f;
+  --card:#241d30;
+  --text:#f5f5f5;
+  --muted:#cbd5e1;
+  background:var(--bg)!important;
+  color:var(--text)!important;
+}
+
 body.dark-mode::before{
   filter:invert(1) brightness(.7);
   opacity:.12;
