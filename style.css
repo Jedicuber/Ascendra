@@ -5810,13 +5810,13 @@ body.dark-mode .ascendra-page{
   --card:#241d30;
   --text:#f5f5f5;
   --muted:#cbd5e1;
-  background:var(--bg)!important;
+  background:transparent!important;
   color:var(--text)!important;
 }
 
 body.dark-mode::before{
-  filter:invert(1) brightness(.7);
-  opacity:.12;
+  filter:none;
+  opacity:.18;
 }
 
 body.dark-mode .card{
@@ -5871,4 +5871,71 @@ body.dark-mode .navbar i,
 body.dark-mode nav i,
 body.dark-mode .bottom-nav i{
   color:#f5f5f5!important;
+}
+
+body.dark-mode .navbar button,
+body.dark-mode nav button,
+body.dark-mode .bottom-nav button{
+  color:#f8fafc!important;
+}
+
+body.dark-mode .navbar button:hover,
+body.dark-mode nav button:hover,
+body.dark-mode .bottom-nav button:hover{
+  background:#3a2e4b!important;
+}
+
+body.dark-mode .ascendra-page :is(
+  #main_paragraph,
+  form,
+  .widget,
+  .sidebar,
+  .alert-card,
+  .breathing-box,
+  .calendar-card,
+  .popup-box,
+  table,
+  .date-grid-card,
+  .entry-card,
+  #nav button,
+  .top-bar,
+  .stat-card,
+  .progress-card,
+  .details-card,
+  .recent-card,
+  .profile-card,
+  .edit-profile-card,
+  .options,
+  .policy-container,
+  .terms-container,
+  .about-section,
+  .feature-card,
+  .credit-card
+){
+  color:#1f162e!important;
+}
+
+body.dark-mode .ascendra-page :is(
+  .top-bar,
+  .sidebar,
+  .calendar-card,
+  .policy-container,
+  .terms-container,
+  .credit-card
+) h1{
+  color:#1f162e!important;
+  -webkit-text-fill-color:#1f162e!important;
+}
+
+body.dark-mode .ascendra-page[data-route="alerts"] #subtitle2,
+body.dark-mode .ascendra-page[data-route="breathing"] .subtitle,
+body.dark-mode .ascendra-page[data-route="journal"] .journal-header p,
+body.dark-mode .ascendra-page[data-route="stats"] .welcome-section > p:last-child,
+body.dark-mode .ascendra-page[data-route="comingsoon"] p,
+body.dark-mode .ascendra-page[data-route="projects"] p{
+  color:#cbd5e1!important;
+}
+
+body.dark-mode .ascendra-page[data-route="settings"] .danger h3{
+  color:#fca5a5!important;
 }
