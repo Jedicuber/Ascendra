@@ -2306,7 +2306,11 @@ return () => {
 },
 "settings": function init_settings() {
 
-    const darkMode = document.getElementById
+const darkMode = document.getElementById("mode");
+
+    darkMode.addEventListener("change", function(){
+        document.body.classList.toggle("dark", darkMode.checked);
+    });
 
     function resetSettings() {
         const confirmReset = confirm(
