@@ -1,6 +1,7 @@
 *{box-sizing:border-box}
 html,body{margin:0;min-height:100%;}
-body{min-height:100vh;background-color:#f4f1ff!important;background-image:url("background.png")!important;background-position:top center!important;background-size:100% auto!important;background-repeat:repeat-y!important;color:#222;font-family:Arial,sans-serif;}
+body{min-height:100vh;background-color:#f4f1ff!important;color:#222;font-family:Arial,sans-serif;position:relative;}
+body::before{content:"";position:fixed;inset:0;background-image:url("background.png");background-position:top center;background-size:100% auto;background-repeat:repeat-y;opacity:.25;pointer-events:none;z-index:-1;}
 #app{min-height:100vh;background:transparent!important;}
 .ascendra-page{display:block;min-height:100vh;position:relative;background:transparent!important;}
 .spa-back-button{position:fixed;left:18px;top:18px;z-index:10000;width:44px;height:44px;border:0;border-radius:14px;background:rgba(255,255,255,.92);box-shadow:0 8px 24px rgba(0,0,0,.15);cursor:pointer;font-size:20px;color:#301060;display:flex;align-items:center;justify-content:center;}
