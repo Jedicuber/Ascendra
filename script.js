@@ -2306,15 +2306,11 @@ return () => {
 },
 "settings": function init_settings() {
 
-    function init_settings(){
-        const darkMode = document.getElementById("mode");
-
-        if (!darkMode) return;
-
-        darkMode.addEventListener("change", function(){
-        document.body.classList.toggle("dark", darkMode.checked);
-        });
+  document.addEventListener("change", function(event){
+    if (event.target.id === "mode") {
+        document.body.classList.toggle("dark", event.target.checked);
     }
+});
 
     function resetSettings() {
         const confirmReset = confirm(
