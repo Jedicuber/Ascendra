@@ -5827,3 +5827,10 @@ body.dark-mode select{
   color:#fff!important;
   border-color:#58466e!important;
 }
+body.dark-mode h1,
+body.dark-mode h2,
+body.dark-mode .page-title{
+  color:#ffffff!important;
+  -webkit-text-fill-color:#ffffff!important;
+  background:none!important;
+}
