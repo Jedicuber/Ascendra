@@ -2369,7 +2369,7 @@ window.loadEntry = loadEntry;
 "menu": function init_menu(){
 const buttons = document.querySelectorAll("#nav button");
 
-const compactMenuQuery = window.matchMedia("(max-width: 768px), (max-height: 500px)");
+const compactMenuQuery = window.matchMedia("(max-width: 768px), (max-height: 820px)");
 
 function clearOrbitPositions() {
     buttons.forEach(button => {
@@ -2379,7 +2379,7 @@ function clearOrbitPositions() {
     });
 }
 
-const radius = 240;
+const radius = 250;
 let angle = 0;
 let paused = false;
 let animationFrame = null;
@@ -3359,6 +3359,10 @@ return () => {
 
 
 },
+"roadmap": function init_roadmap(){
+
+
+},
 "comingsoon": function init_comingsoon(){
 
 
@@ -3380,7 +3384,8 @@ const searchablePages = [
     { name: "To-Dos", route: "todos" },
     { name: "Profile", route: "profile" },
     { name: "Statistics", route: "stats" },
-    { name: "Settings", route: "settings" }
+    { name: "Settings", route: "settings" },
+    { name: "Roadmap", route: "roadmap" }
 ];
 let searchPreviousFocus = null;
 

@@ -596,6 +596,10 @@
         About<br/>
 <i class="fa-solid fa-circle-info"></i>
 </button>
+<button id="roadmap" onclick="navigate('roadmap')" type="button">
+        Roadmap<br/>
+<i aria-hidden="true" class="fa-solid fa-map"></i>
+</button>
 <button id="credits" onclick="navigate('credits')">
         Credits<br/>
 <i class="fa-solid fa-users"></i>
@@ -1325,6 +1329,10 @@
 <p>
                     New ideas will continue to be added as Ascendra develops.
                 </p>
+<a class="about-roadmap-link" href="#/roadmap">
+<i aria-hidden="true" class="fa-solid fa-map"></i>
+                    View Roadmap
+                </a>
 </div>
 </section>
 <section class="creator-section">
@@ -1398,23 +1406,6 @@
 
 
 </template>
-  <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
-  <script src="script.js"></script>
-  <div aria-label="Search Ascendra" aria-modal="true" class="search-overlay" hidden id="searchOverlay" role="dialog">
-    <div class="search-box">
-        <button aria-label="Close search" class="search-close" id="searchClose" type="button">×</button>
-        <input
-            aria-label="Search pages"
-            id="searchInput"
-            type="search"
-            placeholder="Search Ascendra..."
-            autocomplete="off"
-        >
-
-        <div aria-live="polite" id="searchResults"></div>
-    </div>
-</div>
-
 <template id="page-roadmap">
   <main class="roadmap-page">
     <h1>Ascendra Roadmap</h1>
@@ -1435,7 +1426,7 @@
         <h3>Development Progress</h3>
         <p><strong>5 of 8 major features completed</strong></p>
 
-        <div class="progress-bar" aria-label="Genesis development progress">
+        <div aria-label="Genesis development progress: 5 of 8 major features completed" aria-valuemax="8" aria-valuemin="0" aria-valuenow="5" class="progress-bar" role="progressbar">
           <div class="progress-fill"></div>
         </div>
 
@@ -1454,6 +1445,34 @@
       </div>
     </section>
   </main>
+
+  <nav aria-label="Primary navigation" class="navbar">
+    <button onclick="navigate('home')" type="button"><i class="fa-solid fa-mug-saucer"></i><br/>Home</button>
+    <button onclick="navigate('alerts')" type="button"><i class="fa-regular fa-bell"></i><br/>Alerts</button>
+    <button onclick="navigate('todos')" type="button"><i class="fa-solid fa-list-check"></i><br/>To-Dos</button>
+    <button onclick="navigate('habits')" type="button"><i class="fa-regular fa-thumbs-up"></i><br/>Habits</button>
+    <button onclick="navigate('breathing')" type="button"><i class="fa-solid fa-wind"></i><br/>Breathing</button>
+    <button onclick="navigate('calendar')" type="button"><i class="fa-regular fa-calendar"></i><br/>Calendar</button>
+    <button onclick="navigate('journal')" type="button"><i class="fa-solid fa-book-open"></i><br/>Journal</button>
+    <button onclick="navigate('menu')" type="button"><i class="fa-solid fa-bars-staggered"></i><br/>Menu</button>
+  </nav>
 </template>
+  <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+  <script src="script.js"></script>
+  <div aria-label="Search Ascendra" aria-modal="true" class="search-overlay" hidden id="searchOverlay" role="dialog">
+    <div class="search-box">
+        <button aria-label="Close search" class="search-close" id="searchClose" type="button">×</button>
+        <input
+            aria-label="Search pages"
+            id="searchInput"
+            type="search"
+            placeholder="Search Ascendra..."
+            autocomplete="off"
+        >
+
+        <div aria-live="polite" id="searchResults"></div>
+    </div>
+</div>
+
 </body>
 </html>
