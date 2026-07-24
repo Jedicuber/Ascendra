@@ -5654,6 +5654,70 @@ body::before{content:"";position:fixed;inset:0;background-image:url("background.
     }
 }
 
+.credit-card{
+  max-width:700px;
+  margin:40px auto;
+  padding:28px;
+  background:#fff;
+  border-radius:20px;
+  box-shadow:0 12px 35px rgba(0,0,0,.12);
+  text-align:center;
+}
+
+.github-button{
+  display:inline-block;
+  text-decoration:none;
+  margin:10px 0 20px;
+}
+
+.github-button button{
+  display:inline-flex;
+  align-items:center;
+  gap:10px;
+  padding:12px 18px;
+  border:none;
+  border-radius:12px;
+  background:#24292f;
+  color:#fff;
+  font-size:16px;
+  font-weight:700;
+  cursor:pointer;
+  transition:.2s ease;
+}
+
+.github-button button:hover{
+  transform:translateY(-2px);
+  box-shadow:0 8px 20px rgba(0,0,0,.2);
+}
+
+.github-button i{
+  font-size:22px;
+}
+
+.credit-card h3{
+  margin-top:20px;
+}
+
+.credit-card h3 + p,
+.credit-card h3 + p + p,
+.credit-card h3 + p + p + p{
+  display:inline-block;
+  margin:10px 14px;
+}
+
+.credit-card .fa-html5,
+.credit-card .fa-css3,
+.credit-card .fa-js{
+  font-size:48px;
+  transition:.2s ease;
+}
+
+.credit-card .fa-html5:hover,
+.credit-card .fa-css3:hover,
+.credit-card .fa-js:hover{
+  transform:translateY(-4px) scale(1.08);
+}
+
 @media (max-width: 480px) {
     .ascendra-page {
         padding-bottom: calc(122px + env(safe-area-inset-bottom)) !important;
