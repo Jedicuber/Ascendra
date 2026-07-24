@@ -7,8 +7,8 @@
 - Alerts, Todos and habits should be added with more detail ✅
 - Make sure the calendar counts leap years ✅
 - Fix habits page bug ✅
-- Add localstorage to darkMode
-- Fix dark mode nav bar and text
+- Fix roadmap navbar CSS proportions
+- Replace menu with rotating buttons
 ────────────────────────────────────────
 
 💬 Messeges
