@@ -5875,6 +5875,158 @@ body::before{content:"";position:fixed;inset:0;background-image:url("background.
     text-align: center;
 }
 
+.roadmap-page{
+  width:min(900px,calc(100% - 32px));
+  margin:0 auto;
+  padding:40px 0 120px;
+}
+
+.roadmap-page>h1{
+  margin:0 0 24px;
+  text-align:center;
+  font-size:clamp(32px,6vw,52px);
+  color:#5b21b6;
+}
+
+.roadmap-card{
+  padding:28px;
+  border:1px solid rgba(91,33,182,.14);
+  border-radius:22px;
+  background:rgba(255,255,255,.92);
+  box-shadow:0 14px 40px rgba(48,16,96,.12);
+  backdrop-filter:blur(8px);
+}
+
+.roadmap-header{
+  display:flex;
+  align-items:flex-start;
+  justify-content:space-between;
+  gap:20px;
+}
+
+.roadmap-header h2{
+  margin:0;
+  color:#301060;
+  font-size:30px;
+}
+
+.roadmap-subtitle{
+  margin:6px 0 0;
+  color:#6b6475;
+}
+
+.roadmap-status{
+  flex-shrink:0;
+  padding:8px 13px;
+  border-radius:999px;
+  background:#fff3cd;
+  color:#795500;
+  font-size:14px;
+  font-weight:700;
+}
+
+.roadmap-card hr{
+  margin:24px 0;
+  border:0;
+  border-top:1px solid rgba(48,16,96,.14);
+}
+
+.roadmap-card h3{
+  margin:0 0 12px;
+  color:#40206f;
+}
+
+.roadmap-card p{
+  line-height:1.7;
+}
+
+.roadmap-progress{
+  margin-bottom:28px;
+}
+
+.progress-bar{
+  width:100%;
+  height:14px;
+  overflow:hidden;
+  border-radius:999px;
+  background:#e7def7;
+}
+
+.progress-fill{
+  width:62.5%;
+  height:100%;
+  border-radius:inherit;
+  background:linear-gradient(90deg,#6d28d9,#a855f7);
+}
+
+.progress-text{
+  margin:8px 0 0;
+  color:#6b6475;
+  font-size:14px;
+}
+
+.roadmap-details{
+  padding:20px;
+  border-radius:16px;
+  background:#f7f2ff;
+}
+
+.roadmap-details p{
+  margin:0;
+}
+
+body.dark-mode .roadmap-page>h1{
+  color:#c4a7ff;
+}
+
+body.dark-mode .roadmap-card{
+  border-color:rgba(196,167,255,.18);
+  background:rgba(35,27,48,.94);
+  color:#f6f1ff;
+  box-shadow:0 14px 40px rgba(0,0,0,.3);
+}
+
+body.dark-mode .roadmap-header h2,
+body.dark-mode .roadmap-card h3{
+  color:#d5c1ff;
+}
+
+body.dark-mode .roadmap-subtitle,
+body.dark-mode .progress-text{
+  color:#b9aec7;
+}
+
+body.dark-mode .roadmap-card hr{
+  border-top-color:rgba(255,255,255,.12);
+}
+
+body.dark-mode .progress-bar{
+  background:#443653;
+}
+
+body.dark-mode .roadmap-details{
+  background:#30263f;
+}
+
+@media(max-width:600px){
+  .roadmap-page{
+    width:min(100% - 20px,900px);
+    padding-top:24px;
+  }
+
+  .roadmap-card{
+    padding:20px;
+  }
+
+  .roadmap-header{
+    flex-direction:column;
+  }
+
+  .roadmap-header h2{
+    font-size:26px;
+  }
+}
+
 body.dark{
   background-color:#17131f!important;
   color:#f5f5f5!important;
